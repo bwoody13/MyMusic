@@ -1,12 +1,15 @@
-import AlbumRandomizer from './AlbumRandomizer';
-import SmartPlaylistManager from './SmartPlaylists';
+import AlbumDashboardCard from './AlbumDashboardCard';
+import SmartPlaylistCard from './SmartPlaylistsCard';
 
 function Dashboard() {
+    
     return (
         <div>
             <h1>Dashboard</h1>
-            <AlbumRandomizer />
-            <SmartPlaylistManager />
+              <>
+                <AlbumDashboardCard />
+                <SmartPlaylistCard />
+              </>
         </div>
     );
 };

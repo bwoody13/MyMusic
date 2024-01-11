@@ -1,7 +1,6 @@
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const SCOPE = import.meta.env.VITE_SPOTIFY_SCOPE;
 const REDIRECT_URI = "http://localhost:5173/callback";
-// console.log(CLIENT_ID , REDIRECT_URI, SCOPE)
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
@@ -52,7 +51,6 @@ export async function getAccessToken(code: string): Promise<void> {
     params.append("code", code);
     params.append("redirect_uri", REDIRECT_URI);
     params.append("code_verifier", verifier!);
-    console.log(params.toString())
     const result = await fetch(tokenEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -62,8 +60,6 @@ export async function getAccessToken(code: string): Promise<void> {
     const { access_token, refresh_token } = await result.json();
     localStorage.setItem("access_token", access_token);
     localStorage.setItem("refresh_token", refresh_token);
-    console.log("Access Token: " + access_token)
-    // return await result.json();
 }
 
 export async function refreshAccessToken(): Promise<void> {
@@ -75,7 +71,7 @@ export async function refreshAccessToken(): Promise<void> {
         body: new URLSearchParams({
           client_id: CLIENT_ID,
           grant_type: 'refresh_token',
-          refresh_token: localStorage.getItem('refresh_token') || '',
+          refresh_token: localStorage.getItem('refresh_token')!,
         }),
       });
     

@@ -1,12 +1,32 @@
-import {useState} from 'react'
-import { getLikedAlbums } from '../utils/api_handler';
+import {useEffect, useState} from 'react'
+import { getLikedAlbums } from '../utils/spotify_api_handler';
 
-function AlbumRandomizer() {
+function AlbumDashboard() {
     const [randomAlbum, setRandomAlbum] = useState<Album | null>(null);
+
+    const [albums, setAlbums] = useState<Album[]>([]);
+    const [loading, setLoading] = useState(false);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          setLoading(true);
+          try {
+            // Fetch albums and playlists in parallel
+            const albumsData = await getLikedAlbums();
+            setAlbums(albumsData);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          } finally {
+            setLoading(false);
+          }
+        };
+        fetchData();
+    }, []);
+
 
     async function handleRandomize() {
         try {
-            const albumsData = await getLikedAlbums();
+            const albumsData = albums;
             if (albumsData && albumsData.length > 0) {
                 const randomIndex = Math.floor(Math.random() * albumsData.length);
                 setRandomAlbum(albumsData[randomIndex]);
@@ -22,8 +42,8 @@ function AlbumRandomizer() {
 
     return (
         <div>
-            <h2>Album Randomizer</h2>
-            <button onClick={handleRandomize}>Randomize Album</button>
+            <h2>Album Dashboard</h2>
+            {loading? <p>Loading Albums...</p> : <button onClick={handleRandomize}>Randomize Album</button>}
             {randomAlbum && (
                 <div>
                     <h3>{randomAlbum.name}</h3>
@@ -35,4 +55,4 @@ function AlbumRandomizer() {
     );
 };
 
-export default AlbumRandomizer;
+export default AlbumDashboard;

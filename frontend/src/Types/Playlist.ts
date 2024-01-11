@@ -1,10 +1,9 @@
-type Album = {
+type Playlist = {
     id: string;
     name: string;
+    description: string;
     images: Image[];
     type: string;
-    artists: {id: string, name: string}[];
+    owner: {display_name: string, id: string};
     tracks: any[];
-    genres: string[];
-};
-
+}
