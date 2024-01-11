@@ -11,7 +11,6 @@ function AlbumDashboard() {
         const fetchData = async () => {
           setLoading(true);
           try {
-            // Fetch albums and playlists in parallel
             const albumsData = await getLikedAlbums();
             setAlbums(albumsData);
           } catch (error) {
@@ -24,7 +23,7 @@ function AlbumDashboard() {
     }, []);
 
 
-    async function handleRandomize() {
+    function handleRandomize() {
         try {
             const albumsData = albums;
             if (albumsData && albumsData.length > 0) {
