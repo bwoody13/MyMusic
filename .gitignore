@@ -1,9 +1,5 @@
-# Virtual Environment
-.venv
-
-# Env File
+# ENV
 .env
 
-# Py Cache
-__pycache__
-objects/__pycache__
+# VS Code
+.vscode
