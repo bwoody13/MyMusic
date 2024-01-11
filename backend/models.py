@@ -6,8 +6,25 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.String(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
+    album_sync_date = db.Column(db.DateTime, nullable=True)
+    playlist_sync_date = db.Column(db.DateTime, nullable=True)
     owned_playlists = db.relationship('Playlist', backref='user', lazy=True,
                                       cascade="all, delete")
+    followed_playlists = db.relationship('PlaylistFollower', backref='user', lazy=True,
+                                         cascade="all, delete")
+    liked_albums = db.relationship('Album', backref='user', lazy=True,
+                                   cascade="all, delete")
+
+
+class Album(db.Model):
+    id = db.Column(db.String(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+
+
+class AlbumFollower(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(), db.ForeignKey('user.id'), nullable=False)
+    album_id = db.Column(db.String(), db.ForeignKey('album.id'), nullable=False)
 
 
 class Playlist(db.Model):
