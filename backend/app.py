@@ -12,7 +12,7 @@ APP_SECRET = os.getenv('APP_SECRET')
 
 # Init app
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = APP_SECRET
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myspotify.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -109,24 +109,32 @@ def add_smart_playlist():
 
     data = request.json
     parent_playlist_id = data.get("parent_playlist_id")
-    child_playlist_id = data.get("child_playlist_id")
-    if not parent_playlist_id or not child_playlist_id:
-        return jsonify({"error": "Parent and child playlist IDs are required"}), 400
+    children = data.get("children")
+    if not parent_playlist_id or not children:
+        return jsonify({"error": "Parent playlist ID and children are required"}), 400
 
     playlist = Playlist.query.filter_by(id=parent_playlist_id).first()
     if playlist is None:
         return jsonify({"error": "Parent playlist not found"}), 404
 
-    if Playlist.query.filter_by(id=child_playlist_id).first() is None:
-        return jsonify({"error": "Child playlist not found"}), 404
-
     owner_id = playlist.owner_id
     if owner_id != user_id:
         return jsonify({"error": "User ID does not match playlist owner ID"}), 403
 
-    smart_playlist = SmartPlaylist(parent_playlist_id=parent_playlist_id,
-                                   child_playlist_id=child_playlist_id)
-    db.session.add(smart_playlist)
+    for child_playlist_id in children:
+        if child_playlist_id == parent_playlist_id:
+            db.session.rollback()
+            return jsonify({"error": "Child playlist cannot be the same as the parent"}), 400
+
+        child_playlist = Playlist.query.filter_by(id=child_playlist_id).first()
+        if child_playlist is None:
+            db.session.rollback()
+            return jsonify({"error": "Child playlist not found"}), 404
+
+        smart_playlist = SmartPlaylist(parent_playlist_id=parent_playlist_id,
+                                       child_playlist_id=child_playlist_id)
+        db.session.add(smart_playlist)
+
     db.session.commit()
 
     return jsonify({"message": "Smart playlist relationship added successfully"}), 200
@@ -148,7 +156,7 @@ def get_smart_playlists():
     owned_playlists = db.session.execute(stmt).scalars().all()
     smart_playlist_data = [{
         "parent_playlist_id": op.id,
-        "children": [{"child_playlist_id": cp.child_playlist_id} for cp in op.child_playlists]
+        "children": [cp.child_playlist_id for cp in op.child_playlists]
     } for op in owned_playlists
         if op.child_playlists]
 
