@@ -1,4 +1,4 @@
-import SmartPlaylists from "./SmartPlaylists";
+import SmartPlaylists from "../components/SmartPlaylists";
 
 function PlaylistDashboard() {
     return (

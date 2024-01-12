@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 
-function AlbumDashboardCard() {
+function AlbumDashboardButton() {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
@@ -16,4 +16,4 @@ function AlbumDashboardCard() {
     );
 };
 
-export default AlbumDashboardCard;
+export default AlbumDashboardButton;
