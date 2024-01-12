@@ -1,4 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import Playlist from '../Classes/Playlist';
+import SmartPlaylist, { SmartPlaylistData, SmartPlaylistSyncData } from '../Classes/SmartPlaylist';
 
 const backendClient = axios.create({
   baseURL: 'http://localhost:5000',
@@ -35,6 +37,6 @@ export async function getSmartPlaylists(): Promise<SmartPlaylist[]> {
   return backendGet('/smart_playlists');
 }
 
-export async function syncSmartPlaylists(smartPlaylistSyncData: SmartPlaylistSyncData): Promise<any> {
+export async function syncSmartPlaylistData(smartPlaylistSyncData: SmartPlaylistSyncData): Promise<any> {
   return backendPost('/smart_playlists/sync', smartPlaylistSyncData);
 }

@@ -1,3 +1,0 @@
-interface Track {
-    id: string;
-}

@@ -1,5 +1,9 @@
 import axios from 'axios';
+import { plainToClass, plainToInstance } from 'class-transformer';
 import {refreshAccessToken} from './auth'
+import Album from '../Classes/Album';
+
+const excludeVals = { excludeExtraneousValues: true }
 
 const spApiClient = axios.create({
   baseURL: 'https://api.spotify.com/v1',
@@ -47,6 +51,10 @@ async function getAllItems(endpoint: string, options = {}) {
 
 export async function getLikedAlbums(): Promise<Album[]> {
   const items = await getAllItems('me/albums?limit=50');
+  console.log(items[0].album);
+  console.log(plainToInstance(Album, items[0].album, excludeVals))
+//   const albums = items.map((res: any) => plainToInstance(Album, res.album, excludeVals));
+//   console.log(albums);
   return items.map((res: any) => res.album);
 };
 
@@ -61,9 +69,9 @@ export async function getUserInfo(): Promise<User> {
   return response.data;
 }
 
-export async function getPlaylistTracks(playlistId: string): Promise<Track[]> {
-  const items = await getAllItems(`playlists/${playlistId}/tracks?fields=next,items(track(id))&limit=50`);
-  return items.map((res: any) => res.track);
+export async function getPlaylistTracks(playlistId: string): Promise<String[]> {
+  const items = await getAllItems(`playlists/${playlistId}/tracks?fields=next,items(track(uri))&limit=50`);
+  return items.map((res: any) => res.track.uri);
 }
 
 export async function addTracksToPlaylist(playlistId: string, trackIds: Track[]) {

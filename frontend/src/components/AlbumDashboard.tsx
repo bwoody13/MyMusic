@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import { getLikedAlbums } from '../utils/spotify_api_handler';
+import Album from '../Classes/Album';
 
 function AlbumDashboard() {
     const [randomAlbum, setRandomAlbum] = useState<Album | null>(null);
