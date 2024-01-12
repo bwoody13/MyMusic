@@ -9,6 +9,7 @@ import Login from './components/Login'
 import Callback from './components/Callback'
 import Dashboard from './components/Dashboard'
 import SmartPlaylists from './components/SmartPlaylists'
+import AlbumDashboard from './components/AlbumDashboard'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/' element={<Login/>} />
         <Route path='callback' element={<Callback/>} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard/album' element={<AlbumDashboard />} />
         <Route path='/smart-playlists' element={<SmartPlaylists />} />
       </Routes>
     </Router>
