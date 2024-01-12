@@ -3,6 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import {refreshAccessToken} from './auth'
 import Album from '../Classes/Album';
 import Playlist from '../Classes/Playlist';
+import User from '../Classes/User';
 
 const excludeVals = { excludeExtraneousValues: true }
 
@@ -15,59 +16,55 @@ const spApiClient = axios.create({
 
 // Interceptor for handling token refresh
 spApiClient.interceptors.response.use(response => response, async (error) => {
-  if (error.response && error.response.status === 401) {
-    await refreshAccessToken()
-  }
-  return Promise.reject(error);
+    if (error.response && error.response.status === 401) {
+        await refreshAccessToken()
+    }
+    return Promise.reject(error);
 });
 
 function getAuthHeader() {
-  return {
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  };
+    return {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    };
 };
 
 async function apiGet(endpoint: string, options = {}) {
-  return spApiClient.get(endpoint, { ...options, headers: getAuthHeader() });
+    return spApiClient.get(endpoint, { ...options, headers: getAuthHeader() });
 }
 
 async function apiPost(endpoint: string, data: any, options = {}) {
-  return spApiClient.post(endpoint, data, { ...options, headers: getAuthHeader() });
+    return spApiClient.post(endpoint, data, { ...options, headers: getAuthHeader() });
 }
 
 async function apiDelete(endpoint: string, options = {}) {
     return spApiClient.delete(endpoint, { ...options, headers: getAuthHeader() });
 }
 
-async function getAllItems(endpoint: string, options = {}) {
-  let items: any[] = [];
-  let nextPageUrl = endpoint;
-  do {
-    const response = await apiGet(nextPageUrl, options);
-    items = items.concat(response.data.items);
-    nextPageUrl = response.data.next;
-  } while (nextPageUrl);
-  return items;
+async function getAllItems(endpoint: string, options = {}): Promise<any[]> {
+    let items: any[] = [];
+    let nextPageUrl = endpoint;
+    do {
+        const response = await apiGet(nextPageUrl, options);
+        items = items.concat(response.data.items);
+        nextPageUrl = response.data.next;
+    } while (nextPageUrl);
+    return items;
 }
 
 export async function getLikedAlbums(): Promise<Album[]> {
-  const items = await getAllItems('me/albums?limit=50');
-  console.log(items[0].album);
-  console.log(plainToInstance(Album, items[0].album, excludeVals))
-//   const albums = items.map((res: any) => plainToInstance(Album, res.album, excludeVals));
-//   console.log(albums);
-  return items.map((res: any) => res.album);
+    const items = await getAllItems('me/albums?limit=50');
+    return plainToInstance(Album, items, excludeVals);
 };
 
 
 export async function getPlaylists(): Promise<Playlist[]> {
-  const items = await getAllItems('me/playlists?limit=50');
-  return plainToInstance(Playlist, items);
+    const items = await getAllItems('me/playlists?limit=50');
+    return  plainToInstance(Playlist, items, excludeVals);
 };
 
 export async function getUserInfo(): Promise<User> {
-  const response = await apiGet('me');
-  return plainToInstance(User, response.data);
+    const response = await apiGet('me');
+    return plainToInstance(User, response.data);
 }
 
 export async function getPlaylistTracks(playlistId: string): Promise<String[]> {
@@ -75,14 +72,12 @@ export async function getPlaylistTracks(playlistId: string): Promise<String[]> {
   return items.map((res: any) => res.track.uri);
 }
 
-export async function addTracksToPlaylist(playlistId: string, trackIds: Track[]) {
-    const trackUris = trackIds.map(track => `spotify:track:${track.id}`);
+export async function addTracksToPlaylist(playlistId: string, trackUris: String[]) {
     const response = await apiPost(`playlists/${playlistId}/tracks`, { uris: trackUris });
     return response.data;
 }
 
-export async function removeTracksFromPlaylist(playlistId: string, trackIds: Track[]) {
-    const trackUris = trackIds.map(track => `spotify:track:${track.id}`);
+export async function removeTracksFromPlaylist(playlistId: string, trackUris: String[]) {
     const response = await apiDelete(`playlists/${playlistId}/tracks`, { tracks: trackUris });
     return response.data;
 }

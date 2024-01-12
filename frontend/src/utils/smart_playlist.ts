@@ -24,12 +24,12 @@ export async function syncSmartPlaylist(smartPlaylist: SmartPlaylist, keepUnmatc
         const tracksToRemove = [...parentTracks].filter(track => !childrenTracks.has(track));
         removeTracksFromPlaylist(parent_playlist_id, tracksToRemove);
     }
-    
+
     const smartPlaylistSyncData = {
         parent_playlist_id: parent_playlist_id,
         children: childPlaylists.map(childPlaylist => ({child_playlist_id: childPlaylist.playlist.id, snapshot_id: childPlaylist.playlist.snapshot_id})),
     }
-    syncSmartPlaylistData(smartPlaylistSyncData)
+    await syncSmartPlaylistData(smartPlaylistSyncData)
 }
 
 function getOutOfSyncChildren(childPlaylists: ChildPlaylist[]): ChildPlaylist[] {
