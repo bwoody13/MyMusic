@@ -15,8 +15,6 @@ class Base(db.Model):
             if isinstance(c, ColumnProperty):
                 data[c.key] = getattr(self, c.key)
         return data
-            # print(c.key, getattr(self, c.key))
-        # return {c.name: getattr(self, c.name) for c in inspect(self).mapper.column_attrs}
 
 
 class User(Base):
@@ -41,9 +39,8 @@ class Album(Base):
 
 
 class AlbumFollower(Base):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(), db.ForeignKey('user.id'), nullable=False)
-    album_id = db.Column(db.String(), db.ForeignKey('album.id'), nullable=False)
+    user_id = db.Column(db.String(), db.ForeignKey('user.id'), primary_key=True)
+    album_id = db.Column(db.String(), db.ForeignKey('album.id'), primary_key=True)
 
 
 class Playlist(Base):
@@ -57,18 +54,14 @@ class Playlist(Base):
                                       foreign_keys="SmartPlaylist.parent_playlist_id",
                                       backref='playlist', lazy=True,
                                       cascade="all, delete")
-    followers = db.relationship('PlaylistFollower', backref='playlist', lazy=True,
-                                cascade="all, delete")
 
 
 class PlaylistFollower(Base):
-    id = db.Column(db.Integer, primary_key=True)
-    playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), nullable=False)
-    user_id = db.Column(db.String(), db.ForeignKey('user.id'), nullable=False)
+    playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), primary_key=True)
+    user_id = db.Column(db.String(), db.ForeignKey('user.id'), primary_key=True)
 
 
 class SmartPlaylist(Base):
-    id = db.Column(db.Integer, primary_key=True)
-    parent_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), nullable=False)
-    child_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), nullable=False)
+    parent_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), primary_key=True)
+    child_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), primary_key=True)
     last_sync_snapshot_id = db.Column(db.String(), unique=False, nullable=True)

@@ -4,7 +4,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 from models import db, User, Playlist, SmartPlaylist, PlaylistFollower, Album, AlbumFollower
-from sqlalchemy import select
 
 
 load_dotenv()  # Load environment variables from .env file
@@ -206,14 +205,16 @@ def add_smart_playlist():
         if child_playlist is None:
             db.session.rollback()
             return jsonify({"error": "Child playlist not found"}), 404
-
-        smart_playlist = SmartPlaylist(parent_playlist_id=parent_playlist_id,
-                                       child_playlist_id=child_playlist_id)
-        db.session.add(smart_playlist)
+        smart_playlist = SmartPlaylist.query.filter_by(parent_playlist_id=parent_playlist_id,
+                                                       child_playlist_id=child_playlist_id).first()
+        if not smart_playlist:
+            smart_playlist = SmartPlaylist(parent_playlist_id=parent_playlist_id,
+                                           child_playlist_id=child_playlist_id)
+            db.session.add(smart_playlist)
 
     db.session.commit()
 
-    return jsonify({"message": "Smart playlist relationship added successfully"}), 200
+    return jsonify({"message": "Smart playlist relationship added/updated successfully"}), 200
 
 
 @app.route("/smart_playlists", methods=["GET"])
@@ -232,7 +233,7 @@ def get_smart_playlists():
                         id=cp.child_playlist_id).first_or_404().to_dict(),
                     "last_sync_snapshot_id": SmartPlaylist.query.filter_by(
                         parent_playlist_id=op.id,
-                        child_playlist_id=cp.child_playlist_id).last_sync_snapshot_id
+                        child_playlist_id=cp.child_playlist_id).first().last_sync_snapshot_id
                 } for cp in op.child_playlists
             ]
         } for op in owned_playlists
