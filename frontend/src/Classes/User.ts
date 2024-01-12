@@ -1,4 +1,4 @@
-import { Expose } from "class-transformer";
+import { Expose, Type } from "class-transformer";
 
 export default class User {
     @Expose()
@@ -7,4 +7,17 @@ export default class User {
     display_name: string;
     @Expose()
     images: {url: string}[]
+}
+
+export class UserData {
+    @Expose()
+    id: string;
+    @Expose()
+    name: string;
+    @Expose()
+    @Type(() => Date)
+    album_sync_date: Date;
+    @Expose()
+    @Type(() => Date)
+    playlist_sync_date: Date;
 }

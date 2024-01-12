@@ -16,7 +16,8 @@
     "class-transformer": "^0.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1"
+    "react-router-dom": "^6.21.1",
+    "reflect-metadata": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.7",

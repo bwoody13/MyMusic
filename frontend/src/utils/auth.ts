@@ -60,6 +60,7 @@ export async function getAccessToken(code: string) {
       const { access_token, refresh_token } = response.data;
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
+      console.log("Access Token Retirieved")
   } catch (error) {
       console.error('Error during token retrieval:', error);
       window.location.href = '/';
@@ -77,6 +78,7 @@ export async function refreshAccessToken() {
       const { access_token, refresh_token } = response.data;
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
+      console.log("Access Token Refreshed")
   } catch (error) {
       console.error('Error during token refresh:', error);
       window.location.href = '/';

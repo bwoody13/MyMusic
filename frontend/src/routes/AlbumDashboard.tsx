@@ -1,18 +1,18 @@
 import {useEffect, useState} from 'react'
-import { getLikedAlbums } from '../utils/spotify_api_handler';
-import Album from '../Classes/Album';
+import { AlbumDisplay } from '../Classes/Album';
+import { retreiveAlbums, syncAlbumsWithBackend } from '../utils/data_management';
 
 function AlbumDashboard() {
-    const [randomAlbum, setRandomAlbum] = useState<Album | null>(null);
+    const [randomAlbum, setRandomAlbum] = useState<AlbumDisplay | null>(null);
 
-    const [albums, setAlbums] = useState<Album[]>([]);
+    const [albums, setAlbums] = useState<AlbumDisplay[]>([]);
     const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         const fetchData = async () => {
           setLoading(true);
           try {
-            const albumsData = await getLikedAlbums();
+            const albumsData = await retreiveAlbums();
             setAlbums(albumsData);
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -40,15 +40,32 @@ function AlbumDashboard() {
         }
     };
 
+    function handleUpdate() {
+        setLoading(true);
+        try {
+            syncAlbumsWithBackend().then(() => retreiveAlbums().then(albumsData => setAlbums(albumsData)));
+        } catch (error) {
+            console.error('Error updating albums:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div>
             <h2>Album Dashboard</h2>
-            {loading? <p>Loading Albums...</p> : <button onClick={handleRandomize}>Randomize Album</button>}
+            {loading? <p>Loading Albums...</p> : 
+                <div>
+                    <button onClick={handleUpdate}>Update Albums</button>
+                    <hr/>
+                    <h3>Album Randomizer</h3>
+                    <button onClick={handleRandomize}>Randomize Album</button>
+                </div>}
             {randomAlbum && (
                 <div>
                     <h3>{randomAlbum.name}</h3>
-                    <p>{randomAlbum.artists.map(artist => artist.name).join(', ')}</p>
-                    <img src={randomAlbum.images[0].url} alt={randomAlbum.name} width="200" />
+                    <p>{randomAlbum.artists}</p>
+                    <img src={randomAlbum.img_url} alt={randomAlbum.name} width="200" />
                 </div>
             )}
         </div>

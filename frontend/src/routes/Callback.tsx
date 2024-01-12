@@ -12,8 +12,7 @@ function Callback() {
         if (tokenProcessed) {
             getUserInfo().then((user) => {
                 localStorage.setItem("user", JSON.stringify(user));
-                const userData: UserData = { ...user, access_token: localStorage.getItem("access_token")! }
-                updateUser(userData).then(() => console.log("User updated in Backend"));
+                updateUser(user).then(() => console.log("User updated in Backend"));
             });
             navigate("/dashboard");
         } else {
@@ -26,8 +25,7 @@ function Callback() {
                     .then(() => {
                         getUserInfo().then((user) => {
                             localStorage.setItem("user", JSON.stringify(user));
-                            const userData: UserData = { ...user, access_token: localStorage.getItem("access_token")! }
-                            updateUser(userData).then(() => console.log("User updated in Backend"));
+                            updateUser(user).then(() => console.log("User updated in Backend"));
                         });
                         navigate("/dashboard");
                     }).catch(error => {
@@ -43,28 +41,6 @@ function Callback() {
     },
         [navigate, tokenProcessed, getUserInfo, updateUser, getAccessToken]
     );
-    
-
-//   useEffect(() => {
-//     const code = new URLSearchParams(window.location.search).get("code");
-//     console.log(window.location.search)
-//     if (code) {
-//       getAccessToken(code)
-//         .then(() => {
-//             console.log(localStorage.getItem("access_token"), new Date());
-//             setTimeout(() => {}, 1000000);
-//             navigate("/dashboard");
-//             window.history.replaceState({}, document.title, window.location.pathname); // Clear URL parameters
-//         })
-//         .catch(error => {
-//           console.error("Error during token retrieval:", error);
-//           // Handle error, maybe redirect to login
-//           navigate("/");
-//         });
-//     } else {
-//         navigate("/")
-//     }
-//   }, [navigate]);
 
   return <div>Loading...</div>;
 };

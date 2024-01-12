@@ -53,7 +53,7 @@ async function getAllItems(endpoint: string, options = {}): Promise<any[]> {
 
 export async function getLikedAlbums(): Promise<Album[]> {
     const items = await getAllItems('me/albums?limit=50');
-    return plainToInstance(Album, items, excludeVals);
+    return plainToInstance(Album, items.map(item => item.album), excludeVals);
 };
 
 

@@ -18,10 +18,12 @@ export async function syncSmartPlaylist(smartPlaylist: SmartPlaylist, keepUnmatc
     }
 
     const tracksToAdd = [...childrenTracks].filter(track => !parentTracks.has(track));
+    console.log("Adding tracks: ", tracksToAdd);
     addTracksToPlaylist(parent_playlist_id, tracksToAdd);
     
     if (!keepUnmatchedTracks) {
         const tracksToRemove = [...parentTracks].filter(track => !childrenTracks.has(track));
+        console.log("Removing tracks: ", tracksToRemove)
         removeTracksFromPlaylist(parent_playlist_id, tracksToRemove);
     }
 

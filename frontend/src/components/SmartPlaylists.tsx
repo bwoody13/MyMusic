@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { getPlaylists } from "../utils/spotify_api_handler";
-import { addSmartPlaylist, getSmartPlaylists, updatePlaylists } from "../utils/backend_api_handler";
+import { addSmartPlaylist, getSmartPlaylists } from "../utils/backend_api_handler";
+import { PlaylistDisplay } from "../Classes/Playlist";
+import SmartPlaylist from "../Classes/SmartPlaylist";
+import User from "../Classes/User";
 
-function SmartPlaylists() {
-    const [playlists, setPlaylists] = useState<Playlist[]>([]);
+type SmartPlaylistsProps = {
+    playlists: PlaylistDisplay[];
+    playlistLoading: boolean;
+}
+
+
+function SmartPlaylists(props: SmartPlaylistsProps) {
     const [parentPlaylistId, setParentPlaylistId] = useState("");
     const [selectedChildPlaylists, setSelectedChildPlaylists] = useState<{ [id: string]: boolean }>({});
-    const [loading, setLoading] = useState(false);
     const [smartPlaylists, setSmartPlaylists] = useState<SmartPlaylist[]>([]);
+    const [loading, setLoading] = useState(false);
+
+
+    const {playlists, playlistLoading} = props;
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [playlistData, smartPlaylistData] = await Promise.all([getPlaylists(), getSmartPlaylists()]);
-                updatePlaylists(playlistData);
-                setPlaylists(playlistData);
-                const initialChildSelection = playlistData.reduce((acc, playlist) => {
+                const smartPlaylistData = await getSmartPlaylists();
+                const initialChildSelection = playlists.reduce((acc, playlist) => {
                     acc[playlist.id] = false; // Initialize all checkboxes as unchecked
                     return acc;
                 }, {} as { [id: string]: boolean });
@@ -63,7 +71,7 @@ function SmartPlaylists() {
         <div>
             <h1>Smart Playlists</h1>
             <p>Create playlist hierarchies.</p>
-            {loading ? <p>Loading Playlists...</p> : (
+            {loading ? <p>Loading Smart Playlists...</p> : (
                 <form onSubmit={handleSubmit}>
                     <label>
                         Parent Playlist:
@@ -97,7 +105,18 @@ function SmartPlaylists() {
             <h2>Smart Playlists Created</h2>
             <ul>
                 {smartPlaylists.map(smartPlaylist => (
-                    <li>Parent: {smartPlaylist.parent_playlist_id}, Children: {smartPlaylist.children}</li>
+                    <li>
+                        <div>
+                            <p>
+                            Parent: {smartPlaylist.parent_playlist.name}, Children: {smartPlaylist.children.reduce((acc, childPlaylist, i) => {
+                                const sep = i === 0 ? '' : ', ';
+                                return acc + sep + childPlaylist.playlist.name;
+                            }, '')}
+                            </p>
+                            <button>Sync Playlist</button>
+                        </div>
+                        
+                    </li>
                 ))}
             </ul>
         </div>

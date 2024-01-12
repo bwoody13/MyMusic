@@ -1,16 +1,16 @@
 import { Expose } from "class-transformer";
-import Playlist from "./Playlist";
+import { PlaylistDisplay } from "./Playlist";
 
 export default class SmartPlaylist {
     @Expose()
-    parent_playlist: Playlist;
+    parent_playlist: PlaylistDisplay;
     @Expose()
     children: ChildPlaylist[];
 }
 
 export class ChildPlaylist {
     @Expose()
-    playlist: Playlist;
+    playlist: PlaylistDisplay;
     @Expose()
     last_sync_snapshot_id: string;
 }
@@ -20,8 +20,6 @@ export class SmartPlaylistData {
     parent_playlist_id: string;
     @Expose()
     children: string[];
-    @Expose()
-    owner_id: string;
 }
 
 export class SmartPlaylistSyncData {

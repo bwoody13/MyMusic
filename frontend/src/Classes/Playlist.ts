@@ -13,6 +13,23 @@ export default class Playlist {
     type: string;
     @Expose()
     owner: {display_name: string, id: string};
-    @Expose
+    @Expose()
+    snapshot_id: string;
+}
+
+export class PlaylistDisplay {
+    @Expose()
+    id: string;
+    @Expose()
+    name: string;
+    @Expose()
+    desc: string;
+    @Expose()
+    img_url: string;
+    @Expose()
+    type: string;
+    @Expose()
+    owner_id: string;
+    @Expose()
     snapshot_id: string;
 }

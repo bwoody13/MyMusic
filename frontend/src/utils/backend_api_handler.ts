@@ -1,7 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import Playlist from '../Classes/Playlist';
+import Playlist, { PlaylistDisplay } from '../Classes/Playlist';
 import SmartPlaylist, { SmartPlaylistData, SmartPlaylistSyncData } from '../Classes/SmartPlaylist';
-import User from '../Classes/User';
+import User, { UserData } from '../Classes/User';
+import Album, { AlbumDisplay } from '../Classes/Album';
+import { emitWarning } from 'process';
+import { plainToClass, plainToInstance } from 'class-transformer';
 
 const backendClient = axios.create({
   baseURL: 'http://localhost:5000',
@@ -26,8 +29,25 @@ export async function updateUser(user: User): Promise<any> {
   return backendPost('/user', user);
 }
 
+export async function getUser(): Promise<UserData> {
+  const userData = await backendGet('/user');
+  return plainToInstance(UserData, userData)
+}
+
+export async function updateAlbums(albumsData: Album[]) {
+  return backendPost('/albums', {albums: albumsData});
+}
+
+export async function getAlbums(): Promise<AlbumDisplay[]> {
+  return backendGet("/albums"); 
+}
+
 export async function updatePlaylists(playlistsData: Playlist[]): Promise<any> {
   return backendPost('/playlists', { playlists: playlistsData });
+}
+
+export async function getPlaylists(): Promise<PlaylistDisplay[]> {
+  return backendGet('/playlists');
 }
 
 export async function addSmartPlaylist(smartPlaylistData: SmartPlaylistData): Promise<any> {

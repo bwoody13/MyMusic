@@ -9,8 +9,8 @@ function PlaylistDashboardButton() {
 
     return (
         <div>
-            <h2>Playlist Manager</h2>
-            <button onClick={handleNavigate}>Manage Playlists</button>
+            <h2>Playlist Management</h2>
+            <button onClick={handleNavigate}>Go to Playlist Dashboard</button>
         </div>
     );
 };

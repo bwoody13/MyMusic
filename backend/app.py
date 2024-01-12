@@ -42,9 +42,6 @@ def update_user():
 
     access_token = data.get("access_token")
 
-    if not access_token:
-        return jsonify({"error": "Access token is required to authenticate user"}), 401
-
     user = User.query.filter_by(id=id).first()
     name = data.get("name")
     if name:
@@ -58,6 +55,16 @@ def update_user():
     session['user_id'] = user.id
     session['access_token'] = access_token
     return jsonify({"message": "User updated successfully"}), 200
+
+
+@app.route("/user", methods=["GET"])
+def get_user():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User ID not yet in session"}), 401
+
+    user = User.query.filter_by(id=user_id).first_or_404()
+    return jsonify(user.to_dict()), 200
 
 
 @app.route("/albums", methods=["POST"])
