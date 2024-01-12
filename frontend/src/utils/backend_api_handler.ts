@@ -35,4 +35,6 @@ export async function getSmartPlaylists(): Promise<SmartPlaylist[]> {
   return backendGet('/smart_playlists');
 }
 
-// Additional functions for other backend API endpoints can be added similarly
+export async function syncSmartPlaylists(smartPlaylistSyncData: SmartPlaylistSyncData): Promise<any> {
+  return backendPost('/smart_playlists/sync', smartPlaylistSyncData);
+}

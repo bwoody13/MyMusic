@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const SCOPE = import.meta.env.VITE_SPOTIFY_SCOPE;
 const REDIRECT_URI = "http://localhost:5173/callback";
@@ -20,7 +22,7 @@ export async function redirectToAuthCodeFlow() {
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 
-    document.location = `${authorizationEndpoint}?${params.toString()}`;
+    window.location.href = `${authorizationEndpoint}?${params.toString()}`;
 }
 
 function generateCodeVerifier(length: number) {
@@ -42,40 +44,41 @@ async function generateCodeChallenge(codeVerifier: string) {
         .replace(/=+$/, '');
 }
 
-export async function getAccessToken(code: string): Promise<void> {
-    const verifier = localStorage.getItem("verifier");
+export async function getAccessToken(code: string) {
+  const verifier = localStorage.getItem("verifier");
 
-    const params = new URLSearchParams();
-    params.append("client_id", CLIENT_ID);
-    params.append("grant_type", "authorization_code");
-    params.append("code", code);
-    params.append("redirect_uri", REDIRECT_URI);
-    params.append("code_verifier", verifier!);
-    const result = await fetch(tokenEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params
-    });
+  try {
+      const params = new URLSearchParams({
+          client_id: CLIENT_ID,
+          grant_type: "authorization_code",
+          code,
+          redirect_uri: REDIRECT_URI,
+          code_verifier: verifier!
+      });
 
-    const { access_token, refresh_token } = await result.json();
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
+      const response = await axios.post(tokenEndpoint, params);
+      const { access_token, refresh_token } = response.data;
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
+  } catch (error) {
+      console.error('Error during token retrieval:', error);
+      window.location.href = '/';
+  }
 }
 
-export async function refreshAccessToken(): Promise<void> {
-    const result = await fetch(tokenEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
+export async function refreshAccessToken() {
+  try {
+      const response = await axios.post(tokenEndpoint, new URLSearchParams({
           client_id: CLIENT_ID,
           grant_type: 'refresh_token',
           refresh_token: localStorage.getItem('refresh_token')!,
-        }),
-      });
-    
-    const { access_token, refresh_token } = await result.json();
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
-  };
+      }));
+
+      const { access_token, refresh_token } = response.data;
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
+  } catch (error) {
+      console.error('Error during token refresh:', error);
+      window.location.href = '/';
+  }
+}
