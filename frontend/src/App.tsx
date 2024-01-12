@@ -7,8 +7,7 @@ import {
 import './App.css'
 import Login from './routes/Login'
 import Callback from './routes/Callback'
-import Dashboard from './components/Dashboard'
-import SmartPlaylists from './components/SmartPlaylists'
+import Dashboard from './routes/Dashboard'
 import AlbumDashboard from './routes/AlbumDashboard'
 import PlaylistDashboard from './routes/PlaylistDashboard'
 
