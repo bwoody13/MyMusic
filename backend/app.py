@@ -67,10 +67,6 @@ def update_albums():
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
 
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
-
     data = request.json
     for album in data.get("albums", []):
         id = album.get("id")
@@ -114,10 +110,6 @@ def get_albums():
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
 
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
-
     albums = User.query.filter_by(id=user_id).first_or_404().liked_albums
     return jsonify([Album.query.filter_by(id=album.album_id).first_or_404().to_dict()
                     for album in albums]), 200
@@ -128,10 +120,6 @@ def update_playlists():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
-
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
 
     data = request.json
     for playlist_data in data.get('playlists', []):
@@ -183,10 +171,6 @@ def get_playlists():
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
 
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
-
     followed_playlists = User.query.filter_by(id=user_id).first_or_404().followed_playlists
 
     return jsonify([Playlist.query.filter_by(id=playlist.playlist_id).first_or_404().to_dict()
@@ -198,10 +182,6 @@ def add_smart_playlist():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
-
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
 
     data = request.json
     parent_playlist_id = data.get("parent_playlist_id")
@@ -242,19 +222,20 @@ def get_smart_playlists():
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
 
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
-
-    stmt = select(Playlist)\
-        .where(Playlist.owner_id == user_id)
-
-    owned_playlists = db.session.execute(stmt).scalars().all()
-    smart_playlist_data = [{
-        "parent_playlist": op.to_dict(),
-        "children": [Playlist.query.filter_by(id=cp.child_playlist_id).first_or_404().to_dict()
-                     for cp in op.child_playlists]
-    } for op in owned_playlists
+    owned_playlists = User.query.get_or_404(user_id).owned_playlists
+    smart_playlist_data = [
+        {
+            "parent_playlist": op.to_dict(),
+            "children": [
+                {
+                    "playlist": Playlist.query.filter_by(
+                        id=cp.child_playlist_id).first_or_404().to_dict(),
+                    "last_sync_snapshot_id": SmartPlaylist.query.filter_by(
+                        parent_playlist_id=op.id,
+                        child_playlist_id=cp.child_playlist_id).last_sync_snapshot_id
+                } for cp in op.child_playlists
+            ]
+        } for op in owned_playlists
         if op.child_playlists]
 
     return jsonify(smart_playlist_data), 200
@@ -265,10 +246,6 @@ def sync_smart_playlists():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
-
-    access_token = session.get('access_token')
-    if not access_token:
-        return jsonify({"error": "Access token not yet in session"}), 401
 
     playlist_data = request.get_json()
     if not playlist_data:

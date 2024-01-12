@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { plainToClass, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import {refreshAccessToken} from './auth'
 import Album from '../Classes/Album';
+import Playlist from '../Classes/Playlist';
 
 const excludeVals = { excludeExtraneousValues: true }
 
@@ -61,12 +62,12 @@ export async function getLikedAlbums(): Promise<Album[]> {
 
 export async function getPlaylists(): Promise<Playlist[]> {
   const items = await getAllItems('me/playlists?limit=50');
-  return items;
+  return plainToInstance(Playlist, items);
 };
 
 export async function getUserInfo(): Promise<User> {
   const response = await apiGet('me');
-  return response.data;
+  return plainToInstance(User, response.data);
 }
 
 export async function getPlaylistTracks(playlistId: string): Promise<String[]> {

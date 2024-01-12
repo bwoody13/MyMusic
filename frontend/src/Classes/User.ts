@@ -1,9 +1,10 @@
-interface User {
-    id: string;
-    display_name: string;
-    images: Image[]
-}
+import { Expose } from "class-transformer";
 
-interface UserData extends User {
-    access_token: string;
+export default class User {
+    @Expose()
+    id: string;
+    @Expose()
+    display_name: string;
+    @Expose()
+    images: {url: string}[]
 }

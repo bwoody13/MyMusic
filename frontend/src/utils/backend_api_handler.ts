@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import Playlist from '../Classes/Playlist';
 import SmartPlaylist, { SmartPlaylistData, SmartPlaylistSyncData } from '../Classes/SmartPlaylist';
+import User from '../Classes/User';
 
 const backendClient = axios.create({
   baseURL: 'http://localhost:5000',
@@ -21,8 +22,8 @@ async function backendPost(endpoint: string, data: any, options: AxiosRequestCon
 }
 
 // Specific API calls
-export async function updateUser(userData: UserData): Promise<any> {
-  return backendPost('/user', userData);
+export async function updateUser(user: User): Promise<any> {
+  return backendPost('/user', user);
 }
 
 export async function updatePlaylists(playlistsData: Playlist[]): Promise<any> {
