@@ -1,5 +1,5 @@
-import AlbumDashboardCard from './AlbumDashboardCard';
-import SmartPlaylistCard from './SmartPlaylistsCard';
+import AlbumDashboardButton from '../components/AlbumDashboardButton';
+import PlaylistDashboardButton from '../components/PlaylistDashboardButton';
 
 function Dashboard() {
     
@@ -7,8 +7,8 @@ function Dashboard() {
         <div>
             <h1>Dashboard</h1>
               <>
-                <AlbumDashboardCard />
-                <SmartPlaylistCard />
+                <AlbumDashboardButton />
+                <PlaylistDashboardButton />
               </>
         </div>
     );
