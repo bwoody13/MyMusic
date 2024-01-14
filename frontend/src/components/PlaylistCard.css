@@ -10,6 +10,7 @@
 
 .card-body {
     padding-left: 32px;
+    overflow-wrap: anywhere;
 }
 
 .card-img {

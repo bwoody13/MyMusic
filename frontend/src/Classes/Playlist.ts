@@ -31,6 +31,8 @@ export class PlaylistDisplay {
     @Expose()
     owner_id: string;
     @Expose()
+    owner_name: string;
+    @Expose()
     snapshot_id: string;
 }
 

@@ -12,7 +12,7 @@ const PlaylistCard: React.FC<{ playlist: PlaylistDisplay }> = ({ playlist }) => 
                     <div className="col-md-9">
                         <div className="card-body">
                             <strong className="card-title">{playlist.name}</strong>
-                            <p className="card-text"><small className="text-muted">By {playlist.owner_id}</small></p>
+                            <p className="card-text"><small className="text-muted">By {playlist.owner_name}</small></p>
                             <p className="card-text">{playlist.desc}</p>
                         </div>
                     </div>

@@ -4,7 +4,6 @@ import {
   Route,
 } from 'react-router-dom'
 
-import './App.css'
 import Login from './routes/Login'
 import Callback from './routes/Callback'
 import Dashboard from './routes/Dashboard'
