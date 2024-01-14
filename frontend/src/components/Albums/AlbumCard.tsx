@@ -8,7 +8,7 @@ const AlbumCard: React.FC<{album: AlbumDisplay}> = ({album}) => {
                     <img className="album-card-img" src={album.img_url} alt="album cover"/>
                 </div>
                 <div className="col-md-9 card-body">
-                    <h4>{album.name}</h4>
+                    <h3>{album.name}</h3>
                     <p>by {album.artists}</p>
                 </div>
             </div>
