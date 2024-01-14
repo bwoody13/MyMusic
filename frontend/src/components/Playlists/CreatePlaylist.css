@@ -13,7 +13,9 @@
 }
 
 .custom-close {
-  float: right;
+  position: absolute;
+  top: -20px;
+  right: -10px;
   font-size: 1.5em;
   font-weight: bold;
   cursor: pointer;
@@ -25,9 +27,7 @@
   border-radius: 8px; /* Soften the corners */
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* A more subtle shadow */
   z-index: 1051;
-  /* max-width: 400px; */
   width: 25%;
-  /* height: 75%; */
   animation: fadeIn 0.3s; /* Animation for modal entry */
 }
 
@@ -41,19 +41,13 @@
   position: relative;
 }
 
-.custom-close {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  font-size: 1.5em;
-  font-weight: bold;
-  cursor: pointer;
-}
 
 /* Form styles */
 .custom-modal-content form {
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .custom-modal-content label {
@@ -65,20 +59,19 @@
 .custom-modal-content input[type="text"],
 .custom-modal-content textarea {
   padding: 10px;
-  margin-left: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc; /* A softer border */
   border-radius: 4px; /* Slightly rounded corners */
-  width: 50%;
+  width: 90%;
 }
 
 .custom-modal-content input[type="radio"] {
   margin-right: 5px;
-  margin-left: 15px;
 }
 
 .custom-modal-content .radio-label {
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 25px;
   cursor: pointer;
 }
 

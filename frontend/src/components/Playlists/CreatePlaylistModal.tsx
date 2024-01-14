@@ -38,54 +38,63 @@ const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide
     return (
         <div className="modal-backdrop">
             <div className="custom-modal">
-      <div className="custom-modal-content">
-        <span className="custom-close" onClick={onHide}>&times;</span>
-            {/* <div className="modal"> */}
-                {/* <div className="modal-content"> */}
-                    {/* <span className="close" onClick={onHide}>&times;</span> */}
+                <div className="custom-modal-content">
+                    <span className="custom-close" onClick={onHide}>&times;</span>
                     <form onSubmit={handleSubmit}>
-                        <label>
-                            Playlist Name:
-                            <input
-                                type="text"
-                                value={playlistName}
-                                onChange={(e) => setPlaylistName(e.target.value)}
-                                required
-                            />
-                        </label>
-                        <label>
-                            Description:
-                            <textarea
-                                value={playlistDescription}
-                                onChange={(e) => setPlaylistDescription(e.target.value)}
-                            ></textarea>
-                        </label>
-                        <div>
-                            <label>
-                                Public:
+                        <div className='row'>
+                            <div className='col-4'>
+                                <p>Playlist Name:</p>
+                            </div>
+                            <div className='col-8'>
                                 <input
-                                    type="radio"
-                                    name="isPublic"
-                                    checked={isPublic === true}
-                                    onChange={() => setIsPublic(true)}
+                                    type="text"
+                                    value={playlistName}
+                                    onChange={(e) => setPlaylistName(e.target.value)}
+                                    required
                                 />
-                                Yes
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="isPublic"
-                                    checked={isPublic === false}
-                                    onChange={() => setIsPublic(false)}
-                                />
-                                No
-                            </label>
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <p>Description:</p>
+                            </div>
+                            <div className='col-8'>
+                                <textarea
+                                    value={playlistDescription}
+                                    onChange={(e) => setPlaylistDescription(e.target.value)}
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <p>Public:</p>
+                            </div>
+                            <div className='col-8'>
+                                <label className='radio-label'>
+                                    <input
+                                        type="radio"
+                                        name="isPublic"
+                                        checked={isPublic === true}
+                                        onChange={() => setIsPublic(true)}
+                                    />
+                                    Yes
+                                </label>
+                                <label className='radio-label'>
+                                    <input
+                                        type="radio"
+                                        name="isPublic"
+                                        checked={isPublic === false}
+                                        onChange={() => setIsPublic(false)}
+                                    />
+                                    No
+                                </label>
+                            </div>
                         </div>
                         <button type="submit">Create</button>
                     </form>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
