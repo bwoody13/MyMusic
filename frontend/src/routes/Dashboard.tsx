@@ -1,5 +1,5 @@
-import AlbumDashboardButton from '../components/AlbumDashboardButton';
-import PlaylistDashboardButton from '../components/PlaylistDashboardButton';
+import AlbumDashboardButton from '../components/Albums/AlbumDashboardButton';
+import PlaylistDashboardButton from '../components/Playlists/PlaylistDashboardButton';
 
 function Dashboard() {
     

@@ -1,6 +1,6 @@
 import React from 'react';
-import SmartPlaylist from '../Classes/SmartPlaylist';
-import { syncSmartPlaylist } from '../utils/smart_playlist';
+import SmartPlaylist from '../../Classes/SmartPlaylist';
+import { syncSmartPlaylist } from '../../utils/smart_playlist';
 
 type SmartPlaylistItemProps = {
   smartPlaylist: SmartPlaylist;

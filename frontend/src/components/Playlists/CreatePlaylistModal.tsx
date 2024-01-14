@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { createPlaylist } from '../utils/spotify_api_handler';
-import { updatePlaylists } from '../utils/backend_api_handler';
+import { createPlaylist } from '../../utils/spotify_api_handler';
+import { updatePlaylists } from '../../utils/backend_api_handler';
 import './CreatePlaylist.css';
 
 interface CreatePlaylistModalProps {

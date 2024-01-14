@@ -1,6 +1,6 @@
 import React from 'react';
 import PlaylistCard from './PlaylistCard';
-import { PlaylistDisplay } from '../Classes/Playlist';
+import { PlaylistDisplay } from '../../Classes/Playlist';
 
 interface ChildPlaylistChecklistProps {
     playlists: PlaylistDisplay[];

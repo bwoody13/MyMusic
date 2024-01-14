@@ -1,11 +1,12 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react';
 import { AlbumDisplay } from '../Classes/Album';
 import { retreiveAlbums, syncAlbumsWithBackend } from '../utils/data_management';
-import AlbumCard from '../components/AlbumCard';
+import AlbumCard from '../components/Albums/AlbumCard';
+import AlbumCollage from '../components/Albums/AlbumCollage';
+import '../components/Albums/Album.css'
+import AlbumRandomizer from '../components/Albums/AlbumRandomizer';
 
 function AlbumDashboard() {
-    const [randomAlbum, setRandomAlbum] = useState<AlbumDisplay | null>(null);
-
     const [albums, setAlbums] = useState<AlbumDisplay[]>([]);
     const [loading, setLoading] = useState(false);
     
@@ -25,44 +26,36 @@ function AlbumDashboard() {
     }, []);
 
 
-    function handleRandomize() {
-        try {
-            const albumsData = albums;
-            if (albumsData && albumsData.length > 0) {
-                const randomIndex = Math.floor(Math.random() * albumsData.length);
-                setRandomAlbum(albumsData[randomIndex]);
-                console.log(albumsData[randomIndex])
-            } else {
-                console.log('No liked albums found');
-            }
-        } catch (error) {
-            console.error('Error fetching albums:', error);
-            // Handle the error appropriately
-        }
-    };
+    
 
     function handleUpdate() {
         setLoading(true);
         try {
-            syncAlbumsWithBackend().then(() => retreiveAlbums().then(albumsData => setAlbums(albumsData)));
+            syncAlbumsWithBackend().then(() => retreiveAlbums().then(albumsData => {
+                    setAlbums(albumsData);
+                    setLoading(false);
+                }));
         } catch (error) {
             console.error('Error updating albums:', error);
-        } finally {
-            setLoading(false);
+            setLoading(false);    
         }
     };
 
     return (
         <div>
-            <h2>Album Dashboard</h2>
+            <h2 className='title'>Album Dashboard</h2>
             {loading? <p>Loading Albums...</p> : 
-                <div>
-                    <button onClick={handleUpdate}>Update Albums</button>
-                    <hr/>
-                    <h3>Album Randomizer</h3>
-                    <button onClick={handleRandomize}>Randomize Album</button>
-                </div>}
-            {randomAlbum && <AlbumCard album={randomAlbum}/>}
+            <div>
+                <AlbumCollage albums={albums} />
+                <div className='dashboard-content'>
+                    <div>
+                        <button className='mt-2' onClick={handleUpdate}>Update Albums</button>
+                        <hr/>
+                    </div>
+                <AlbumRandomizer albums={albums} />
+                </div>
+                
+            </div>}
         </div>
     );
 };

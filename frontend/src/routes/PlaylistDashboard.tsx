@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import SmartPlaylists from "../components/SmartPlaylists";
+import SmartPlaylists from "../components/Playlists/SmartPlaylists";
 import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
-import CreatePlaylistButton from "../components/CreatePlaylistButton";
+import CreatePlaylistButton from "../components/Playlists/CreatePlaylistButton";
 
 function PlaylistDashboard() {
     const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);

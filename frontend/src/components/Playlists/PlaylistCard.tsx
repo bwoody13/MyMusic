@@ -1,6 +1,6 @@
 import React from 'react';
 import './PlaylistCard.css'; // Re-enable the import of custom CSS
-import { PlaylistDisplay } from '../Classes/Playlist';
+import { PlaylistDisplay } from '../../Classes/Playlist';
 
 const PlaylistCard: React.FC<{ playlist: PlaylistDisplay }> = ({ playlist }) => {
     return (
