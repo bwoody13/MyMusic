@@ -92,7 +92,8 @@ def update_albums():
         if not album:
             album = Album(id=id, name=name, artists=artists, genres=genres, img_url=img_url)
             db.session.add(album)
-        elif name != album.name or artists != album.artists or genres != album.genres or img_url != album.img_url:
+        elif (name != album.name or artists != album.artists or genres != album.genres or
+              img_url != album.img_url):
             album.name = name
             album.artists = artists
             album.genres = genres
@@ -176,11 +177,14 @@ def get_playlists():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
+    
+    user = db.get_or_404(User, user_id)
 
-    followed_playlists = User.query.filter_by(id=user_id).first_or_404().followed_playlists
-
-    return jsonify([Playlist.query.filter_by(id=playlist.playlist_id).first_or_404().to_dict()
-                    for playlist in followed_playlists]), 200
+    playlistDicts = [Playlist.query.filter_by(id=playlist.playlist_id).first_or_404().to_dict()
+                     for playlist in user.followed_playlists]
+    for playlist in playlistDicts:
+        playlist["owner_name"] = db.get_or_404(User, playlist['owner_id']).name
+    return jsonify(playlistDicts), 200
 
 
 @app.route("/smart_playlists", methods=["POST"])
