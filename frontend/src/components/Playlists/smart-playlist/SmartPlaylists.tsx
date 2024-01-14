@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { addSmartPlaylist, getSmartPlaylists } from "../../utils/backend_api_handler";
-import { PlaylistDisplay } from "../../Classes/Playlist";
-import SmartPlaylist from "../../Classes/SmartPlaylist";
-import User from "../../Classes/User";
+import { addSmartPlaylist, getSmartPlaylists } from "../../../utils/backend_api_handler";
+import { PlaylistDisplay } from "../../../Classes/Playlist";
+import SmartPlaylist from "../../../Classes/SmartPlaylist";
+import User from "../../../Classes/User";
 import ChildPlaylistChecklist from "./ChildPlaylistChecklist";
 import SmartPlaylistItem from "./SmartPlaylistItem";
 
@@ -71,8 +71,7 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
 
     return (
         <div>
-            <h3>Smart Playlists</h3>
-            <p>Create playlist hierarchies.</p>
+            <h2>Smart Playlists</h2>
             {loading ? <p>Loading Smart Playlists...</p> : (
                 <form onSubmit={handleSubmit}>
                     <label>
@@ -99,7 +98,7 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
             )}
             <h4>Smart Playlists Created</h4>
             <ul>
-                {smartPlaylists.map(smartPlaylist => <SmartPlaylistItem smartPlaylist={smartPlaylist} />)}
+                {smartPlaylists.map(smartPlaylist => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id} smartPlaylist={smartPlaylist} />)}
             </ul>
         </div>
     );

@@ -15,7 +15,7 @@ const CreatePlaylist: React.FC<CreatePlaylistProps> = (props) => {
 
     return (
         <>
-            <h3>Create a New Playlist</h3>
+            <h2>Create a New Playlist</h2>
             <button onClick={openModal}>Create New Playlist</button>
             <CreatePlaylistModal show={modalVisible} onHide={closeModal} addPlaylist={addPlaylist} />
         </>

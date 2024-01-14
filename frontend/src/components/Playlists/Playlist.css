@@ -29,3 +29,27 @@
 .card-img {
     margin-top: 20px;
 }
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+}
+
+.overlay-checkmark {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Green-checkmark.svg/1200px-Green-checkmark.svg.png');
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100px;
+    height: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px;
+}
+
+.form-check {
+    display: none;
+}

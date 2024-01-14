@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import '../components/Playlists/Playlist.css';
-import SmartPlaylists from "../components/Playlists/SmartPlaylists";
+import SmartPlaylists from "../components/Playlists/smart-playlist/SmartPlaylists";
 import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
 import CreatePlaylist from "../components/Playlists/CreatePlaylist";

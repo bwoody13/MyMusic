@@ -1,16 +1,13 @@
 import React from 'react';
-import SmartPlaylist from '../../Classes/SmartPlaylist';
-import { syncSmartPlaylist } from '../../utils/smart_playlist';
+import SmartPlaylist from '../../../Classes/SmartPlaylist';
+import { syncSmartPlaylist } from '../../../utils/smart_playlist';
 
 type SmartPlaylistItemProps = {
   smartPlaylist: SmartPlaylist;
 };
 
-
-
 const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist}) => {
     function onSync() {
-        // TODO: Make it
         syncSmartPlaylist(smartPlaylist).then(() => console.log("Smart Playlist synced"));
     }
 

@@ -1,12 +1,17 @@
+.album-dashboard {
+
+}
+
 .dashboard-content {
     position: relative; /* Ensures proper stacking context */
     z-index: 1; /* Higher than the background */
     text-align: center;
+
 }
 
 .title {
     text-align: center; /* Center the title */
-    background-color: rgba(255, 255, 255, 0.9); /* Opaque white background */
+    background-color: rgba(255, 255, 255, 0.8); /* Opaque white background */
     margin: 0 auto; /* Center the title block horizontally */
     padding: 10px; /* Add some padding */
     width: fit-content; /* Adjust width to fit the content */
@@ -25,7 +30,7 @@
     height: 100%;
     z-index: -1; /* Position it behind the content */
     overflow: hidden;
-    opacity: 0.6;
+    opacity: 0.5;
     left: 50%;
     transform: translateX(-50%);
 }

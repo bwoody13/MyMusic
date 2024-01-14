@@ -1,6 +1,6 @@
 import React from 'react';
-import PlaylistCard from './PlaylistCard';
-import { PlaylistDisplay } from '../../Classes/Playlist';
+import ChildPlaylistCard from './ChildPlaylistCard';
+import { PlaylistDisplay } from '../../../Classes/Playlist';
 
 interface ChildPlaylistChecklistProps {
     playlists: PlaylistDisplay[];
@@ -12,8 +12,7 @@ const ChildPlaylistChecklist: React.FC<ChildPlaylistChecklistProps> = ({ playlis
     return (
         <div className='row row-cols-4'>
             {playlists.map((playlist) => (
-                // d-flex align-items-center mb-2
-                <div key={playlist.id} className="col">
+                <div key={playlist.id} className="col p-3">
                     <input 
                         type="checkbox"
                         id={`checkbox-${playlist.id}`}
@@ -22,7 +21,7 @@ const ChildPlaylistChecklist: React.FC<ChildPlaylistChecklistProps> = ({ playlis
                         className="form-check"
                     />
                     <label htmlFor={`checkbox-${playlist.id}`}>
-                        <PlaylistCard key={playlist.id} playlist={playlist} />
+                        <ChildPlaylistCard key={playlist.id} playlist={playlist} isChecked={selectedPlaylists[playlist.id]} />
                     </label>
                 </div>
             ))}

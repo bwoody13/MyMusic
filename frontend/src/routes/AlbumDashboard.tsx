@@ -41,7 +41,7 @@ function AlbumDashboard() {
     };
 
     return (
-        <div>
+        <div className='album-dashboard'>
             <h1 className='title'>Album Dashboard</h1>
             {loading? <p>Loading Albums From Spotify... This may take a moment.</p> : 
             <div>
