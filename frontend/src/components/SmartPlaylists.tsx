@@ -3,6 +3,8 @@ import { addSmartPlaylist, getSmartPlaylists } from "../utils/backend_api_handle
 import { PlaylistDisplay } from "../Classes/Playlist";
 import SmartPlaylist from "../Classes/SmartPlaylist";
 import User from "../Classes/User";
+import ChildPlaylistChecklist from "./ChildPlaylistChecklist";
+import SmartPlaylistItem from "./SmartPlaylistItem";
 
 type SmartPlaylistsProps = {
     playlists: PlaylistDisplay[];
@@ -43,10 +45,10 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
         setParentPlaylistId(event.target.value);
     };
 
-    const handleChildChange = (event: React.ChangeEvent<HTMLInputElement>, playlistId: string) => {
-        setSelectedChildPlaylists(prevState => ({
+    const handleChildChange = (playlistId: string, isSelected: boolean) => {
+        setSelectedChildPlaylists((prevState) => ({
             ...prevState,
-            [playlistId]: event.target.checked
+            [playlistId]: isSelected,
         }));
     };
 
@@ -69,7 +71,7 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
 
     return (
         <div>
-            <h1>Smart Playlists</h1>
+            <h3>Smart Playlists</h3>
             <p>Create playlist hierarchies.</p>
             {loading ? <p>Loading Smart Playlists...</p> : (
                 <form onSubmit={handleSubmit}>
@@ -84,40 +86,20 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
                             ))}
                         </select>
                     </label>
-                    <div>
-                        Child Playlists:
-                        {playlists.map(playlist => (
-                            <div key={playlist.id}>
-                                <label>
-                                    <input 
-                                        type="checkbox"
-                                        checked={selectedChildPlaylists[playlist.id]}
-                                        onChange={(e) => handleChildChange(e, playlist.id)}
-                                    />
-                                    {playlist.name}
-                                </label>
-                            </div>
-                        ))}
+                    <div className="container-fluid">
+                        <p>Child Playlists:</p>
+                        <ChildPlaylistChecklist 
+                            playlists={playlists} 
+                            selectedPlaylists={selectedChildPlaylists} 
+                            onSelectionChange={handleChildChange} 
+                        />
                     </div>
                     <button type="submit">Create Smart Playlist</button>
                 </form>
             )}
-            <h2>Smart Playlists Created</h2>
+            <h4>Smart Playlists Created</h4>
             <ul>
-                {smartPlaylists.map(smartPlaylist => (
-                    <li>
-                        <div>
-                            <p>
-                            Parent: {smartPlaylist.parent_playlist.name}, Children: {smartPlaylist.children.reduce((acc, childPlaylist, i) => {
-                                const sep = i === 0 ? '' : ', ';
-                                return acc + sep + childPlaylist.playlist.name;
-                            }, '')}
-                            </p>
-                            <button>Sync Playlist</button>
-                        </div>
-                        
-                    </li>
-                ))}
+                {smartPlaylists.map(smartPlaylist => <SmartPlaylistItem smartPlaylist={smartPlaylist} />)}
             </ul>
         </div>
     );

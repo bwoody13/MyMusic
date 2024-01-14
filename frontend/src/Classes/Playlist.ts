@@ -33,3 +33,9 @@ export class PlaylistDisplay {
     @Expose()
     snapshot_id: string;
 }
+
+export class NewPlaylistInfo {
+    name: string;
+    description: string;
+    public: boolean;
+}

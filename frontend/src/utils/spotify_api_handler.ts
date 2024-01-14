@@ -2,8 +2,9 @@ import axios from 'axios';
 import { plainToInstance } from 'class-transformer';
 import {refreshAccessToken} from './auth'
 import Album from '../Classes/Album';
-import Playlist from '../Classes/Playlist';
+import Playlist, { NewPlaylistInfo } from '../Classes/Playlist';
 import User from '../Classes/User';
+import { chunkArray } from './helpers';
 
 const excludeVals = { excludeExtraneousValues: true }
 
@@ -56,7 +57,6 @@ export async function getLikedAlbums(): Promise<Album[]> {
     return plainToInstance(Album, items.map(item => item.album), excludeVals);
 };
 
-
 export async function getPlaylists(): Promise<Playlist[]> {
     const items = await getAllItems('me/playlists?limit=50');
     return  plainToInstance(Playlist, items, excludeVals);
@@ -73,20 +73,26 @@ export async function getPlaylistTracks(playlistId: string): Promise<String[]> {
 }
 
 export async function addTracksToPlaylist(playlistId: string, trackUris: String[]) {
-    const response = await apiPost(`playlists/${playlistId}/tracks`, { uris: trackUris });
-    return response.data;
+    // Can only add 100 tracks per request
+    const trackChunks = chunkArray(trackUris, 100);
+    const promises = trackChunks.map(chunk => 
+        apiPost(`playlists/${playlistId}/tracks`, { uris: chunk })
+    );
+    const responses = await Promise.all(promises);
+    return responses.map((response) => response.data);
 }
 
 export async function removeTracksFromPlaylist(playlistId: string, trackUris: String[]) {
-    const response = await apiDelete(`playlists/${playlistId}/tracks`, { tracks: trackUris });
-    return response.data;
+    // Can only remove 100 tracks per request
+    const trackChunks = chunkArray(trackUris, 100);
+    const promises = trackChunks.map(chunk => 
+        apiDelete(`playlists/${playlistId}/tracks`, { tracks: chunk })
+    );
+    const responses = await Promise.all(promises);
+    return responses.map((response) => response.data);
 }
 
-export async function createPlaylist(name: string, description: string, isPublic: boolean): Promise<Playlist> {
-    const response = await apiPost('me/playlists', {
-        name,
-        description,
-        public: isPublic
-    });
-    return response.data;
+export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo): Promise<Playlist> {
+    const response = await apiPost('me/playlists', newPlaylistInfo);
+    return plainToInstance(Playlist, response.data);
 }

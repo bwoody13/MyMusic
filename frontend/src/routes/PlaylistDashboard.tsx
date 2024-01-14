@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SmartPlaylists from "../components/SmartPlaylists";
 import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
+import CreatePlaylistButton from "../components/CreatePlaylistButton";
 
 function PlaylistDashboard() {
     const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);
@@ -22,6 +23,7 @@ function PlaylistDashboard() {
         fetchData();
     }, []);
 
+    // TODO: Fix to correctly make page loading
     function handleUpdate() {
         setLoading(true);
         try {
@@ -39,6 +41,8 @@ function PlaylistDashboard() {
             {loading ? <p>Updating Playlists...</p> : 
                 <div>
                     <button onClick={handleUpdate}>Update Playlists</button>
+                    <hr/>
+                    <CreatePlaylistButton />
                     <hr/>
                 </div>}
             <SmartPlaylists playlists={playlists} playlistLoading={loading} />

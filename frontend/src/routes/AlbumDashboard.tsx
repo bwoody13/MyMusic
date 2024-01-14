@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import { AlbumDisplay } from '../Classes/Album';
 import { retreiveAlbums, syncAlbumsWithBackend } from '../utils/data_management';
+import AlbumCard from '../components/AlbumCard';
 
 function AlbumDashboard() {
     const [randomAlbum, setRandomAlbum] = useState<AlbumDisplay | null>(null);
@@ -61,13 +62,7 @@ function AlbumDashboard() {
                     <h3>Album Randomizer</h3>
                     <button onClick={handleRandomize}>Randomize Album</button>
                 </div>}
-            {randomAlbum && (
-                <div>
-                    <h3>{randomAlbum.name}</h3>
-                    <p>{randomAlbum.artists}</p>
-                    <img src={randomAlbum.img_url} alt={randomAlbum.name} width="200" />
-                </div>
-            )}
+            {randomAlbum && <AlbumCard album={randomAlbum}/>}
         </div>
     );
 };

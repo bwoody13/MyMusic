@@ -2,12 +2,13 @@ import SmartPlaylist, { ChildPlaylist } from "../Classes/SmartPlaylist";
 import { syncSmartPlaylistData } from "./backend_api_handler";
 import { addTracksToPlaylist, getPlaylistTracks, removeTracksFromPlaylist } from "./spotify_api_handler";
 
+// Assumes that playlists are up to date in the DB
 export async function syncSmartPlaylist(smartPlaylist: SmartPlaylist, keepUnmatchedTracks: boolean = true) {
     const parent_playlist_id = smartPlaylist.parent_playlist.id;
     const parentTracks = new Set<String>(await getPlaylistTracks(parent_playlist_id));
 
     let childPlaylists = smartPlaylist.children;
-    if (keepUnmatchedTracks) {
+    if (!keepUnmatchedTracks) {
         childPlaylists = getOutOfSyncChildren(childPlaylists);
     }
 
@@ -34,6 +35,7 @@ export async function syncSmartPlaylist(smartPlaylist: SmartPlaylist, keepUnmatc
     await syncSmartPlaylistData(smartPlaylistSyncData)
 }
 
+// Assumes that playlists are up to date in the DB
 function getOutOfSyncChildren(childPlaylists: ChildPlaylist[]): ChildPlaylist[] {
     return childPlaylists.filter((childPlaylist) => childPlaylist.playlist.snapshot_id != childPlaylist.last_sync_snapshot_id)
 }

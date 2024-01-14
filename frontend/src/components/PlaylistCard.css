@@ -1,0 +1,17 @@
+.card-img {
+    width: 100px;
+    height: 100px;
+}
+
+.card {
+    text-align: left;
+    padding: 20px;
+}
+
+.card-body {
+    padding-left: 32px;
+}
+
+.card-img {
+    margin-top: 20px;
+}
