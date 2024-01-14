@@ -1,9 +1,8 @@
 import {useEffect, useState} from 'react';
+import '../components/Albums/Album.css'
 import { AlbumDisplay } from '../Classes/Album';
 import { retreiveAlbums, syncAlbumsWithBackend } from '../utils/data_management';
-import AlbumCard from '../components/Albums/AlbumCard';
 import AlbumCollage from '../components/Albums/AlbumCollage';
-import '../components/Albums/Album.css'
 import AlbumRandomizer from '../components/Albums/AlbumRandomizer';
 
 function AlbumDashboard() {
