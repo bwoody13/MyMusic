@@ -79,12 +79,12 @@
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
-  background-color: #5cb85c; /* A pleasant green, or choose your own color */
+  background-color: #1DB954; /* A pleasant green, or choose your own color */
   color: #fff;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .custom-modal-content button[type="submit"]:hover {
-  background-color: #4cae4c; /* A slightly darker green for the hover state */
+  background-color: #179443; /* A slightly darker green for the hover state */
 }
