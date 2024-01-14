@@ -43,8 +43,8 @@ function AlbumDashboard() {
 
     return (
         <div>
-            <h2 className='title'>Album Dashboard</h2>
-            {loading? <p>Loading Albums...</p> : 
+            <h1 className='title'>Album Dashboard</h1>
+            {loading? <p>Loading Albums From Spotify... This may take a moment.</p> : 
             <div>
                 <AlbumCollage albums={albums} />
                 <div className='dashboard-content'>

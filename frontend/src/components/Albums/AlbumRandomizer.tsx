@@ -23,13 +23,12 @@ function AlbumRandomizer(props: AlbumRandomizerProps) {
             }
         } catch (error) {
             console.error('Error fetching albums:', error);
-            // Handle the error appropriately
         }
     };
 
     return (
         <div>
-            <h3 className="title">Album Randomizer</h3>
+            <h2 className="title">Album Randomizer</h2>
             <button className="m-2" onClick={handleRandomize}>Randomize Album</button>
             {randomAlbum && <AlbumCard album={randomAlbum}/>}
         </div>
