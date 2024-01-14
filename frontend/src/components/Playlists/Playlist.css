@@ -1,0 +1,31 @@
+.dashboard-content {
+    text-align: center;
+}
+
+.title {
+    text-align: center; /* Center the title */
+    background-color: rgba(255, 255, 255, 0.9); /* Opaque white background */
+    margin: 0 auto; /* Center the title block horizontally */
+    padding: 10px; /* Add some padding */
+    width: fit-content; /* Adjust width to fit the content */
+    border-radius: 5px; /* Optional: add rounded corners */
+}
+
+.card-img {
+    width: 100px;
+    height: 100px;
+}
+
+.card {
+    text-align: left;
+    padding: 20px;
+}
+
+.card-body {
+    padding-left: 32px;
+    overflow-wrap: anywhere;
+}
+
+.card-img {
+    margin-top: 20px;
+}

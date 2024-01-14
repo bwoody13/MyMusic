@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { createPlaylist } from '../../utils/spotify_api_handler';
 import { updatePlaylists } from '../../utils/backend_api_handler';
 import './CreatePlaylist.css';
+import { PlaylistDisplay } from '../../Classes/Playlist';
+import { playlistToPlaylistDisplay } from '../../utils/helpers';
 
 interface CreatePlaylistModalProps {
     show: boolean;
     onHide: () => void;
+    addPlaylist: (playlist: PlaylistDisplay) => void;
 }
 
-const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide }) => {
+const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide, addPlaylist }) => {
     const [playlistName, setPlaylistName] = useState('');
     const [playlistDescription, setPlaylistDescription] = useState('');
     const [isPublic, setIsPublic] = useState(true);
@@ -20,7 +23,10 @@ const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide
             description: playlistDescription,
             public: isPublic,
         };
-        createPlaylist(playlistData).then((playlist) => updatePlaylists([playlist]));
+        createPlaylist(playlistData).then((playlist): void => {
+            updatePlaylists([playlist]);
+            addPlaylist(playlistToPlaylistDisplay(playlist));
+        });
         // Hide the modal on successful creation
         onHide();
     };

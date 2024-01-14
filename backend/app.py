@@ -177,7 +177,7 @@ def get_playlists():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({"error": "User ID not yet in session"}), 401
-    
+
     user = db.get_or_404(User, user_id)
 
     playlistDicts = [Playlist.query.filter_by(id=playlist.playlist_id).first_or_404().to_dict()

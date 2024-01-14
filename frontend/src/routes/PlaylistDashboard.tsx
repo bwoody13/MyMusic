@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import '../components/Playlists/Playlist.css';
 import SmartPlaylists from "../components/Playlists/SmartPlaylists";
 import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
-import CreatePlaylistButton from "../components/Playlists/CreatePlaylistButton";
+import CreatePlaylist from "../components/Playlists/CreatePlaylist";
 
 function PlaylistDashboard() {
     const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);
@@ -23,29 +24,36 @@ function PlaylistDashboard() {
         fetchData();
     }, []);
 
-    // TODO: Fix to correctly make page loading
+    function addPlaylist(playlist: PlaylistDisplay): void {
+        setPlaylists([...playlists, playlist]);
+    }
+
     function handleUpdate() {
         setLoading(true);
         try {
-            syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => setPlaylists(playlistData)));
+            syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => {
+                setPlaylists(playlistData);
+                setLoading(false);
+            }));
         } catch (error) {
             console.error('Error updating playlists:', error);
-        } finally {
             setLoading(false);
         }
     };
 
     return (
         <div>
-            <h2>Playlist Dashboard</h2>
-            {loading ? <p>Updating Playlists...</p> : 
-                <div>
-                    <button onClick={handleUpdate}>Update Playlists</button>
-                    <hr/>
-                    <CreatePlaylistButton />
-                    <hr/>
-                </div>}
-            <SmartPlaylists playlists={playlists} playlistLoading={loading} />
+            <h1 className="title">Playlist Dashboard</h1>
+            <div className="dashboard-content">
+                {loading ? <p>Updating Playlists...</p> : 
+                    <div>
+                        <button onClick={handleUpdate}>Update Playlists</button>
+                        <hr/>
+                        <CreatePlaylist addPlaylist={addPlaylist} />
+                        <hr/>
+                    </div>}
+                <SmartPlaylists playlists={playlists} playlistLoading={loading} />
+            </div>
         </div>
     )
 }

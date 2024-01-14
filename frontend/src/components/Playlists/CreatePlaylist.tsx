@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import CreatePlaylistModal from './CreatePlaylistModal';
+import { PlaylistDisplay } from '../../Classes/Playlist';
 
-const NewPlaylistButton: React.FC = () => {
+type CreatePlaylistProps = {
+    addPlaylist: (playlist: PlaylistDisplay) => void;
+}
+
+const CreatePlaylist: React.FC<CreatePlaylistProps> = (props) => {
+    const {addPlaylist} = props
     const [modalVisible, setModalVisible] = useState(false);
 
     const openModal = () => setModalVisible(true);
@@ -11,9 +17,9 @@ const NewPlaylistButton: React.FC = () => {
         <>
             <h3>Create a New Playlist</h3>
             <button onClick={openModal}>Create New Playlist</button>
-            <CreatePlaylistModal show={modalVisible} onHide={closeModal} />
+            <CreatePlaylistModal show={modalVisible} onHide={closeModal} addPlaylist={addPlaylist} />
         </>
     );
 };
 
-export default NewPlaylistButton;
+export default CreatePlaylist;

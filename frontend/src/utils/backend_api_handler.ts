@@ -3,8 +3,7 @@ import Playlist, { PlaylistDisplay } from '../Classes/Playlist';
 import SmartPlaylist, { SmartPlaylistData, SmartPlaylistSyncData } from '../Classes/SmartPlaylist';
 import User, { UserData } from '../Classes/User';
 import Album, { AlbumDisplay } from '../Classes/Album';
-import { emitWarning } from 'process';
-import { plainToClass, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 
 const backendClient = axios.create({
   baseURL: 'http://localhost:5000',
