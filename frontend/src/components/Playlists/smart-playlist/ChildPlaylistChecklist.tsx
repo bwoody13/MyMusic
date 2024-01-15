@@ -10,9 +10,10 @@ interface ChildPlaylistChecklistProps {
 
 const ChildPlaylistChecklist: React.FC<ChildPlaylistChecklistProps> = ({ playlists, selectedPlaylists, onSelectionChange }) => {
     return (
-        <div className='row row-cols-4'>
+        <div className='row row-cols-1 row-cols-md-2 row-cols-lg-4'>
             {playlists.map((playlist) => (
                 <div key={playlist.id} className="col p-3">
+                    <label>
                     <input 
                         type="checkbox"
                         id={`checkbox-${playlist.id}`}
@@ -20,8 +21,7 @@ const ChildPlaylistChecklist: React.FC<ChildPlaylistChecklistProps> = ({ playlis
                         onChange={(e) => onSelectionChange(playlist.id, e.target.checked)}
                         className="form-check"
                     />
-                    <label htmlFor={`checkbox-${playlist.id}`}>
-                        <ChildPlaylistCard key={playlist.id} playlist={playlist} isChecked={selectedPlaylists[playlist.id]} />
+                    <ChildPlaylistCard key={playlist.id} playlist={playlist} isChecked={selectedPlaylists[playlist.id]} />
                     </label>
                 </div>
             ))}

@@ -5,6 +5,7 @@ import SmartPlaylist from "../../../Classes/SmartPlaylist";
 import User from "../../../Classes/User";
 import ChildPlaylistChecklist from "./ChildPlaylistChecklist";
 import SmartPlaylistItem from "./SmartPlaylistItem";
+import ParentPlaylistDropdown from "./ParentPlaylistDropdown";
 
 type SmartPlaylistsProps = {
     playlists: PlaylistDisplay[];
@@ -72,21 +73,18 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
     return (
         <div>
             <h2>Smart Playlists</h2>
-            {loading ? <p>Loading Smart Playlists...</p> : (
+            {loading || playlistLoading ? <p>Loading Smart Playlists...</p> : (
                 <form onSubmit={handleSubmit}>
-                    <label>
-                        Parent Playlist:
-                        <select value={parentPlaylistId} onChange={handleParentChange}>
-                            <option value="">Select Parent Playlist</option>
-                            {playlists.map(playlist => (
-                                <option key={playlist.id} value={playlist.id}>
-                                    {playlist.name}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                    <div className="container-fluid">
-                        <p>Child Playlists:</p>
+                    <div className="parent-container">
+                        <ParentPlaylistDropdown 
+                            playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} 
+                            selectedParentId={parentPlaylistId} 
+                            onParentChange={setParentPlaylistId} 
+                        />
+                    </div>
+                    <br/>
+                    <div className="container-fluid child-container">
+                        <strong>Child Playlists:</strong>
                         <ChildPlaylistChecklist 
                             playlists={playlists} 
                             selectedPlaylists={selectedChildPlaylists} 
@@ -96,10 +94,9 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
                     <button type="submit">Create Smart Playlist</button>
                 </form>
             )}
+            <hr/>
             <h4>Smart Playlists Created</h4>
-            <ul>
-                {smartPlaylists.map(smartPlaylist => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id} smartPlaylist={smartPlaylist} />)}
-            </ul>
+            {smartPlaylists.map(smartPlaylist => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id} smartPlaylist={smartPlaylist} />)}
         </div>
     );
 }
