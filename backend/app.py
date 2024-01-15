@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+from db_helpers import add_owner_to_playlist_dict, make_playlist_dict
 from models import db, User, Playlist, SmartPlaylist, PlaylistFollower, Album, AlbumFollower
 
 
@@ -180,11 +181,8 @@ def get_playlists():
 
     user = db.get_or_404(User, user_id)
 
-    playlistDicts = [Playlist.query.filter_by(id=playlist.playlist_id).first_or_404().to_dict()
-                     for playlist in user.followed_playlists]
-    for playlist in playlistDicts:
-        playlist["owner_name"] = db.get_or_404(User, playlist['owner_id']).name
-    return jsonify(playlistDicts), 200
+    playlist_dicts = make_playlist_dict(user.followed_playlists)
+    return jsonify(playlist_dicts), 200
 
 
 @app.route("/smart_playlists", methods=["POST"])
@@ -237,11 +235,11 @@ def get_smart_playlists():
     owned_playlists = User.query.get_or_404(user_id).owned_playlists
     smart_playlist_data = [
         {
-            "parent_playlist": op.to_dict(),
+            "parent_playlist": add_owner_to_playlist_dict(op.to_dict()),
             "children": [
                 {
-                    "playlist": Playlist.query.filter_by(
-                        id=cp.child_playlist_id).first_or_404().to_dict(),
+                    "playlist": add_owner_to_playlist_dict(Playlist.query.filter_by(
+                        id=cp.child_playlist_id).first_or_404().to_dict()),
                     "last_sync_snapshot_id": SmartPlaylist.query.filter_by(
                         parent_playlist_id=op.id,
                         child_playlist_id=cp.child_playlist_id).first().last_sync_snapshot_id
