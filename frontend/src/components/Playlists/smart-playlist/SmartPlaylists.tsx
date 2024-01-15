@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { addSmartPlaylist, getSmartPlaylists } from "../../../utils/backend_api_handler";
+import { useEffect, useState } from "react";
+import { getSmartPlaylists } from "../../../utils/backend_api_handler";
 import { PlaylistDisplay } from "../../../Classes/Playlist";
 import SmartPlaylist from "../../../Classes/SmartPlaylist";
-import User from "../../../Classes/User";
-import ChildPlaylistChecklist from "./ChildPlaylistChecklist";
-import SmartPlaylistItem from "./SmartPlaylistItem";
-import ParentPlaylistDropdown from "./ParentPlaylistDropdown";
 import SmartPlaylistsCreated from "./SmartPlaylistsCreated";
 import CreateSmartPlaylist from "./CreateSmartPlaylist";
 
