@@ -1,12 +1,15 @@
 .album-dashboard {
-
+    .card {
+        padding: 20px;
+        text-align: left;
+        width: 42%;
+    }
 }
 
 .dashboard-content {
     position: relative; /* Ensures proper stacking context */
     z-index: 1; /* Higher than the background */
     text-align: center;
-
 }
 
 .title {

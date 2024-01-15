@@ -2,7 +2,7 @@ import { redirectToAuthCodeFlow } from "../utils/auth";
 
 function Login() {
     return (
-        <div>
+        <div className="login">
             <h2>Press below to authenticate with Spotify</h2>
             <button onClick={() => redirectToAuthCodeFlow()}
             >

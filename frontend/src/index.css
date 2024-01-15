@@ -1,61 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-synthesis: none;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
 }
 
 body {
-  padding: 75px 25px 50px;
-  word-wrap: break-word;
-  /* background-color: rgb(62, 62, 62); */
-  /* color: white; */
+    padding: 75px 25px 50px;
+    word-wrap: break-word;
+    /* background-color: rgb(62, 62, 62); */
+    /* color: white; */
 }
 
 a {
-  font-weight: 500;
-  color: #1DB954;
-  text-decoration: inherit;
+    font-weight: 500;
+    color: #1DB954;
+    text-decoration: inherit;
 }
+
 a:hover {
-  color: #1a9b47;
+    color: #1a9b47;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: 3.2em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  /* background-color: #1a1a1a; */
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 2px solid rgb(209, 209, 209);
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #1DB954;
+    border-color: #1DB954;
+    background-color: rgb(225, 225, 225);
+    border-width: 2px;
 }
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
-.my {
-  color: #1DB954;
-}
 
 .navbar-brand {
-  font-size: 2.5rem;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
+    padding-left: 10px;
+    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+
+    .my {
+        color: #1DB954;
+    }
 }
+
+.login {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.dashboard {
+    text-align: center;
+    align-items: center;
+
+    .card {
+        padding: 20px;
+        margin: 20px
+    }
+
+    .dashboard-title {
+        padding-bottom: 40px;
+    }
+}
+
