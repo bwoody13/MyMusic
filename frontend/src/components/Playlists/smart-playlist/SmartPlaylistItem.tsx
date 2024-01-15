@@ -1,15 +1,27 @@
-import React from 'react';
-import SmartPlaylist, { ChildPlaylist } from '../../../Classes/SmartPlaylist';
+import { useState } from 'react';
+import SmartPlaylist from '../../../Classes/SmartPlaylist';
 import { syncSmartPlaylist } from '../../../utils/smart_playlist';
 import SmallPlaylistCard from './SmallPlaylistCard';
 
 type SmartPlaylistItemProps = {
     smartPlaylist: SmartPlaylist;
+    setIsSyncing: (isSyncing: boolean) => void;
 };
 
-const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist }) => {
+const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist, setIsSyncing }) => {
+    const [removeUnmatched, setRemoveUnmatched] = useState(false);
+
     function onSync() {
-        syncSmartPlaylist(smartPlaylist).then(() => console.log("Smart Playlist synced"));
+        setIsSyncing(true);
+        try {
+            syncSmartPlaylist(smartPlaylist, !removeUnmatched).then(() => {
+                alert("Smart Playlist synced");
+                setIsSyncing(false);
+            });
+        } catch (error) {
+            setIsSyncing(false);
+            console.error("Error syncing smart playlist");
+        }
     }
 
     return (
@@ -32,6 +44,8 @@ const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist }) 
             </div>
             <div className='col-2 sync'>
                 <button onClick={onSync}>Sync Playlist</button>
+                <br/>
+                <input type='checkbox' checked={removeUnmatched} onChange={() => setRemoveUnmatched(!removeUnmatched)} /> Remove Extraneous Parent Tracks
             </div>
         </div>
     );
