@@ -2,7 +2,7 @@ import { AlbumDisplay } from "../../Classes/Album";
 
 const AlbumCard: React.FC<{album: AlbumDisplay}> = ({album}) => {
     return (
-        <div className="card container-fluid">
+        <div className="container-fluid card random-album">
             <div className="row">
                 <div className="col-6">
                     <img className="album-card-img" src={album.img_url} alt="album cover"/>
