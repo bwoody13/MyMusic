@@ -4,6 +4,7 @@ import { AlbumDisplay } from '../Classes/Album';
 import { retreiveAlbums, syncAlbumsWithBackend } from '../utils/data_management';
 import AlbumCollage from '../components/Albums/AlbumCollage';
 import AlbumRandomizer from '../components/Albums/AlbumRandomizer';
+import AlbumRecommender from '../components/Albums/AlbumRecommender';
 
 function AlbumDashboard() {
     const [albums, setAlbums] = useState<AlbumDisplay[]>([]);
@@ -52,6 +53,8 @@ function AlbumDashboard() {
                         <hr/>
                     </div>
                 <AlbumRandomizer albums={albums} />
+                <hr/>
+                <AlbumRecommender albums={albums} />
                 </div>
                 
             </div>}

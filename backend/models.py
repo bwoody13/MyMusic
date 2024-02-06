@@ -33,6 +33,7 @@ class User(Base):
 class Album(Base):
     id = db.Column(db.String(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
+    # TODO: add artist_id or make new table
     artists = db.Column(db.String(), unique=False, nullable=False)
     genres = db.Column(db.String(), unique=False, nullable=True)
     img_url = db.Column(db.String(), unique=False, nullable=True)

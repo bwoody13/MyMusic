@@ -26,6 +26,7 @@ export class AlbumDisplay {
     type: string;
     @Expose()
     artists: string; // Comma separated string of artist names
+    // TODO: Remove this field, genere data not populated for albums OR get from artists at inital scrape of album
     @Expose()
     genres: string; // Comma separated string of genre names
 }

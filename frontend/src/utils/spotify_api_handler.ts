@@ -5,6 +5,7 @@ import Album from '../Classes/Album';
 import Playlist, { NewPlaylistInfo } from '../Classes/Playlist';
 import User from '../Classes/User';
 import { chunkArray } from './helpers';
+import Track from '../Classes/Track';
 
 const excludeVals = { excludeExtraneousValues: true }
 
@@ -95,4 +96,15 @@ export async function removeTracksFromPlaylist(playlistId: string, trackUris: St
 export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo): Promise<Playlist> {
     const response = await apiPost('me/playlists', newPlaylistInfo);
     return plainToInstance(Playlist, response.data);
+}
+
+export async function recommendTracks(seedArtists: string[] = [], seedGenres: string[] = [], seedTracks: string[] = [], extraOptions: any = {}): Promise<Track[]> {
+    const params = new URLSearchParams({
+        ...(seedArtists.length > 0 ? { seed_artists: seedArtists.join(',') } : {}),
+        ...(seedGenres.length > 0 ? { seed_genres: seedGenres.join(',') } : {}),
+        ...(seedTracks.length > 0 ? { seed_tracks: seedTracks.join(',') } : {}),
+        ...extraOptions,
+    });
+    const response = await apiGet(`recommendations?${params.toString()}`);
+    return plainToInstance(Track, response.data.tracks, excludeVals);
 }
