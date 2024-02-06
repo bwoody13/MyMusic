@@ -28,7 +28,7 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
 
     const handleRecommendation = () => {
         if (baseAlbum) {
-            recommendAlbum(baseAlbum).then(album => setRecommendedAlbum(album));
+            recommendAlbum(baseAlbum, albums.map(album => album.id)).then(album => setRecommendedAlbum(album));
         } else {
             console.log("No base album selected.")
         }

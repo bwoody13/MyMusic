@@ -15,6 +15,8 @@ export default class Album {
     genres: string[];
 };
 
+
+
 export class AlbumDisplay {
     @Expose()
     id: string;

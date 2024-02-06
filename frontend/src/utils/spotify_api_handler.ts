@@ -5,7 +5,8 @@ import Album from '../Classes/Album';
 import Playlist, { NewPlaylistInfo } from '../Classes/Playlist';
 import User from '../Classes/User';
 import { chunkArray } from './helpers';
-import Track from '../Classes/Track';
+import Track, { TrackRecommednations } from '../Classes/Track';
+import Artist from '../Classes/Artist';
 
 const excludeVals = { excludeExtraneousValues: true }
 
@@ -98,13 +99,29 @@ export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo): Promise<
     return plainToInstance(Playlist, response.data);
 }
 
-export async function recommendTracks(seedArtists: string[] = [], seedGenres: string[] = [], seedTracks: string[] = [], extraOptions: any = {}): Promise<Track[]> {
+export async function recommendTracks(seedArtists: string[] = [], seedGenres: string[] = [], seedTracks: string[] = [], limit: number = 100, extraOptions: any = {}): Promise<TrackRecommednations[]> {
     const params = new URLSearchParams({
+        limit: (limit > 100 ? 100 : limit),
         ...(seedArtists.length > 0 ? { seed_artists: seedArtists.join(',') } : {}),
         ...(seedGenres.length > 0 ? { seed_genres: seedGenres.join(',') } : {}),
         ...(seedTracks.length > 0 ? { seed_tracks: seedTracks.join(',') } : {}),
         ...extraOptions,
     });
     const response = await apiGet(`recommendations?${params.toString()}`);
-    return plainToInstance(Track, response.data.tracks, excludeVals);
+    return plainToInstance(TrackRecommednations, response.data.tracks, excludeVals);
+}
+
+export async function getAlbumTracks(albumId: string): Promise<Track[]> {
+    const response = await getAllItems(`albums/${albumId}/tracks?limit=50`);
+    return plainToInstance(Track, response, excludeVals);
+}
+
+export async function getAlbum(albumId: string): Promise<Album> {
+    const response = await apiGet(`albums/${albumId}`);
+    return plainToInstance(Album, response.data as Album, excludeVals);
+}
+
+export async function getArtists(artistIds: string[]): Promise<Artist[]> {
+    const response = await apiGet(`artists?ids=${artistIds.join(',')}`);
+    return plainToInstance(Artist, response.data.artists, excludeVals);
 }

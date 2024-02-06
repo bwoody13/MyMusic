@@ -7,6 +7,10 @@ export default class Track {
     name: string;
     @Expose()
     popularity: number;
+    
+}
+
+export class TrackRecommednations extends Track {
     @Expose()
     album: {id: string, name: string}
 }

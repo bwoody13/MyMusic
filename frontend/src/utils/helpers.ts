@@ -1,4 +1,6 @@
+import Album, { AlbumDisplay } from "../Classes/Album";
 import Playlist, { PlaylistDisplay } from "../Classes/Playlist";
+import { AVAILABLE_GENRE_SEEDS } from "./genre_seeds";
 
 export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
     const chunks: T[][] = [];
@@ -23,4 +25,30 @@ export function playlistToPlaylistDisplay(playlist: Playlist): PlaylistDisplay {
         owner_name: playlist.owner.display_name,
         snapshot_id: playlist.snapshot_id
     }
+}
+
+export function albumToAlbumDisplay(album: Album): AlbumDisplay {
+    return {
+        id: album.id,
+        name: album.name,
+        img_url: album.images.length > 0 ? album.images[0].url : "",
+        type: album.type,
+        artists: album.artists.map(artist => artist.name).join(", "),
+        genres: album.genres.join(", "),
+    }
+}
+
+export function filterGenreSeeds(genres: string[]): string[] {
+    const seedGenres = [];
+    for (const genre of genres) {
+        if (AVAILABLE_GENRE_SEEDS.has(genre)) {
+            seedGenres.push(genre);
+        } else {
+            const dashGenre = genre.replace("/\s/g", "-");
+            if (AVAILABLE_GENRE_SEEDS.has(dashGenre)) {
+                seedGenres.push(dashGenre);
+            }
+        }
+    }
+    return seedGenres;
 }
