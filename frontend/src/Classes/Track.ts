@@ -10,7 +10,16 @@ export default class Track {
     
 }
 
-export class TrackRecommednations extends Track {
+export class TrackRecommendations extends Track {
     @Expose()
-    album: {id: string, name: string}
+    album: {id: string, name: string, images: {url: string}[]}
+    @Expose()
+    artists: {id: string, name: string}[]
+}
+
+export class TrackDisplay extends Track {
+    @Expose()
+    albumImage: string;
+    @Expose()
+    artists: string;
 }

@@ -4,6 +4,7 @@ import SmartPlaylists from "../components/Playlists/smart-playlist/SmartPlaylist
 import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
 import CreatePlaylist from "../components/Playlists/CreatePlaylist";
+import PlaylistRecommender from "../components/Playlists/PlaylistRecommender";
 
 function PlaylistDashboard() {
     const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);
@@ -51,6 +52,8 @@ function PlaylistDashboard() {
                         <hr/>
                         <CreatePlaylist addPlaylist={addPlaylist} />
                         <hr/>
+                        <PlaylistRecommender playlists={playlists} />
+                        <hr />
                     </div>}
                 <SmartPlaylists playlists={playlists} playlistLoading={loading} />
             </div>

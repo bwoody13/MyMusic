@@ -5,7 +5,7 @@ import Album from '../Classes/Album';
 import Playlist, { NewPlaylistInfo } from '../Classes/Playlist';
 import User from '../Classes/User';
 import { chunkArray } from './helpers';
-import Track, { TrackRecommednations } from '../Classes/Track';
+import Track, { TrackRecommendations } from '../Classes/Track';
 import Artist from '../Classes/Artist';
 
 const excludeVals = { excludeExtraneousValues: true }
@@ -99,7 +99,7 @@ export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo): Promise<
     return plainToInstance(Playlist, response.data);
 }
 
-export async function recommendTracks(seedArtists: string[] = [], seedGenres: string[] = [], seedTracks: string[] = [], limit: number = 100, extraOptions: any = {}): Promise<TrackRecommednations[]> {
+export async function recommendTracks(seedArtists: string[] = [], seedGenres: string[] = [], seedTracks: string[] = [], limit: number = 100, extraOptions: any = {}): Promise<TrackRecommendations[]> {
     const params = new URLSearchParams({
         limit: (limit > 100 ? 100 : limit),
         ...(seedArtists.length > 0 ? { seed_artists: seedArtists.join(',') } : {}),
@@ -108,7 +108,7 @@ export async function recommendTracks(seedArtists: string[] = [], seedGenres: st
         ...extraOptions,
     });
     const response = await apiGet(`recommendations?${params.toString()}`);
-    return plainToInstance(TrackRecommednations, response.data.tracks, excludeVals);
+    return plainToInstance(TrackRecommendations, response.data.tracks, excludeVals);
 }
 
 export async function getAlbumTracks(albumId: string): Promise<Track[]> {

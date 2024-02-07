@@ -1,5 +1,6 @@
 import Album, { AlbumDisplay } from "../Classes/Album";
 import Playlist, { PlaylistDisplay } from "../Classes/Playlist";
+import { TrackDisplay, TrackRecommendations } from "../Classes/Track";
 import { AVAILABLE_GENRE_SEEDS } from "./genre_seeds";
 
 export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
@@ -51,4 +52,14 @@ export function filterGenreSeeds(genres: string[]): string[] {
         }
     }
     return seedGenres;
+}
+
+export function trackRecommendationsToTrackDisplay(tracks: TrackRecommendations[]): TrackDisplay[] {
+    return tracks.map(track => ({
+        id: track.id,
+        name: track.name,
+        popularity: track.popularity,
+        artists: track.artists.map(artist => artist.name).join(", "),
+        albumImage: track.album.images.length > 0 ? track.album.images[0].url : "",
+    }));
 }
