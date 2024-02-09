@@ -6,14 +6,14 @@ const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolea
     return (
             <div className="card">
                 <div className="row">
-                    <div className=" col-12 col-md-4">
+                    <div className=" col-12 col-md-5">
                         <div className='card-img-container'>
                             <img src={playlist.img_url} className="card-img" alt={playlist.name} />
                             {isChecked && <div className="overlay-checkmark"></div>}
                         </div>
                         
                     </div>
-                    <div className=" col-12 col-md-8">
+                    <div className=" col-12 col-md-7">
                         <div className="card-body">
                             <strong className="card-title">{parse(playlist.name)}</strong>
                             <p className="card-text"><small className="text-muted">By {parse(playlist.owner_name)}</small></p>

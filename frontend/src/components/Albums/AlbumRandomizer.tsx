@@ -27,7 +27,7 @@ function AlbumRandomizer(props: AlbumRandomizerProps) {
     };
 
     return (
-        <div>
+        <div id="randomizer" className="scroll-page">
             <h2 className="title">Album Randomizer</h2>
             <button className="m-2" onClick={handleRandomize}>Randomize Album</button>
             {randomAlbum && <AlbumCard album={randomAlbum}/>}

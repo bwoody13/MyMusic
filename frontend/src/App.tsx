@@ -10,19 +10,19 @@ import Dashboard from './routes/Dashboard'
 import AlbumDashboard from './routes/AlbumDashboard'
 import PlaylistDashboard from './routes/PlaylistDashboard'
 import TopNavBar from './components/TopNavBar'
-import LeftNavBar from './components/LeftNavBar'
+import Sidebar from './components/Sidebar'
 
 function App() {
 
   return (
     <>
       <div>
+      <Router>
         <TopNavBar />
         <div className='d-flex'>
-          {/* <LeftNavBar /> */}
-          {/* <p>The spotify app that helps you get the most out of your music.</p> */}
-          <div className="flex-grow-1 p-3">
-            <Router>
+            <Sidebar />
+            {/* <p>The spotify app that helps you get the most out of your music.</p> */}
+            <div className="flex-grow-1 p-3 content">
               <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='callback' element={<Callback />} />
@@ -30,9 +30,9 @@ function App() {
                 <Route path='/dashboard/album' element={<AlbumDashboard />} />
                 <Route path='dashboard/playlist' element={<PlaylistDashboard />} />
               </Routes>
-            </Router>
-          </div>
+            </div>
         </div>
+        </Router>
       </div>
 
     </>

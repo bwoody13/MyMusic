@@ -36,7 +36,7 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
     }
 
     return (
-        <div>
+        <div id="recommender" className="scroll-page">
             <h2 className="title">Album Recommender</h2>
             <br/>
             <div>

@@ -48,7 +48,7 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
     };
 
     return (
-        <div>
+        <div id="create-sp" className="scroll-page">
             <form onSubmit={handleSubmit}>
                     <div className="parent-container">
                         <ParentPlaylistDropdown 

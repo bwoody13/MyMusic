@@ -73,12 +73,14 @@
 
 .playlist-card {
     img {
+        padding-top: 5px;
         width: 50px;
         height: auto;
     }
 
     padding: 10px;
     text-align: left;
+    font-size: 0.9rem;
 }
 
 .smart-playlist-card {

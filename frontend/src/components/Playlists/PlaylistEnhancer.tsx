@@ -35,7 +35,7 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
     
 
     return (
-        <div>
+        <div id="enhancer" className="scroll-page">
             <h2>Playlist Enhancer</h2>
             <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
             {selectedPlaylist &&
