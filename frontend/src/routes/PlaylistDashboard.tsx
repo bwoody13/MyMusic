@@ -5,6 +5,7 @@ import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_manag
 import { PlaylistDisplay } from "../Classes/Playlist";
 import CreatePlaylist from "../components/Playlists/CreatePlaylist";
 import PlaylistRecommender from "../components/Playlists/PlaylistRecommender";
+import PlaylistEnhancer from "../components/Playlists/PlaylistEnhancer";
 
 function PlaylistDashboard() {
     const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);
@@ -51,6 +52,8 @@ function PlaylistDashboard() {
                         <button onClick={handleUpdate}>Update Playlists</button>
                         <hr/>
                         <CreatePlaylist addPlaylist={addPlaylist} />
+                        <hr/>
+                        <PlaylistEnhancer playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} />
                         <hr/>
                         <PlaylistRecommender playlists={playlists} />
                         <hr />

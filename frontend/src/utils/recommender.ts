@@ -61,3 +61,26 @@ export async function recommendTracksFromPlaylist(basePlaylist: PlaylistDisplay)
 
     return trackRecommendationsToTrackDisplay(recommendations);
 }
+
+export async function recommendTracksForPlaylist(playlist: PlaylistDisplay): Promise<TrackDisplay[]> {
+    const playlistTrackIds = (await getPlaylistTracks(playlist.id)).map(trackUri => trackUri.split(":")[2]);
+
+    const trackSamples = [];
+    for (let i = 0; i < 4; i++) {
+        trackSamples.push(_.sampleSize(playlistTrackIds, 5));
+    }
+    const recommendations = Array.from(new Set(await Promise.all(trackSamples.map(async (sample) => {
+        const recommendations = await recommendTracks([], [], sample, 7);
+        return recommendations;
+    })).then(recommendations => recommendations.flat())));
+
+    const playlistTrackSet = new Set(playlistTrackIds);
+    const filteredRecommendations = recommendations.filter(track => !playlistTrackSet.has(track.id));
+    let finalRecommendations = null;
+    if (filteredRecommendations.length < 10) {
+        finalRecommendations = filteredRecommendations;
+    } else {
+        finalRecommendations = _.sampleSize(filteredRecommendations, 10);
+    }
+    return trackRecommendationsToTrackDisplay(finalRecommendations);
+}

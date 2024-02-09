@@ -12,7 +12,9 @@ type PlaylistRecommenderProps = {
 function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
 
     const [basePlaylist, setBasePlaylist] = useState<PlaylistDisplay | null>(null);
+    const [recommendationBase, setRecommendationBase] = useState<PlaylistDisplay | null>(null);
     const [recommendations, setRecommendations] = useState<TrackDisplay[]>([]);
+    const [loadingRecs, setLoadingRecs] = useState(false);
 
     const playlistOptions: CustomOptionType[] = playlists.map((playlist) => ({
         id: playlist.id,
@@ -29,8 +31,11 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
     const handleRecommendation = () => {
         if (basePlaylist) {
             // TODO: make calls to recommend from playlist
+            setRecommendationBase(basePlaylist);
+            setLoadingRecs(true);
             recommendTracksFromPlaylist(basePlaylist).then((recommendations) => {
                 setRecommendations(recommendations);
+                setLoadingRecs(false);
             });
         } else {
             console.log("No base playlist selected.")
@@ -46,10 +51,11 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
                 <CustomSelect options={playlistOptions} onSelectChange={updateBasePlaylist} />
                 <button className="m-2" onClick={handleRecommendation}>Recommend Tracks</button>
                 {/* TODO: display recommendations better */}
-                {recommendations && <div><p>Recommended Tracks:</p>
-                <ul>
+                {recommendationBase && <div><p>Recommended Tracks for {recommendationBase?.name}:</p>
+                {loadingRecs && <p>Loading recommendations...</p>}
+                {recommendations && <ul>
                     {recommendations.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
-                </ul>
+                </ul>}
                 </div>}
                 
             </div>
