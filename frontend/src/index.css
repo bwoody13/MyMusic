@@ -78,6 +78,7 @@ button:focus-visible {
 
 .login {
     padding-top: 50px;
+    margin-left: -250px;
     text-align: center;
 }
 
