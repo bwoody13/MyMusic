@@ -44,8 +44,8 @@ function PlaylistDashboard() {
     };
 
     return (
-        <div>
-            <h1 className="title">Playlist Dashboard</h1>
+        <div className="playlist-dashboard">
+            {/* <h1 className="title">Playlist Dashboard</h1> */}
             <div className="dashboard-content">
                 {loading ? <p>Updating Playlists...</p> : 
                     <div>
