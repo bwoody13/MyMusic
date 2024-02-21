@@ -24,11 +24,6 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
             setLoading(true);
             try {
                 const smartPlaylistData = await getSmartPlaylists();
-                // const initialChildSelection = playlists.reduce((acc, playlist) => {
-                //     acc[playlist.id] = false; // Initialize all checkboxes as unchecked
-                //     return acc;
-                // }, {} as { [id: string]: boolean });
-                // setSelectedChildPlaylists(initialChildSelection);
                 setSmartPlaylists(smartPlaylistData);
             } catch (error) {
                 console.error('Error fetching data:', error);

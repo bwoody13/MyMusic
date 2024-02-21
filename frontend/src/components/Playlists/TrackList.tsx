@@ -17,8 +17,6 @@ type TrackListProps = {
                 <div className="col-md-8">
                     <strong className="name">{track.name}</strong>
                     <p><small className="owner"> by {track.artists}</small></p>
-                {/* <h5>{track.name}</h5>
-                <p>By {track.artists}</p> */}
                 </div>
             </div>
             ))}

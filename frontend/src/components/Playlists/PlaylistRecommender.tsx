@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CustomOptionType } from "../../Classes/CustomOption";
 import { PlaylistDisplay } from "../../Classes/Playlist"
-import Track, { TrackDisplay, TrackRecommendations } from "../../Classes/Track";
+import { TrackDisplay } from "../../Classes/Track";
 import CustomSelect from "../CustomSelect";
 import { recommendTracksFromPlaylist } from "../../utils/recommender";
 import TrackList from "./TrackList";
@@ -57,14 +57,8 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
                 </div>
                 {recommendationBase && <div><p>Recommended Tracks for {recommendationBase?.name}:</p>
                 {loadingRecs && <p>Loading recommendations...</p>}
-                {/* {recommendations && <ul>
-                    {recommendations.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
-                </ul>} */}
                 {recommendations && <TrackList tracks={recommendations} cols={4}/>}
                 </div>}
-                
-                
-                
             </div>
         </div>
     )

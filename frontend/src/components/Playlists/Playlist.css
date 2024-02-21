@@ -96,5 +96,13 @@
         width: 75px;
     }
 
+    .btn-link {
+        /* ... existing styles ... */
+        /* Add the following to make the button look like a link */
+        font-size: 0.8em;
+        padding: 0;
+        text-decoration: underline;
+      }
+
 }
 
