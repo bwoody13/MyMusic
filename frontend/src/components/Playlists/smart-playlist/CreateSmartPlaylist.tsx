@@ -5,6 +5,8 @@ import SmartPlaylist from "../../../Classes/SmartPlaylist";
 import { PlaylistDisplay } from "../../../Classes/Playlist";
 import ParentPlaylistDropdown from "./ParentPlaylistDropdown";
 import ChildPlaylistChecklist from "./ChildPlaylistChecklist";
+import { CustomOptionType } from "../../../Classes/CustomOption";
+import CustomSelect from "../../CustomSelect";
 
 type CreateSmartPlaylistProps = {
     playlists: PlaylistDisplay[];
@@ -17,6 +19,13 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
         acc[playlist.id] = false; // Initialize all checkboxes as unchecked
         return acc;
     }, {} as { [id: string]: boolean }));
+
+    const parentPlaylistOptions: CustomOptionType[] = playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id).map((playlist) => ({
+        id: playlist.id,
+        name: playlist.name,
+        image: playlist.img_url,
+        authors: playlist.owner_name
+    }));
 
     const handleChildChange = (playlistId: string, isSelected: boolean) => {
         setSelectedChildPlaylists((prevState) => ({
@@ -51,11 +60,12 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
         <div id="create-sp" className="scroll-page">
             <form onSubmit={handleSubmit}>
                     <div className="parent-container">
-                        <ParentPlaylistDropdown 
+                        <span><strong>Parent Playlist: </strong><CustomSelect options={parentPlaylistOptions} onSelectChange={setParentPlaylistId} /></span>
+                        {/* <ParentPlaylistDropdown 
                             playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} 
                             selectedParentId={parentPlaylistId} 
                             onParentChange={setParentPlaylistId} 
-                        />
+                        /> */}
                     </div>
                     <br/>
                     <div className="container-fluid child-container">

@@ -2,13 +2,13 @@ import React from 'react';
 import { PlaylistDisplay } from '../../../Classes/Playlist';
 import parse from 'html-react-parser'
 
-const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolean }> = ({ playlist, isChecked }) => {
-    return (
+const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolean }> = ({ playlist, isChecked }) => {   
+     return (
             <div className="card">
                 <div className="row">
                     <div className=" col-12 col-md-5">
                         <div className='card-img-container'>
-                            <img src={playlist.img_url} className="card-img" alt={playlist.name} />
+                            <img src={playlist.img_url.length === 0? "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png" : playlist.img_url} className="card-img" alt={playlist.name} />
                             {isChecked && <div className="overlay-checkmark"></div>}
                         </div>
                         

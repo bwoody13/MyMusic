@@ -4,6 +4,8 @@ import { retreiveAlbums, retreivePlaylists, syncAlbumsWithBackend, syncPlaylists
 import { useAlbums } from '../contexts/AlbumContext';
 import { useLoading } from '../contexts/LoadingContext';
 import { usePlaylists } from '../contexts/PlaylistContext';
+import CreatePlaylist from './Playlists/CreatePlaylist';
+import { PlaylistDisplay } from '../Classes/Playlist';
 
 const getActiveLinkClass = ({ isActive }: { isActive: boolean }) => isActive ? 'active' : '';
 
@@ -11,7 +13,7 @@ const Sidebar: React.FC = () => {
     const { pathname } = useLocation();
     const { setAlbums } = useAlbums();
     const { setLoading } = useLoading();
-    const { setPlaylists } = usePlaylists();
+    const { playlists, setPlaylists } = usePlaylists();
     let userLS = localStorage.getItem('user');
     const user: User | null = userLS ? JSON.parse(userLS) : null;
 
@@ -45,6 +47,10 @@ const Sidebar: React.FC = () => {
         }
     };
 
+    function addPlaylist(playlist: PlaylistDisplay) {
+        setPlaylists([...playlists, playlist]);
+    }
+
 
     return (
         <div className="sidebar bg-dark">
@@ -64,8 +70,10 @@ const Sidebar: React.FC = () => {
                 <a href="#recommender">Album Recommender</a>
             </>)}
             {pathname === "/dashboard/playlist" && (<>
-                <button onClick={handlePlaylistUpdate}>Update Playlists</button>
-                <a href='#create'>Create Playlist</a>
+                <button className='p-2 mb-2' onClick={handlePlaylistUpdate}>Update Playlists</button>
+                <CreatePlaylist addPlaylist={addPlaylist} />
+                <hr/>
+                {/* <a href='#create'>Create Playlist</a> */}
                 <a href='#enhancer'>Enhance Playlist</a>
                 <a href='#recommender'>Recommend New Playlist</a>
                 <a href='#smart'>Smart Playlists</a>

@@ -1,10 +1,10 @@
 .playlist-dashboard {
     .dashboard-content {
-        text-align: center;
+        text-align: left;
     }
     
     .title {
-        text-align: center; /* Center the title */
+        /* text-align: center; */
         background-color: rgba(255, 255, 255, 0.9); /* Opaque white background */
         /* margin: 0 auto;  */
         padding: 10px; /* Add some padding */

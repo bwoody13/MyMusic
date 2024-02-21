@@ -27,27 +27,33 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
 
     const handleSuggestions = () => {
         setLoadingRecs(true);
-        recommendTracksForPlaylist(selectedPlaylist!).then((tracks) => {
-            setRecommendedTracks(tracks);
+        try {
+            recommendTracksForPlaylist(selectedPlaylist!).then((tracks) => {
+                setRecommendedTracks(tracks);
+                setLoadingRecs(false);
+            });
+        } catch (error) {
             setLoadingRecs(false);
-        });
+        }
     }
     
 
     return (
         <div id="enhancer" className="scroll-page">
             <h2>Playlist Enhancer</h2>
-            <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
-            {selectedPlaylist &&
-                <div>
-                    <p>Playlist Selected: {selectedPlaylist.name + " by " + selectedPlaylist.owner_name}</p>
+            <div className="row">
+                <div className="col-6">
+                    <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
+                    {/* <p>Playlist Selected: {selectedPlaylist.name + " by " + selectedPlaylist.owner_name}</p> */}
                     <button className="m-2" onClick={handleSuggestions}>Get Suggestions</button>
+                </div>
+                <div className="col-6">
                     {loadingRecs && <p>Loading recommendations...</p>}
                     {recommendedTracks && <ul>
                     {recommendedTracks.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
-                </ul>}
+                    </ul>}
                 </div>
-                }
+            </div>
         </div>
     )
 };

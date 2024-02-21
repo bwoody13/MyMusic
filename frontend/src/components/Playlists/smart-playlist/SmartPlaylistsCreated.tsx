@@ -8,7 +8,7 @@ const SmartPlaylistsCreated: React.FC<{smartPlaylists: SmartPlaylist[]}> = ({sma
     return (
         <div id="created-sp" className="scroll-page">
             <h4>Smart Playlists Created</h4>
-            {isSyncing ? <p>Please wait, we are syncing a smart playlist.</p> : smartPlaylists.map(smartPlaylist => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id} smartPlaylist={smartPlaylist} setIsSyncing={setIsSyncing} />)}
+            {isSyncing ? <p>Please wait, we are syncing a smart playlist.</p> : smartPlaylists.map((smartPlaylist, idx) => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id + idx} smartPlaylist={smartPlaylist} setIsSyncing={setIsSyncing} />)}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import '../components/Playlists/Playlist.css';
 import SmartPlaylists from "../components/Playlists/smart-playlist/SmartPlaylists";
-import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
+import { retreivePlaylists } from "../utils/data_management";
 import { PlaylistDisplay } from "../Classes/Playlist";
 import CreatePlaylist from "../components/Playlists/CreatePlaylist";
 import PlaylistRecommender from "../components/Playlists/PlaylistRecommender";
@@ -28,19 +28,12 @@ function PlaylistDashboard() {
         fetchData();
     }, []);
 
-    function addPlaylist(playlist: PlaylistDisplay): void {
-        setPlaylists([...playlists, playlist]);
-    }
-
     return (
         <div className="playlist-dashboard">
             {/* <h1 className="title">Playlist Dashboard</h1> */}
             <div className="dashboard-content">
                 {isLoading ? <p>Updating Playlists...</p> : 
-                    <div>
-                        <hr/>
-                        <CreatePlaylist addPlaylist={addPlaylist} />
-                        <hr/>
+                    <div>                        
                         <PlaylistEnhancer playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} />
                         <hr/>
                         <PlaylistRecommender playlists={playlists} />

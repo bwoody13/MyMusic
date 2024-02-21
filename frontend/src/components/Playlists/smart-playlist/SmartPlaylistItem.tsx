@@ -39,7 +39,7 @@ const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist, se
             <div className='col-8'>
                 <p>Children:</p>
                 <div className='row row-cols-3 row-cols-xl-4'>
-                    {smartPlaylist.children.map(childPlaylist => <div className='col'><SmallPlaylistCard key={childPlaylist.playlist.id} playlist={childPlaylist.playlist} /></div>)}
+                    {smartPlaylist.children.map(childPlaylist => <div className='col'><SmallPlaylistCard key={childPlaylist.playlist.id + "child"} playlist={childPlaylist.playlist} /></div>)}
                 </div>
             </div>
             <div className='col-2 sync'>
