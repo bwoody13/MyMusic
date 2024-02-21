@@ -4,6 +4,7 @@ import { PlaylistDisplay } from "../../Classes/Playlist";
 import CustomSelect from "../CustomSelect";
 import { recommendTracksForPlaylist } from "../../utils/recommender";
 import { TrackDisplay } from "../../Classes/Track";
+import TrackList from "./TrackList";
 
 const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists}) => {
     const [selectedPlaylist, setSelectedPlaylist] = useState<PlaylistDisplay | null>(null);
@@ -40,20 +41,19 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
 
     return (
         <div id="enhancer" className="scroll-page">
-            <h2>Playlist Enhancer</h2>
+            
             <div className="row">
-                <div className="col-6">
-                    <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
-                    {/* <p>Playlist Selected: {selectedPlaylist.name + " by " + selectedPlaylist.owner_name}</p> */}
-                    <button className="m-2" onClick={handleSuggestions}>Get Suggestions</button>
+                <div className="col-5">
+                    <h2 className="title">Playlist Enhancer</h2>
                 </div>
-                <div className="col-6">
-                    {loadingRecs && <p>Loading recommendations...</p>}
-                    {recommendedTracks && <ul>
-                    {recommendedTracks.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
-                    </ul>}
+                <div className="col-7">
+                    <p>Select a Playlist to Enhance</p>
+                    <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
                 </div>
             </div>
+            <button className="m-2" onClick={handleSuggestions}>Get Suggestions</button>
+            {loadingRecs && <p>Loading recommendations...</p>}
+            {(recommendedTracks) && <><p>Recommended Enhancements for {selectedPlaylist!.name}</p><TrackList tracks={recommendedTracks} cols={4}/></>}
         </div>
     )
 };

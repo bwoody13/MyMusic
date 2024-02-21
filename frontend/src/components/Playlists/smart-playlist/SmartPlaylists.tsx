@@ -41,7 +41,7 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
 
     return (
         <div id="smart" className="scroll-page">
-            <h2>Smart Playlists</h2>
+            <h2 className="title">Smart Playlists</h2>
             {loading || playlistLoading ? <p>Loading Smart Playlists...</p> : (
                 <CreateSmartPlaylist playlists={playlists} setSmartPlaylists={setSmartPlaylists} />
             )}

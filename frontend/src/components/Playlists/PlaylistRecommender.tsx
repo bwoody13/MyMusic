@@ -4,6 +4,7 @@ import { PlaylistDisplay } from "../../Classes/Playlist"
 import Track, { TrackDisplay, TrackRecommendations } from "../../Classes/Track";
 import CustomSelect from "../CustomSelect";
 import { recommendTracksFromPlaylist } from "../../utils/recommender";
+import TrackList from "./TrackList";
 
 type PlaylistRecommenderProps = {
     playlists: PlaylistDisplay[];
@@ -43,22 +44,24 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
 
     return (
         <div id="recommender" className="scroll-page">
-            <h2 className="title">Playlist Recommender</h2>
             <div className="row">
                 <div className="col-5">
-                    <h4 className="title">Select a Playlist to use for getting recommendations</h4>
-                    <CustomSelect options={playlistOptions} onSelectChange={updateBasePlaylist} />
+                    <h2 className="title">Playlist Recommender</h2>
+                    
                     <button className="m-2" onClick={handleRecommendation}>Recommend Tracks</button>
                 </div>
                 <div className="col-7">
-                    {recommendationBase && <div><p>Recommended Tracks for {recommendationBase?.name}:</p>
-                    {loadingRecs && <p>Loading recommendations...</p>}
-                    {recommendations && <ul>
-                        {recommendations.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
-                    </ul>}
-                    </div>}
+                    <p>Select a Playlist to use for getting recommendations</p>
+                    <CustomSelect options={playlistOptions} onSelectChange={updateBasePlaylist} />
+                    
                 </div>
-
+                {recommendationBase && <div><p>Recommended Tracks for {recommendationBase?.name}:</p>
+                {loadingRecs && <p>Loading recommendations...</p>}
+                {/* {recommendations && <ul>
+                    {recommendations.map((track) => (<li key={track.id}>{track.name + " by " + track.artists}</li>))}
+                </ul>} */}
+                {recommendations && <TrackList tracks={recommendations} cols={4}/>}
+                </div>}
                 
                 
                 
