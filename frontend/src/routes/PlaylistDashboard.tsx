@@ -6,10 +6,12 @@ import { PlaylistDisplay } from "../Classes/Playlist";
 import CreatePlaylist from "../components/Playlists/CreatePlaylist";
 import PlaylistRecommender from "../components/Playlists/PlaylistRecommender";
 import PlaylistEnhancer from "../components/Playlists/PlaylistEnhancer";
+import { usePlaylists } from "../contexts/PlaylistContext";
+import { useLoading } from "../contexts/LoadingContext";
 
 function PlaylistDashboard() {
-    const [playlists, setPlaylists] = useState<PlaylistDisplay[]>([]);
-    const [loading, setLoading] = useState(false);
+    const {playlists, setPlaylists} = usePlaylists();
+    const {isLoading, setLoading} = useLoading();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,26 +32,12 @@ function PlaylistDashboard() {
         setPlaylists([...playlists, playlist]);
     }
 
-    function handleUpdate() {
-        setLoading(true);
-        try {
-            syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => {
-                setPlaylists(playlistData);
-                setLoading(false);
-            }));
-        } catch (error) {
-            console.error('Error updating playlists:', error);
-            setLoading(false);
-        }
-    };
-
     return (
         <div className="playlist-dashboard">
             {/* <h1 className="title">Playlist Dashboard</h1> */}
             <div className="dashboard-content">
-                {loading ? <p>Updating Playlists...</p> : 
+                {isLoading ? <p>Updating Playlists...</p> : 
                     <div>
-                        <button onClick={handleUpdate}>Update Playlists</button>
                         <hr/>
                         <CreatePlaylist addPlaylist={addPlaylist} />
                         <hr/>
@@ -58,7 +46,7 @@ function PlaylistDashboard() {
                         <PlaylistRecommender playlists={playlists} />
                         <hr />
                     </div>}
-                <SmartPlaylists playlists={playlists} playlistLoading={loading} />
+                <SmartPlaylists playlists={playlists} playlistLoading={isLoading} />
             </div>
         </div>
     )

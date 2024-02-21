@@ -1,16 +1,50 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import User from '../Classes/User';
+import { retreiveAlbums, retreivePlaylists, syncAlbumsWithBackend, syncPlaylistsWithBackend } from '../utils/data_management';
+import { useAlbums } from '../contexts/AlbumContext';
+import { useLoading } from '../contexts/LoadingContext';
+import { usePlaylists } from '../contexts/PlaylistContext';
 
 const getActiveLinkClass = ({ isActive }: { isActive: boolean }) => isActive ? 'active' : '';
 
 const Sidebar: React.FC = () => {
     const { pathname } = useLocation();
+    const { setAlbums } = useAlbums();
+    const { setLoading } = useLoading();
+    const { setPlaylists } = usePlaylists();
     let userLS = localStorage.getItem('user');
     const user: User | null = userLS ? JSON.parse(userLS) : null;
 
     if (pathname === '/')
         return <></>
         // return <div className="sidebar bg-dark"></div>;
+
+    function handleAlbumUpdate() {
+        setLoading(true);
+        try {
+            syncAlbumsWithBackend().then(() => retreiveAlbums().then(albumsData => {
+                    setAlbums(albumsData);
+                    setLoading(false);
+                }));
+        } catch (error) {
+            console.error('Error updating albums:', error);
+            setLoading(false);    
+        }
+    };
+
+    function handlePlaylistUpdate() {
+        setLoading(true);
+        try {
+            syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => {
+                setPlaylists(playlistData);
+                setLoading(false);
+            }));
+        } catch (error) {
+            console.error('Error updating playlists:', error);
+            setLoading(false);
+        }
+    };
+
 
     return (
         <div className="sidebar bg-dark">
@@ -24,10 +58,13 @@ const Sidebar: React.FC = () => {
             )}
             
             {pathname === "/dashboard/album" && (<>
+                <button className='p-2 mb-2' onClick={handleAlbumUpdate}>Update Albums</button>
+                <hr/>
                 <a href="#randomizer">Album Randomizer</a>
                 <a href="#recommender">Album Recommender</a>
             </>)}
             {pathname === "/dashboard/playlist" && (<>
+                <button onClick={handlePlaylistUpdate}>Update Playlists</button>
                 <a href='#create'>Create Playlist</a>
                 <a href='#enhancer'>Enhance Playlist</a>
                 <a href='#recommender'>Recommend New Playlist</a>

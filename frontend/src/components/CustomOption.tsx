@@ -7,8 +7,14 @@ type CustomOptionProps = {
 
 const CustomOption: React.FC<CustomOptionProps> = ({ innerProps, data }) => (
     <div {...innerProps}>
-      <img src={data.image} alt={data.name} style={{ width: 50, height: 50, marginRight: 10 }} />
-      {data.name} by {data.authors}
+      <div className="row">
+        <div className='col-2'>
+          <img src={data.image} alt={data.name} style={{ width: 50, height: 50, marginRight: 10 }} />
+        </div>
+        <div className='col-9'>
+          <p>{data.name} by {data.authors}</p>
+        </div>
+      </div>
     </div>
   );
   

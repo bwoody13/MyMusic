@@ -1,14 +1,7 @@
 .album-dashboard {
     text-align: left;
-
-    .card {
-        padding: 20px;
-        text-align: left;
-        width: 50%;
-        /* Additional styles may be needed to ensure the .card is displayed correctly */
-      }
     
-      .dashboard-content {
+    .dashboard-content {
         text-align: left;
         position: relative; 
         z-index: 1;
@@ -44,12 +37,16 @@
         left: 50%;
         transform: translateX(-50%);
     }
+
+    .custom-select {
+        /* width: 50%; */
+    }
     
     .album-cover {
         width: 100%;
         height: auto;
         object-fit: cover;
-        mix-blend-mode: multiply; /* Blends the images for a collage effect */
+        mix-blend-mode: multiply;
     }
     
     /* .random-album {
@@ -57,8 +54,16 @@
         width: 100%;
     } */
     
+    .card {
+        padding: 20px;
+        text-align: left;
+        width: 75%;
+      }
+
     .album-card-img {
-        width: 250px;
+        /* width: 250px; */
+        width: 100%;
+        max-width: 250px;
         height: auto;
     }
     

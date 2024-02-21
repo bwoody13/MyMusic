@@ -9,6 +9,7 @@ type CustomSelectProps = {
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelectChange }) => (
     <Select
+        className="custom-select"
         options={options}
         getOptionLabel={(option) => `${option.name} by ${option.authors}`}
         getOptionValue={(option) => option.id}

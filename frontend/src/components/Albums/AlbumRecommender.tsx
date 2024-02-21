@@ -38,12 +38,19 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
     return (
         <div id="recommender" className="scroll-page">
             <h2 className="title">Album Recommender</h2>
-            <br/>
+            <div className="row">
+                <div className="col-5">
+                    <h4 className="title">Select Album to use for getting recommended Album</h4>
+                    <CustomSelect options={albumOptions} onSelectChange={updateBaseAlbum} />
+                    <button className="m-2" onClick={handleRecommendation}>Recommend Album</button>
+                </div>
+                <div className="col-7">
+                    {recommendedAlbum && <AlbumCard album={recommendedAlbum}/>}
+                </div>
+            </div>
             <div>
-                <h4 className="title">Select Album to use for getting recommended Album</h4>
-                <CustomSelect options={albumOptions} onSelectChange={updateBaseAlbum} />
-                <button className="m-2" onClick={handleRecommendation}>Recommend Album</button>
-                {recommendedAlbum && <AlbumCard album={recommendedAlbum}/>}
+                <br/>
+                
             </div>
         </div>
     )
