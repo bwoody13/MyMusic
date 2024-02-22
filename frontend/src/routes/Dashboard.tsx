@@ -5,7 +5,6 @@ function Dashboard() {
 
     return (
         <div className='dashboard'>
-            {/* <h1 className='dashboard-title'>Dashboard</h1> */}
             <div className='row justify-content-center'>
                 <div className='card col-4'>
                     <AlbumDashboardButton />

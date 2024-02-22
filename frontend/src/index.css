@@ -169,3 +169,7 @@ button:focus-visible {
         padding-bottom: 40px;
     }
 }
+
+.custom-select {
+    /* overflow-y: hidden; */
+}

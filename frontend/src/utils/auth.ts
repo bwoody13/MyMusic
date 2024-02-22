@@ -64,6 +64,7 @@ export async function getAccessToken(code: string) {
   } catch (error) {
       console.error('Error during token retrieval:', error);
       window.location.href = '/';
+      alert("Error retrieving key. Please Try Again.")
   }
 }
 
@@ -82,5 +83,6 @@ export async function refreshAccessToken() {
   } catch (error) {
       console.error('Error during token refresh:', error);
       window.location.href = '/';
+      alert("Error refreshing key. Please Try Again")
   }
 }

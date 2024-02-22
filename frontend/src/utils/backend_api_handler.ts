@@ -13,6 +13,8 @@ const backendClient = axios.create({
   }
 });
 
+// TODO: Create listener to report failures
+
 async function backendGet(endpoint: string, options: AxiosRequestConfig = {}) {
   const response = await backendClient.get(endpoint, options);
   return response.data;

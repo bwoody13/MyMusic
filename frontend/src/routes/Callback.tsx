@@ -33,10 +33,9 @@ function Callback() {
                         // Handle error, maybe redirect to login
                         navigate("/");
                     });
-                } else {
-                    navigate("/")
-                }
-
+            } else {
+                navigate("/")
+            }
         }
     },
         [navigate, tokenProcessed, getUserInfo, updateUser, getAccessToken]

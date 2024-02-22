@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import '../components/Playlists/Playlist.css';
 import SmartPlaylists from "../components/Playlists/smart-playlist/SmartPlaylists";
-import { retreivePlaylists } from "../utils/data_management";
-import { PlaylistDisplay } from "../Classes/Playlist";
-import CreatePlaylist from "../components/Playlists/CreatePlaylist";
+import { retreivePlaylists, syncPlaylistsWithBackend } from "../utils/data_management";
 import PlaylistRecommender from "../components/Playlists/PlaylistRecommender";
 import PlaylistEnhancer from "../components/Playlists/PlaylistEnhancer";
 import { usePlaylists } from "../contexts/PlaylistContext";
@@ -18,10 +16,17 @@ function PlaylistDashboard() {
             setLoading(true);
             try {
                 const playlistData = await retreivePlaylists();
-                setPlaylists(playlistData);
+                if (playlistData.length === 0) {
+                    syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => {
+                        setPlaylists(playlistData);
+                        setLoading(false);
+                    }));
+                } else {
+                    setPlaylists(playlistData);
+                    setLoading(false);
+                }   
             } catch (error) {
                 console.error("Error fetching data:", error);
-            } finally {
                 setLoading(false);
             }
         };
@@ -30,7 +35,6 @@ function PlaylistDashboard() {
 
     return (
         <div className="playlist-dashboard">
-            {/* <h1 className="title">Playlist Dashboard</h1> */}
             <div className="dashboard-content">
                 {isLoading ? <p>Updating Playlists...</p> : 
                     <div>                        

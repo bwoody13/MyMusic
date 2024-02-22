@@ -45,20 +45,21 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
     return (
         <div id="recommender" className="scroll-page">
             <div className="row">
-                <div className="col-5">
+                <div className="col-lg-5">
                     <h2 className="title">Playlist Recommender</h2>
-                    
                     <button className="m-2" onClick={handleRecommendation}>Recommend Tracks</button>
                 </div>
-                <div className="col-7">
-                    <p>Select a Playlist to use for getting recommendations</p>
+                <div className="col-lg-7">
+                    <p>Select a Playlist to use for getting recommendations:</p>
                     <CustomSelect options={playlistOptions} onSelectChange={updateBasePlaylist} />
-                    
                 </div>
-                {recommendationBase && <div><p>Recommended Tracks for {recommendationBase?.name}:</p>
+                <div>
                 {loadingRecs && <p>Loading recommendations...</p>}
-                {recommendations && <TrackList tracks={recommendations} cols={4}/>}
-                </div>}
+                {recommendations.length > 0 && recommendationBase && <>
+                    <p>Recommended Tracks for {recommendationBase?.name}:</p>
+                    <TrackList tracks={recommendations}/>
+                </>}
+                </div>
             </div>
         </div>
     )

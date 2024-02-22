@@ -12,10 +12,8 @@ type SmartPlaylistsProps = {
 
 
 function SmartPlaylists(props: SmartPlaylistsProps) {
-    
     const [smartPlaylists, setSmartPlaylists] = useState<SmartPlaylist[]>([]);
     const [loading, setLoading] = useState(false);
-
 
     const {playlists, playlistLoading} = props;
 

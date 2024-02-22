@@ -13,6 +13,7 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
     const {albums} = props;
     const [baseAlbum, setBaseAlbum] = useState<AlbumDisplay | null>(null);
     const [recommendedAlbum, setRecommendedAlbum] = useState<AlbumDisplay | null>(null);
+    const [isRecommending, setRecommending] = useState(false);
 
     const albumOptions: CustomOptionType[] = albums.map(album => ({
         id: album.id,
@@ -27,10 +28,15 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
     }
 
     const handleRecommendation = () => {
+        setRecommending(true);
         if (baseAlbum) {
-            recommendAlbum(baseAlbum, albums.map(album => album.id)).then(album => setRecommendedAlbum(album));
+            recommendAlbum(baseAlbum, albums.map(album => album.id)).then(album => {
+                setRecommendedAlbum(album); 
+                setRecommending(false);
+            });
         } else {
             console.log("No base album selected.")
+            setRecommending(false);
         }
         
     }
@@ -38,19 +44,23 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
     return (
         <div id="recommender" className="scroll-page">
             <div className="row">
-                <div className="col-5">
+                <div className="col col-lg-5">
                     <h2 className="title">Album Recommender</h2>
-                    <h4 className="title">Select Album to use for getting recommended Album</h4>
-                    <CustomSelect options={albumOptions} onSelectChange={updateBaseAlbum} />
                     <button className="m-2" onClick={handleRecommendation}>Recommend Album</button>
                 </div>
-                <div className="col-7">
-                    {recommendedAlbum && <AlbumCard album={recommendedAlbum}/>}
+                <div className="col-lg-7">
+                    <p className="title">Select Album to use for getting recommended Album</p>
+                    <CustomSelect options={albumOptions} onSelectChange={updateBaseAlbum} />
+                    
                 </div>
             </div>
-            <div>
-                <br/>
-                
+            <div className="row justify-content-center">
+                <div className="col col-lg-9 col-xl-8">
+                    {isRecommending ? <p className="title">Recommending...</p> : <>
+                    <br/>
+                    {recommendedAlbum && <AlbumCard album={recommendedAlbum}/>}
+                    </>}
+                </div>
             </div>
         </div>
     )

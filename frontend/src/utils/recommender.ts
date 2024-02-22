@@ -55,7 +55,7 @@ export async function recommendTracksFromPlaylist(basePlaylist: PlaylistDisplay)
     }
 
     const recommendations = Array.from(new Set(await Promise.all(baseTracksSample.map(async (sample) => {
-        const recommendations = await recommendTracks([], [], sample, 10);
+        const recommendations = await recommendTracks([], [], sample, 12);
         return recommendations;
     })).then(recommendations => recommendations.flat())));
 
@@ -70,17 +70,17 @@ export async function recommendTracksForPlaylist(playlist: PlaylistDisplay): Pro
         trackSamples.push(_.sampleSize(playlistTrackIds, 5));
     }
     const recommendations = Array.from(new Set(await Promise.all(trackSamples.map(async (sample) => {
-        const recommendations = await recommendTracks([], [], sample, 7);
+        const recommendations = await recommendTracks([], [], sample, 8);
         return recommendations;
     })).then(recommendations => recommendations.flat())));
 
     const playlistTrackSet = new Set(playlistTrackIds);
     const filteredRecommendations = recommendations.filter(track => !playlistTrackSet.has(track.id));
     let finalRecommendations = null;
-    if (filteredRecommendations.length < 10) {
+    if (filteredRecommendations.length < 12) {
         finalRecommendations = filteredRecommendations;
     } else {
-        finalRecommendations = _.sampleSize(filteredRecommendations, 10);
+        finalRecommendations = _.sampleSize(filteredRecommendations, 12);
     }
     return trackRecommendationsToTrackDisplay(finalRecommendations);
 }

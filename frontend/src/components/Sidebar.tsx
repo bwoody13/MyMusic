@@ -19,7 +19,6 @@ const Sidebar: React.FC = () => {
 
     if (pathname === '/')
         return <></>
-        // return <div className="sidebar bg-dark"></div>;
 
     function handleAlbumUpdate() {
         setLoading(true);
@@ -51,18 +50,35 @@ const Sidebar: React.FC = () => {
         setPlaylists([...playlists, playlist]);
     }
 
+    function handleUpdateLibrary() {
+        setLoading(true)
+        try {
+            Promise.all([syncAlbumsWithBackend(), syncPlaylistsWithBackend()]).then(() => {
+                Promise.all([retreiveAlbums(), retreivePlaylists()]).then(([albumsData, playlistData]) => {
+                  setAlbums(albumsData);
+                  setPlaylists(playlistData);
+                  setLoading(false);
+                });
+              });
+        } catch (error) {
+            console.error('Error updating library:', error);
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="sidebar bg-dark">
             {/* Display user info if logged in */}
             {user && (
                 <div className="user-info">
-                    <img src={user.images.length > 0 ? user.images[0].url : ""} alt="User" className="user-profile-img" />
+                    <img src={user.images.length > 0 ? (user.images[0].url.length > 0 ? user.images[0].url : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y") : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y"} alt="User" className="user-profile-img" />
                     <br/>
                     <p className="user-name">{user.display_name}</p>
                 </div>
             )}
-            
+            {pathname === '/dashboard' && <>
+                <button className='p-2 mb-2' onClick={handleUpdateLibrary}>Update Library</button>
+            </>}
             {pathname === "/dashboard/album" && (<>
                 <button className='p-2 mb-2' onClick={handleAlbumUpdate}>Update Albums</button>
                 <hr/>

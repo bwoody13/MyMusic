@@ -14,9 +14,11 @@
     
     .child-container {
         .card-img {
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            max-width: 100px;
+            height: auto;
             margin-top: 5px;
+            cursor: pointer;
         }
         
         .card {
@@ -51,7 +53,8 @@
             bottom: 0;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Green-checkmark.svg/1200px-Green-checkmark.svg.png');
             background-color: rgba(255, 255, 255, 0.3);
-            width: 100px;
+            width: 100%;
+            max-width: 100px;
             height: auto;
             background-repeat: no-repeat;
             background-position: center;
@@ -75,7 +78,9 @@
     .playlist-card {
         img {
             padding-top: 5px;
-            width: 50px;
+            /* width: 100%; */
+            width: 100%;
+            max-width: 75px;
             height: auto;
         }
     
@@ -93,7 +98,8 @@
     }
 
     .track-img {
-        width: 75px;
+        width: 100%;
+        max-width: 75px;
     }
 
     .btn-link {

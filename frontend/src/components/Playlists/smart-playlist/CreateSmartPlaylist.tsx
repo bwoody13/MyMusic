@@ -19,6 +19,7 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
         acc[playlist.id] = false; // Initialize all checkboxes as unchecked
         return acc;
     }, {} as { [id: string]: boolean }));
+    const [isCreating, setCreating] = useState(false);
 
     const parentPlaylistOptions: CustomOptionType[] = playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id).map((playlist) => ({
         id: playlist.id,
@@ -34,8 +35,8 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
         }));
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleSubmit = () => {
+        setCreating(true);
         const childPlaylistIds = Object.keys(selectedChildPlaylists).filter(id => selectedChildPlaylists[id]);
         const user: User = JSON.parse(localStorage.getItem('user') || '{}');
         const smartPlaylistData = {
@@ -44,40 +45,39 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
             owner_id: user.id
         };
         console.log(smartPlaylistData);
-        addSmartPlaylist(smartPlaylistData)
+        try {
+            addSmartPlaylist(smartPlaylistData)
             .then(() => 
                 getSmartPlaylists()
                     .then(smartPlaylists => {
                         setSmartPlaylists(smartPlaylists);
                         setParentPlaylistId('');
                         setSelectedChildPlaylists({});
-                        alert("New Smart Playlist added")
+                        setCreating(false);
+                        alert("New Smart Playlist added");
                     })
             );
+        } catch (error) {
+            console.error(error);
+            setCreating(false);
+        }
     };
 
     return (
         <div id="create-sp" className="scroll-page">
-            <form onSubmit={handleSubmit}>
-                    <div className="parent-container">
-                        <span><strong>Parent Playlist: </strong><CustomSelect options={parentPlaylistOptions} onSelectChange={setParentPlaylistId} /></span>
-                        {/* <ParentPlaylistDropdown 
-                            playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} 
-                            selectedParentId={parentPlaylistId} 
-                            onParentChange={setParentPlaylistId} 
-                        /> */}
-                    </div>
-                    <br/>
-                    <div className="container-fluid child-container">
-                        <strong>Child Playlists:</strong>
-                        <ChildPlaylistChecklist 
-                            playlists={playlists} 
-                            selectedPlaylists={selectedChildPlaylists} 
-                            onSelectionChange={handleChildChange} 
-                        />
-                    </div>
-                    <button type="submit">Create Smart Playlist</button>
-                </form>
+            <div className="parent-container">
+                <span><strong>Parent Playlist: </strong><CustomSelect options={parentPlaylistOptions} onSelectChange={setParentPlaylistId} /></span>
+            </div>
+            <br/>
+            <div className="container-fluid child-container">
+                <strong>Child Playlists:</strong>
+                <ChildPlaylistChecklist 
+                    playlists={playlists} 
+                    selectedPlaylists={selectedChildPlaylists} 
+                    onSelectionChange={handleChildChange} 
+                />
+            </div>
+            {isCreating ? <p>Creating Smart Playlist...</p> : <button onClick={handleSubmit}>Create Smart Playlist</button>}
         </div>
     )
 };

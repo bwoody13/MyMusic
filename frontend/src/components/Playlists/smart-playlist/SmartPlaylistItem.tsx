@@ -26,7 +26,7 @@ const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist, se
 
     return (
         <div className='row card smart-playlist-card'>
-            <div className='col-2'>
+            <div className='col-md-4 col-lg-3'>
                 <div className='row'>
                     <div className=''>
                         <p>Parent:</p>
@@ -36,13 +36,13 @@ const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist, se
                     </div>
                 </div>
             </div>
-            <div className='col-8'>
+            <div className='col-md-6 col-lg-7'>
                 <p>Children:</p>
-                <div className='row row-cols-3 row-cols-xl-4'>
+                <div className='row row-cols-1 row-cols-md-2 row-cols-xl-3'>
                     {smartPlaylist.children.map(childPlaylist => <div className='col'><SmallPlaylistCard key={childPlaylist.playlist.id + "child"} playlist={childPlaylist.playlist} /></div>)}
                 </div>
             </div>
-            <div className='col-2 sync'>
+            <div className='col-md-2 sync'>
                 <button onClick={onSync}>Sync Playlist</button>
                 <br/>
                 <input type='checkbox' checked={removeUnmatched} onChange={() => setRemoveUnmatched(!removeUnmatched)} /> Remove Extraneous Parent Tracks

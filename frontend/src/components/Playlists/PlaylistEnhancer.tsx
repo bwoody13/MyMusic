@@ -11,8 +11,6 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
     const [recommendedTracks, setRecommendedTracks] = useState<TrackDisplay[]>([]);
     const [loadingRecs, setLoadingRecs] = useState(false);
 
-
-
     const playlistOptions: CustomOptionType[] = playlists.map((playlist) => ({
         id: playlist.id,
         name: playlist.name,
@@ -38,22 +36,21 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
         }
     }
     
-
     return (
         <div id="enhancer" className="scroll-page">
             
             <div className="row">
-                <div className="col-5">
+                <div className="col-lg-5">
                     <h2 className="title">Playlist Enhancer</h2>
                 </div>
-                <div className="col-7">
-                    <p>Select a Playlist to Enhance</p>
+                <div className="col-lg-7">
+                    <p>Select a Playlist to Enhance:</p>
                     <CustomSelect options={playlistOptions} onSelectChange={updateSelectedPlaylist} />
                 </div>
             </div>
             <button className="m-2" onClick={handleSuggestions}>Get Suggestions</button>
             {loadingRecs && <p>Loading recommendations...</p>}
-            {(recommendedTracks && selectedPlaylist) && <><p>Recommended Enhancements for {selectedPlaylist.name}</p><TrackList tracks={recommendedTracks} cols={4}/></>}
+            {(recommendedTracks.length > 0 && selectedPlaylist) && <><p>Recommended Enhancements for {selectedPlaylist.name}:</p><TrackList tracks={recommendedTracks}/></>}
         </div>
     )
 };

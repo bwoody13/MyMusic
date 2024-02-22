@@ -7,23 +7,23 @@ const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolea
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
-      };
+    };
 
-      const renderDescription = () => {
-        const maxDescriptionLength = 50;
-      
-        if (isExpanded || playlist.desc.length <= maxDescriptionLength) {
-          return <>{parse(playlist.desc)}
-                {isExpanded && <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>Collapse</button>}
-            </>;
-        }
-        return (
-          <>
-            {parse(`${playlist.desc.substring(0, maxDescriptionLength)}`)}
-            <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>...</button>
-          </>
-        );
-      };
+    const renderDescription = () => {
+    const maxDescriptionLength = 50;
+    
+    if (isExpanded || playlist.desc.length <= maxDescriptionLength) {
+        return <>{parse(playlist.desc)}
+            {isExpanded && <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>Collapse</button>}
+        </>;
+    }
+    return (
+        <>
+        {parse(`${playlist.desc.substring(0, maxDescriptionLength)}`)}
+        <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>...</button>
+        </>
+    );
+    };
 
      return (
             <div className="card">

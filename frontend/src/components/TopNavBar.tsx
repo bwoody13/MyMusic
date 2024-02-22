@@ -4,11 +4,11 @@ const TopNavBar = () => {
     const { pathname } = useLocation();
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav className="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
             <div className="container-fluid">
                 <a href="/dashboard" className="navbar-brand"><span className="my">My</span><span className="nav-title">Spotify</span></a>
                 <div className='section-title'>
-                {pathname === '/' &&
+                    {pathname === '/' &&
                         <h1>Login</h1>
                     }
                     {pathname === '/dashboard' &&
