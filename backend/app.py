@@ -44,7 +44,7 @@ def update_user():
     access_token = data.get("access_token")
 
     user = User.query.filter_by(id=id).first()
-    name = data.get("name")
+    name = data.get("display_name")
     if name:
         if not user:
             user = User(id=id, name=name)
@@ -53,7 +53,7 @@ def update_user():
             user.name = name
 
     db.session.commit()
-    session['user_id'] = user.id
+    session['user_id'] = id
     session['access_token'] = access_token
     return jsonify({"message": "User updated successfully"}), 200
 
@@ -137,7 +137,9 @@ def update_playlists():
         owner_id = owner_data.get("id")
         snapshot_id = playlist_data.get("snapshot_id")
         if not playlist_id or not name or not owner_data or not owner_id or not snapshot_id:
-            return jsonify({"error": "Playlist data is incomplete"}), 400
+            print(playlist_data, "skipping...")
+            continue
+            # return jsonify({"error": "Playlist data is incomplete"}), 400
 
         owner_name = owner_data.get("name", "")
         desc = playlist_data.get("description", "")
