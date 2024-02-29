@@ -2,7 +2,7 @@ import axios from "axios";
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const SCOPE = import.meta.env.VITE_SPOTIFY_SCOPE;
-const REDIRECT_URI = "http://localhost:5173/callback";
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
