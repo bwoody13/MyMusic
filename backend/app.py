@@ -41,7 +41,7 @@ def update_user():
     if not id:
         return jsonify({"error": "User ID is required"}), 400
 
-    access_token = data.get("access_token")
+    # access_token = data.get("access_token")
 
     user = User.query.filter_by(id=id).first()
     name = data.get("display_name")
@@ -54,7 +54,7 @@ def update_user():
 
     db.session.commit()
     session['user_id'] = id
-    session['access_token'] = access_token
+    # session['access_token'] = access_token
     return jsonify({"message": "User updated successfully"}), 200
 
 
