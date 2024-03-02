@@ -17,6 +17,8 @@ CORS(app, supports_credentials=True)
 app.secret_key = APP_SECRET
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 # app.config['SQLALCHEMY_ECHO'] = True
 
 
@@ -281,6 +283,12 @@ def sync_smart_playlists():
 
     db.session.commit()
     return jsonify({"message": "Smart playlist snapshots updated successfully"}), 200
+
+
+# @app.after_request
+# def after_request(response):
+#     response.headers["Set-Cookie"] = "session=your_session_value; SameSite=None; Secure"
+#     return response
 
 
 if __name__ == '__main__':
