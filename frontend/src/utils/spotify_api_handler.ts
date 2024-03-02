@@ -22,6 +22,7 @@ spApiClient.interceptors.response.use(response => response, async (error) => {
     if (error.response && error.response.status === 401) {
         await refreshAccessToken()
     }
+    alert("Request failed due to invalid token. Token was refreshed. Please resubmit request.")
     return Promise.reject(error);
 });
 
