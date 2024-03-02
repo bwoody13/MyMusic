@@ -15,7 +15,7 @@ APP_SECRET = os.getenv('APP_SECRET')
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = APP_SECRET
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myspotify.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SQLALCHEMY_ECHO'] = True
 
@@ -141,7 +141,7 @@ def update_playlists():
             continue
             # return jsonify({"error": "Playlist data is incomplete"}), 400
 
-        owner_name = owner_data.get("name", "")
+        owner_name = owner_data.get("name", owner_id)
         desc = playlist_data.get("description", "")
         images = playlist_data.get("images", [{}])
         img_url = images[0].get("url", "") if images else ""
@@ -207,6 +207,7 @@ def add_smart_playlist():
     if owner_id != user_id:
         return jsonify({"error": "User ID does not match playlist owner ID"}), 403
 
+    SmartPlaylist.query.filter_by(parent_playlist_id=parent_playlist_id).delete()
     for child_playlist_id in children:
         if child_playlist_id == parent_playlist_id:
             db.session.rollback()
