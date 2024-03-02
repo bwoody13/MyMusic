@@ -6,7 +6,7 @@ import Album, { AlbumDisplay } from '../Classes/Album';
 import { plainToInstance } from 'class-transformer';
 
 const backendClient = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
