@@ -40,7 +40,7 @@ export async function recommendAlbum(baseAlbum: AlbumDisplay, excludeAlbums: str
             maxCountAlbumId = albumId;
         }
     }
-    console.log(maxCount, maxCountAlbumId)
+    console.log(maxCount, maxCountAlbumId, baseAlbum.id)
 
     const recommendAlbum = await getAlbum(maxCountAlbumId);
     return albumToAlbumDisplay(recommendAlbum);

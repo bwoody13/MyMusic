@@ -35,7 +35,8 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
                 setRecommending(false);
             });
         } else {
-            console.log("No base album selected.")
+            alert("Please select a base album to recommend another album.")
+            // console.log("No base album selected.")
             setRecommending(false);
         }
         

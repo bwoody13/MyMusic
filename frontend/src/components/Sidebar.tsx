@@ -18,7 +18,9 @@ const Sidebar: React.FC = () => {
     const user: User | null = userLS ? JSON.parse(userLS) : null;
 
     if (pathname === '/')
-        return <></>
+        return <div className="sidebar bg-dark">
+            <p className='user-name'>Log in to view sidebar content.</p>
+        </div>
 
     function handleAlbumUpdate() {
         setLoading(true);
