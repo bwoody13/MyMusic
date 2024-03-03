@@ -56,7 +56,7 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
                 </div>
             </div>
             <div className="row justify-content-center">
-                <div className="col col-lg-9 col-xl-8">
+                <div className="col col-lg-10 col-xl-10 col-xxl-8">
                     {isRecommending ? <p className="title">Recommending...</p> : <>
                     <br/>
                     {recommendedAlbum && <AlbumCard album={recommendedAlbum}/>}
