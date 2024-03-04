@@ -7,6 +7,14 @@ type CustomSelectProps = {
     onSelectChange: (id: string) => void;
 }
 
+const customStyles = {
+    menuList: (provided: any) => ({
+      ...provided,
+      overflowY: 'auto',
+      overflowX: 'hidden'
+    }),
+  };
+
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelectChange }) => (
     <Select
         className="custom-select"
@@ -15,6 +23,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelectChange }) 
         getOptionValue={(option) => option.id}
         components={{ Option: CustomOption }}
         onChange={(option) => option && onSelectChange(option.id)}
+        styles={customStyles}
     />
 );
 

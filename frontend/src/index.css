@@ -176,10 +176,6 @@ button:focus-visible {
     }
 }
 
-.custom-select {
-    /* overflow-y: hidden; */
-}
-
 hr {
     height: 5px;
     background: linear-gradient(90deg, #1DB954 0%, #191414 50%, #1DB954 100%);

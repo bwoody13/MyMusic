@@ -6,6 +6,7 @@ import { recommendTracksForPlaylist } from "../../utils/recommender";
 import { TrackDisplay } from "../../Classes/Track";
 import TrackList from "./TrackList";
 import { addTracksToPlaylist } from "../../utils/spotify_api_handler";
+import PlaylistLink from "./PlaylistLink";
 import { makeTrackUri } from "../../utils/helpers";
 
 const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists}) => {
@@ -65,7 +66,7 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
             </div>
             <button className="m-2" onClick={handleSuggestions}>Get Suggestions</button>
             {loadingRecs && <p>Loading recommendations...</p>}
-            {(recommendedTracks.length > 0 && selectedPlaylist) && <><p>Recommended Enhancements for {selectedPlaylist.name}:</p><TrackList tracks={recommendedTracks}/>
+            {(recommendedTracks.length > 0 && selectedPlaylist) && <><p>Recommended Enhancements for <PlaylistLink playlist={selectedPlaylist}/>:</p><TrackList tracks={recommendedTracks}/>
             {!addedTracks && <button onClick={handleAddTracks}>Add Tracks to Playlist</button>}</>}
         </div>
     )

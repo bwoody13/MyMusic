@@ -5,6 +5,7 @@ import { TrackDisplay } from "../../Classes/Track";
 import CustomSelect from "../CustomSelect";
 import { recommendTracksFromPlaylist } from "../../utils/recommender";
 import TrackList from "./TrackList";
+import PlaylistLink from "./PlaylistLink";
 
 type PlaylistRecommenderProps = {
     playlists: PlaylistDisplay[];
@@ -56,7 +57,7 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
                 <div>
                 {loadingRecs && <p>Loading recommendations...</p>}
                 {recommendations.length > 0 && recommendationBase && <>
-                    <p>Recommended Tracks for {recommendationBase?.name}:</p>
+                    <p>Recommended Tracks for <PlaylistLink playlist={recommendationBase}/>:</p>
                     <TrackList tracks={recommendations}/>
                 </>}
                 </div>
