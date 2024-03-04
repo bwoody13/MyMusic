@@ -63,3 +63,7 @@ export function trackRecommendationsToTrackDisplay(tracks: TrackRecommendations[
         albumImage: track.album.images.length > 0 ? track.album.images[0].url : "",
     }));
 }
+
+export function makeTrackUri(trackId: string): string {
+    return `spotify:track:${trackId}`;
+}

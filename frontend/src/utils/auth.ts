@@ -65,6 +65,7 @@ export async function getAccessToken(code: string) {
       console.error('Error during token retrieval:', error);
       window.location.href = '/';
       alert("Error retrieving key. Please Try Again.")
+      throw new Error('Error during token retrieval');
   }
 }
 
