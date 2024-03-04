@@ -22,8 +22,13 @@
         }
         
         .card {
+            box-sizing: border-box;
             text-align: left;
             padding: 10px;
+            min-height: 125px;
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         
         .card-body {
@@ -39,7 +44,7 @@
             margin-bottom: 5px;
             font-size: 0.8rem;
         }
-        
+
         .card-img-container {
             position: relative;
             width: 100%;

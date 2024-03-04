@@ -1,29 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PlaylistDisplay } from '../../../Classes/Playlist';
 import parse from 'html-react-parser'
 
 const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolean }> = ({ playlist, isChecked }) => {   
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-    const renderDescription = () => {
-    const maxDescriptionLength = 50;
-    
-    if (isExpanded || playlist.desc.length <= maxDescriptionLength) {
-        return <>{parse(playlist.desc)}
-            {isExpanded && <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>Collapse</button>}
-        </>;
-    }
-    return (
-        <>
-        {parse(`${playlist.desc.substring(0, maxDescriptionLength)}`)}
-        <button className="btn btn-link p-0 border-0 align-baseline" onClick={toggleExpand}>...</button>
-        </>
-    );
-    };
 
      return (
             <div className="card">
@@ -39,7 +18,7 @@ const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolea
                             <strong className="card-title">{parse(playlist.name)}</strong>
                             <p className="card-text"><small className="text-muted">By {parse(playlist.owner_name)}</small></p>
                             {/* <p className="card-text">{parse(playlist.desc)}</p> */}
-                            <p className="card-text desc-text">{renderDescription()}</p>
+                            <p className="card-text desc-text">{parse(playlist.desc)}</p>
                         </div>
                     </div>
                 </div>
