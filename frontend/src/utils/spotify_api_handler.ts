@@ -126,3 +126,8 @@ export async function getArtists(artistIds: string[]): Promise<Artist[]> {
     const response = await apiGet(`artists?ids=${artistIds.join(',')}`);
     return plainToInstance(Artist, response.data.artists, excludeVals);
 }
+
+export async function getSinglePlaylist(playlistId: string): Promise<Playlist> {
+    const response = await apiGet(`playlists/${playlistId}`);
+    return plainToInstance(Playlist, response.data as Playlist, excludeVals);
+}

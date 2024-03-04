@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { PlaylistDisplay } from '../../../Classes/Playlist';
 import parse from 'html-react-parser'
+import PlaylistLink from '../PlaylistLink';
 
 const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolean }> = ({ playlist, isChecked }) => {   
 
@@ -15,7 +16,7 @@ const ChildPlaylistCard: React.FC<{ playlist: PlaylistDisplay, isChecked: boolea
                     </div>
                     <div className=" col-12 col-md-7">
                         <div className="card-body">
-                            <strong className="card-title">{parse(playlist.name)}</strong>
+                            <strong className="card-title"><PlaylistLink playlist={playlist} /></strong>
                             <p className="card-text"><small className="text-muted">By {playlist.owner_name ? parse(playlist.owner_name) : ''}</small></p>
                             {/* <p className="card-text">{parse(playlist.desc)}</p> */}
                             <p className="card-text desc-text">{parse(playlist.desc)}</p>

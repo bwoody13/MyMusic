@@ -53,8 +53,16 @@ class Playlist(Base):
     img_url = db.Column(db.String(), unique=False, nullable=True)
     child_playlists = db.relationship('SmartPlaylist',
                                       foreign_keys="SmartPlaylist.parent_playlist_id",
-                                      backref='playlist', lazy=True,
-                                      cascade="all, delete")
+                                      # back_populates='parent_playlist',
+                                      backref='playlist',
+                                      lazy=True,
+                                      cascade='all, delete, delete-orphan')
+    followers = db.relationship('PlaylistFollower', backref='playlist',
+                                lazy=True, cascade='all, delete, delete-orphan')
+    # parent_playlists = db.relationship('SmartPlaylist',
+    #                                    foreign_keys="SmartPlaylist.child_playlist_id",
+    #                                    back_populates='child_playlist', lazy=True,
+    #                                    cascade='all, delete, delete-orphan')
 
 
 class PlaylistFollower(Base):
@@ -66,3 +74,7 @@ class SmartPlaylist(Base):
     parent_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), primary_key=True)
     child_playlist_id = db.Column(db.String(), db.ForeignKey('playlist.id'), primary_key=True)
     last_sync_snapshot_id = db.Column(db.String(), unique=False, nullable=True)
+    # parent_playlist = db.relationship('Playlist', foreign_keys=[parent_playlist_id],
+    #                                   back_populates='child_playlists')
+    # child_playlist = db.relationship('Playlist', foreign_keys=[child_playlist_id],
+    #                                  back_populates='parent_playlists')

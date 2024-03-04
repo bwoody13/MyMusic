@@ -77,6 +77,8 @@ def update_albums():
         return jsonify({"error": "User ID not yet in session"}), 401
 
     data = request.json
+    remove_not_found_albums = data.get("remove_not_found_albums", False)
+    album_ids = []
     for album in data.get("albums", []):
         id = album.get("id")
         name = album.get("name")
@@ -86,6 +88,8 @@ def update_albums():
         artists = ", ".join([artist.get("name") for artist in artistsData])
         if not id or not name or not artists:
             return jsonify({"error": "Invalid album data"}), 400
+
+        album_ids.append(id)
 
         genres = ", ".join(album.get("genres", ""))
         images = album.get("images", [{}])
@@ -106,6 +110,10 @@ def update_albums():
         if not album_follower:
             album_follower = AlbumFollower(user_id=user_id, album_id=id)
             db.session.add(album_follower)
+
+    if remove_not_found_albums:
+        AlbumFollower.query.filter(AlbumFollower.user_id == user_id,
+                                   AlbumFollower.album_id.notin_(album_ids)).delete()
 
     user = User.query.filter_by(id=user_id).first_or_404()
     user.album_sync_date = datetime.utcnow()
@@ -132,6 +140,8 @@ def update_playlists():
         return jsonify({"error": "User ID not yet in session"}), 401
 
     data = request.json
+    remove_not_found_playlists = data.get("remove_not_found_playlists", False)
+    provided_ids = []
     for playlist_data in data.get('playlists', []):
         playlist_id = playlist_data.get("id")
         name = playlist_data.get("name")
@@ -142,7 +152,7 @@ def update_playlists():
             print(playlist_data, "skipping...")
             continue
             # return jsonify({"error": "Playlist data is incomplete"}), 400
-
+        provided_ids.append(playlist_id)
         owner_name = owner_data.get("display_name", owner_id)
         desc = playlist_data.get("description", "")
         images = playlist_data.get("images", [{}])
@@ -169,6 +179,26 @@ def update_playlists():
         if not playlist_follower:
             playlist_follower = PlaylistFollower(playlist_id=playlist_id, user_id=user_id)
             db.session.add(playlist_follower)
+
+    if remove_not_found_playlists:
+        PlaylistFollower.query.filter(
+            PlaylistFollower.playlist_id.notin_(provided_ids),
+            PlaylistFollower.user_id == user_id).delete()
+
+        SmartPlaylist.query.filter(
+            SmartPlaylist.parent_playlist_id.notin_(provided_ids)).delete()
+
+        SmartPlaylist.query.filter(
+            SmartPlaylist.child_playlist_id.notin_(provided_ids)).delete()
+
+        Playlist.query.filter(Playlist.owner_id == user_id,
+                              Playlist.id.notin_(provided_ids)).delete()
+
+        # for playlist in playlists_to_delete:
+        #     db.session.delete(playlist)
+
+        # for follower in following_to_delete:
+        #     db.session.delete(follower)
 
     user = User.query.filter_by(id=user_id).first()
     user.playlist_sync_date = datetime.utcnow()

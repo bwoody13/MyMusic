@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addTracksToPlaylist, createPlaylist } from '../../utils/spotify_api_handler';
+import { addTracksToPlaylist, createPlaylist, getSinglePlaylist } from '../../utils/spotify_api_handler';
 import { updatePlaylists } from '../../utils/backend_api_handler';
 import './CreatePlaylist.css';
 import { PlaylistDisplay } from '../../Classes/Playlist';
@@ -32,9 +32,18 @@ const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide
             createPlaylist(playlistData, user.id).then((playlist): void => {
                 if (tracksToAdd && tracksToAdd.length > 0) {
                     addTracksToPlaylist(playlist.id, tracksToAdd.map((track) => makeTrackUri(track.id))).then(() => {
-                        updatePlaylists([playlist]);
+                        // There is an API bug that assigns the playlist a weird undefined owner in response, calling API again on that specific playlist shows correct owner though. Re-call API to get the correct owner
+                        getSinglePlaylist(playlist.id).then((playlist) => {
+                            updatePlaylists([playlist], false);
+                            addPlaylist(playlistToPlaylistDisplay(playlist));
+                            alert("Created new playlist and added tracks if provided.");
+                        });
+                    });
+                } else {
+                    getSinglePlaylist(playlist.id).then((playlist) => {
+                        updatePlaylists([playlist], false);
                         addPlaylist(playlistToPlaylistDisplay(playlist));
-                        alert("Created new playlist and added tracks if provided.")
+                        alert("Created new playlist and added tracks if provided.");
                     });
                 }
             }, onHide);

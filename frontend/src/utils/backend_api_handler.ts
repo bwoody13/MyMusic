@@ -45,16 +45,16 @@ export async function getUser(): Promise<UserData> {
     return plainToInstance(UserData, userData)
 }
 
-export async function updateAlbums(albumsData: Album[]) {
-    return backendPost('/albums', { albums: albumsData });
+export async function updateAlbums(albumsData: Album[], removeUnfound: boolean) {
+    return backendPost('/albums', { albums: albumsData, remove_not_found_albums: removeUnfound });
 }
 
 export async function getAlbums(): Promise<AlbumDisplay[]> {
     return backendGet("/albums");
 }
 
-export async function updatePlaylists(playlistsData: Playlist[]): Promise<any> {
-    return backendPost('/playlists', { playlists: playlistsData });
+export async function updatePlaylists(playlistsData: Playlist[], removeUnfound: boolean): Promise<any> {
+    return backendPost('/playlists', { playlists: playlistsData, remove_not_found_playlists: removeUnfound });
 }
 
 export async function getPlaylists(): Promise<PlaylistDisplay[]> {
