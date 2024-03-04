@@ -100,8 +100,6 @@ button:focus-visible {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    /* background-color: rgba(38, 220, 102, 0.4); */
-    /* border-radius: 20% 20% 0 0; */
 }
 
 .sidebar {

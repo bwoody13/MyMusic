@@ -46,11 +46,11 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
         <div id="recommender" className="scroll-page">
             <div className="row">
                 <div className="col col-lg-5">
-                    <h2 className="title">Album Recommender</h2>
+                    <h2 className="title shaded">Album Recommender</h2>
                     <button className="m-2" onClick={handleRecommendation}>Recommend Album</button>
                 </div>
                 <div className="col-lg-7">
-                    <p className="title">Select Album to use for getting recommended Album</p>
+                    <p className="shaded">Select Album to use for getting recommended Album</p>
                     <CustomSelect options={albumOptions} onSelectChange={updateBaseAlbum} />
                     
                 </div>
