@@ -13,7 +13,7 @@ export async function syncPlaylistsWithBackend() {
 
 export async function retreiveAlbums() {
     const user = await getUser();
-    if (user.album_sync_date.getTime() + AUTO_SYNC_TIME < Date.now()) {
+    if (!user.album_sync_date || user.album_sync_date.getTime() + AUTO_SYNC_TIME < Date.now()) {
         await syncAlbumsWithBackend();
     }
     return getAlbums();
@@ -21,7 +21,7 @@ export async function retreiveAlbums() {
 
 export async function retreivePlaylists() {
     const user = await getUser();
-    if (user.playlist_sync_date.getTime() + AUTO_SYNC_TIME < Date.now()) {
+    if (!user.playlist_sync_date || user.playlist_sync_date.getTime() + AUTO_SYNC_TIME < Date.now()) {
         await syncPlaylistsWithBackend();
     }
     return getPlaylistsDB();
