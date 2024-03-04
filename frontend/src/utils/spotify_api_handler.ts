@@ -95,8 +95,8 @@ export async function removeTracksFromPlaylist(playlistId: string, trackUris: St
     return responses.map((response) => response.data);
 }
 
-export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo): Promise<Playlist> {
-    const response = await apiPost('me/playlists', newPlaylistInfo);
+export async function createPlaylist(newPlaylistInfo: NewPlaylistInfo, user_id: string): Promise<Playlist> {
+    const response = await apiPost(`users/${user_id}/playlists`, newPlaylistInfo);
     return plainToInstance(Playlist, response.data);
 }
 

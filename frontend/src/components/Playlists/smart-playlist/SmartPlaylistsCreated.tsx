@@ -1,6 +1,8 @@
 import { useState } from "react";
 import SmartPlaylist, { SmartPlaylistData } from "../../../Classes/SmartPlaylist";
 import SmartPlaylistItem from "./SmartPlaylistItem";
+import { random } from "lodash";
+import { randomInt } from "crypto";
 
 const SmartPlaylistsCreated: React.FC<{smartPlaylists: SmartPlaylist[], setSmartPlaylists: (value: React.SetStateAction<SmartPlaylist[]>) => void}> = ({smartPlaylists, setSmartPlaylists}) => {
     const [isSyncing, setIsSyncing] = useState(false);
@@ -12,7 +14,7 @@ const SmartPlaylistsCreated: React.FC<{smartPlaylists: SmartPlaylist[], setSmart
     return (
         <div id="created-sp" className="scroll-page">
             <h4>Smart Playlists Created</h4>
-            {isSyncing ? <p>Please wait, we are syncing a smart playlist.</p> : smartPlaylists.map((smartPlaylist, idx) => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id + idx} smartPlaylist={smartPlaylist} setIsSyncing={setIsSyncing} handleDelete={handleDelete} />)}
+            {isSyncing ? <p>Please wait, we are syncing a smart playlist.</p> : smartPlaylists.map((smartPlaylist, idx) => <SmartPlaylistItem key={smartPlaylist.parent_playlist.id + 'smart_display'} smartPlaylist={smartPlaylist} setIsSyncing={setIsSyncing} handleDelete={handleDelete} />)}
         </div>
     );
 };

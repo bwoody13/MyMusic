@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { createPlaylist } from '../../utils/spotify_api_handler';
+import { addTracksToPlaylist, createPlaylist } from '../../utils/spotify_api_handler';
 import { updatePlaylists } from '../../utils/backend_api_handler';
 import './CreatePlaylist.css';
 import { PlaylistDisplay } from '../../Classes/Playlist';
-import { playlistToPlaylistDisplay } from '../../utils/helpers';
+import { makeTrackUri, playlistToPlaylistDisplay } from '../../utils/helpers';
+import { TrackDisplay } from '../../Classes/Track';
+import User from '../../Classes/User';
 
 interface CreatePlaylistModalProps {
     show: boolean;
     onHide: () => void;
     addPlaylist: (playlist: PlaylistDisplay) => void;
+    tracksToAdd?: TrackDisplay[];
 }
 
-const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide, addPlaylist }) => {
+const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide, addPlaylist, tracksToAdd }) => {
     const [playlistName, setPlaylistName] = useState('');
     const [playlistDescription, setPlaylistDescription] = useState('');
     const [isPublic, setIsPublic] = useState(true);
@@ -23,10 +26,19 @@ const CreateaPlaylistModal: React.FC<CreatePlaylistModalProps> = ({ show, onHide
             description: playlistDescription,
             public: isPublic,
         };
-        createPlaylist(playlistData).then((playlist): void => {
-            updatePlaylists([playlist]);
-            addPlaylist(playlistToPlaylistDisplay(playlist));
-        });
+        let userLS = localStorage.getItem('user');
+        const user: User | null = userLS ? JSON.parse(userLS) : null;
+        if (user) {
+            createPlaylist(playlistData, user.id).then((playlist): void => {
+                if (tracksToAdd && tracksToAdd.length > 0) {
+                    addTracksToPlaylist(playlist.id, tracksToAdd.map((track) => makeTrackUri(track.id))).then(() => {
+                        updatePlaylists([playlist]);
+                        addPlaylist(playlistToPlaylistDisplay(playlist));
+                        alert("Created new playlist and added tracks if provided.")
+                    });
+                }
+            }, onHide);
+        }
         // Hide the modal on successful creation
         onHide();
     };

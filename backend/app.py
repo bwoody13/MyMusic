@@ -143,7 +143,7 @@ def update_playlists():
             continue
             # return jsonify({"error": "Playlist data is incomplete"}), 400
 
-        owner_name = owner_data.get("name", owner_id)
+        owner_name = owner_data.get("display_name", owner_id)
         desc = playlist_data.get("description", "")
         images = playlist_data.get("images", [{}])
         img_url = images[0].get("url", "") if images else ""

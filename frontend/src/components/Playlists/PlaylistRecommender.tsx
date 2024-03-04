@@ -6,17 +6,23 @@ import CustomSelect from "../CustomSelect";
 import { recommendTracksFromPlaylist } from "../../utils/recommender";
 import TrackList from "./TrackList";
 import PlaylistLink from "./PlaylistLink";
+import CreatePlaylistModal from "./CreatePlaylistModal";
+import { usePlaylists } from "../../contexts/PlaylistContext";
 
 type PlaylistRecommenderProps = {
     playlists: PlaylistDisplay[];
 }
 
-function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
-
+function PlaylistRecommender({ }: PlaylistRecommenderProps) {
+    const { playlists, setPlaylists } = usePlaylists();
     const [basePlaylist, setBasePlaylist] = useState<PlaylistDisplay | null>(null);
     const [recommendationBase, setRecommendationBase] = useState<PlaylistDisplay | null>(null);
     const [recommendations, setRecommendations] = useState<TrackDisplay[]>([]);
     const [loadingRecs, setLoadingRecs] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const openModal = () => setModalVisible(true);
+    const closeModal = () => setModalVisible(false);
 
     const playlistOptions: CustomOptionType[] = playlists.map((playlist) => ({
         id: playlist.id,
@@ -37,10 +43,14 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
             recommendTracksFromPlaylist(basePlaylist).then((recommendations) => {
                 setRecommendations(recommendations);
                 setLoadingRecs(false);
-            });
+            }, () => setLoadingRecs(false));
         } else {
             console.log("No base playlist selected.")
         }
+    }
+
+    function addPlaylist(playlist: PlaylistDisplay) {
+        setPlaylists([...playlists, playlist]);
     }
 
     return (
@@ -59,6 +69,8 @@ function PlaylistRecommender({ playlists }: PlaylistRecommenderProps) {
                 {recommendations.length > 0 && recommendationBase && <>
                     <p>Recommended Tracks for <PlaylistLink playlist={recommendationBase}/>:</p>
                     <TrackList tracks={recommendations}/>
+                    <button onClick={openModal}>Add Tracks to New Playlist</button>
+                    <CreatePlaylistModal show={modalVisible} onHide={closeModal} addPlaylist={addPlaylist} tracksToAdd={recommendations} />
                 </>}
                 </div>
             </div>
