@@ -30,6 +30,11 @@ async function backendPost(endpoint: string, data: any, options: AxiosRequestCon
     return response.data;
 }
 
+async function backendDelete(endpoint: string, options: AxiosRequestConfig = {}) {
+    const response = await backendClient.delete(endpoint, options);
+    return response.data;
+}
+
 // Specific API calls
 export async function updateUser(user: User): Promise<any> {
     return backendPost('/user', user);
@@ -66,4 +71,8 @@ export async function getSmartPlaylists(): Promise<SmartPlaylist[]> {
 
 export async function syncSmartPlaylistData(smartPlaylistSyncData: SmartPlaylistSyncData): Promise<any> {
     return backendPost('/smart_playlists/sync', smartPlaylistSyncData);
+}
+
+export async function deleteSmartPlaylist(smartPlaylistId: string): Promise<any> {
+    return backendDelete(`/smart_playlists/${smartPlaylistId}`);
 }

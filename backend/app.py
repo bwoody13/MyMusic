@@ -256,6 +256,17 @@ def get_smart_playlists():
     return jsonify(smart_playlist_data), 200
 
 
+@app.route("/smart_playlists/<string:playlist_id>", methods=["DELETE"])
+def delete_smart_playlist(playlist_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User ID not yet in session"}), 401
+
+    SmartPlaylist.query.filter_by(parent_playlist_id=playlist_id).delete()
+    db.session.commit()
+    return jsonify({"message": "Smart playlist deleted"}), 200
+
+
 @app.route("/smart_playlists/sync", methods=["POST"])
 def sync_smart_playlists():
     user_id = session.get('user_id')

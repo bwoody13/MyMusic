@@ -39,7 +39,7 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
                 <CreateSmartPlaylist playlists={playlists} setSmartPlaylists={setSmartPlaylists} />
             )}
             <hr/>
-            <SmartPlaylistsCreated smartPlaylists={smartPlaylists} />
+            <SmartPlaylistsCreated smartPlaylists={smartPlaylists} setSmartPlaylists={setSmartPlaylists} />
         </div>
     );
 }
