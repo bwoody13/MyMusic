@@ -13,7 +13,7 @@ APP_SECRET = os.getenv('APP_SECRET')
 
 # Init app
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=os.getenv('ALLOWED_DOMAINS'))
 app.secret_key = APP_SECRET
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
