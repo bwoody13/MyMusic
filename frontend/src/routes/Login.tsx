@@ -4,9 +4,9 @@ function Login() {
     return (
         <div className="login">
             <h2>Press below to authenticate with Spotify</h2>
-            <button onClick={() => redirectToAuthCodeFlow()}
-            >
-                Login</button>
+            <button onClick={() => redirectToAuthCodeFlow()}>Login</button>
+            <hr />
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeh6dRmUF_jBsiZNB7KnljT2hBdbAlnm5EJ2a_Myi5TTAejbA/viewform?embedded=true" width="700" height="520" frameBorder="0" marginHeight="0" marginWidth="0">Loading…</iframe>
         </div>
     )
 }

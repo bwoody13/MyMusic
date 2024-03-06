@@ -64,7 +64,7 @@ export async function getAccessToken(code: string) {
   } catch (error) {
       console.error('Error during token retrieval:', error);
       window.location.href = '/';
-      alert("Error retrieving key. Please Try Again.")
+      alert("Error retrieving key. Please Try Again. If you have not been registered in the application, we cannot use your account yet. As per Spotify's permissions, we must manually add your account. Please fill out the form below.")
   }
 }
 
