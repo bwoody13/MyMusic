@@ -10,7 +10,6 @@ type SmartPlaylistsProps = {
     playlistLoading: boolean;
 }
 
-
 function SmartPlaylists(props: SmartPlaylistsProps) {
     const [smartPlaylists, setSmartPlaylists] = useState<SmartPlaylist[]>([]);
     const [loading, setLoading] = useState(false);
@@ -18,16 +17,11 @@ function SmartPlaylists(props: SmartPlaylistsProps) {
     const {playlists, playlistLoading} = props;
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = () => {
             setLoading(true);
-            try {
-                const smartPlaylistData = await getSmartPlaylists();
-                setSmartPlaylists(smartPlaylistData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
-            }
+            getSmartPlaylists().then((smartPlaylistData) => setSmartPlaylists(smartPlaylistData))
+            .catch((error) => console.error('Error fetching data:', error))
+            .finally(() => setLoading(false));
         };
         fetchData();
     }, []);

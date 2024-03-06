@@ -12,23 +12,17 @@ function PlaylistDashboard() {
     const {isLoading, setLoading} = useLoading();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = () => {
             setLoading(true);
-            try {
-                const playlistData = await retreivePlaylists();
-                if (playlistData.length === 0) {
-                    syncPlaylistsWithBackend().then(() => retreivePlaylists().then(playlistData => {
-                        setPlaylists(playlistData);
-                        setLoading(false);
-                    }));
-                } else {
-                    setPlaylists(playlistData);
-                    setLoading(false);
-                }   
-            } catch (error) {
+            retreivePlaylists().then((playlistData) => {
+                setPlaylists(playlistData);
+            })
+            .catch((error) => {
                 console.error("Error fetching data:", error);
+            })
+            .finally(() => {
                 setLoading(false);
-            }
+            });
         };
         fetchData();
     }, []);

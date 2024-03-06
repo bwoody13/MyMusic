@@ -15,7 +15,7 @@ const backendClient = axios.create({
 
 backendClient.interceptors.response.use(response => response,
     error => {
-        alert(`Backend Request failed: ${error.response?.status} - ${error.message}. If this error persists please contact the MyMusic team.`);
+        alert(`Backend Request failed: ${error.response?.status} - ${error.message}. If this error persists please contact the MyMusic team. Logging back in may resolve your issue.`);
         return Promise.reject(error);
     }
 );

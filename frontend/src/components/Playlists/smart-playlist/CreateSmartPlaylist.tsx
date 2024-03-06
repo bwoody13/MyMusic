@@ -45,22 +45,18 @@ const CreateSmartPlaylist: React.FC<CreateSmartPlaylistProps> = ({playlists, set
             owner_id: user.id
         };
         console.log(smartPlaylistData);
-        try {
-            addSmartPlaylist(smartPlaylistData)
-            .then(() => 
-                getSmartPlaylists()
-                    .then(smartPlaylists => {
-                        setSmartPlaylists(smartPlaylists);
-                        setParentPlaylistId('');
-                        setSelectedChildPlaylists({});
-                        setCreating(false);
-                        alert("New Smart Playlist added");
-                    })
-            );
-        } catch (error) {
-            console.error(error);
+        addSmartPlaylist(smartPlaylistData).then(() => 
+            getSmartPlaylists()
+                .then(smartPlaylists => {
+                    setSmartPlaylists(smartPlaylists);
+                    setParentPlaylistId('');
+                    setSelectedChildPlaylists({});
+                }))
+        .catch(error => console.error(error))
+        .finally(() => {
             setCreating(false);
-        }
+            alert("New Smart Playlist added");
+        });
     };
 
     return (

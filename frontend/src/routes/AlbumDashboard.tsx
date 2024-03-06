@@ -12,23 +12,17 @@ function AlbumDashboard() {
     const { isLoading, setLoading } = useLoading();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = () => {
             setLoading(true);
-            try {
-                const albumsData = await retreiveAlbums();
-                if (albumsData.length === 0) {
-                    syncAlbumsWithBackend().then(() => retreiveAlbums().then(albumsData => {
-                        setAlbums(albumsData);
-                        setLoading(false);
-                    }));
-                } else {
-                    setAlbums(albumsData);
-                    setLoading(false);
-                }
-            } catch (error) {
+            retreiveAlbums().then((albumsData) => {
+                setAlbums(albumsData);
+            })
+            .catch((error) => {
                 console.error('Error fetching data:', error);
+            })
+            .finally(() => {
                 setLoading(false);
-            }
+            });
         };
         fetchData();
     }, []);

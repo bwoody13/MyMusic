@@ -1,8 +1,6 @@
 import { useState } from "react";
 import SmartPlaylist, { SmartPlaylistData } from "../../../Classes/SmartPlaylist";
 import SmartPlaylistItem from "./SmartPlaylistItem";
-import { random } from "lodash";
-import { randomInt } from "crypto";
 
 const SmartPlaylistsCreated: React.FC<{smartPlaylists: SmartPlaylist[], setSmartPlaylists: (value: React.SetStateAction<SmartPlaylist[]>) => void}> = ({smartPlaylists, setSmartPlaylists}) => {
     const [isSyncing, setIsSyncing] = useState(false);

@@ -12,9 +12,9 @@ function Callback() {
         if (tokenProcessed) {
             getUserInfo().then((user) => {
                 localStorage.setItem("user", JSON.stringify(user));
+                navigate("/dashboard");
                 updateUser(user).then(() => console.log("User updated in Backend"));
             });
-            navigate("/dashboard");
         } else {
             const queryParams = new URLSearchParams(window.location.search);
             const code = queryParams.get("code");
@@ -25,9 +25,9 @@ function Callback() {
                     .then(() => {
                         getUserInfo().then((user) => {
                             localStorage.setItem("user", JSON.stringify(user));
+                            navigate("/dashboard");
                             updateUser(user).then(() => console.log("User updated in Backend"));
                         });
-                        navigate("/dashboard");
                     }).catch(error => {
                         console.error("Error during token retrieval:", error);
                         // Handle error, maybe redirect to login

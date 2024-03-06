@@ -42,8 +42,9 @@ function PlaylistRecommender({ }: PlaylistRecommenderProps) {
             setLoadingRecs(true);
             recommendTracksFromPlaylist(basePlaylist).then((recommendations) => {
                 setRecommendations(recommendations);
-                setLoadingRecs(false);
-            }, () => setLoadingRecs(false));
+            })
+            .catch((error) => alert("Error creating recomendations."))
+            .finally(() => setLoadingRecs(false));
         } else {
             console.log("No base playlist selected.")
         }

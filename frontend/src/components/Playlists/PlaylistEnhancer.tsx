@@ -31,14 +31,13 @@ const PlaylistEnhancer: React.FC<{playlists: PlaylistDisplay[]}> = ({playlists})
 
     const handleSuggestions = () => {
         setLoadingRecs(true);
-        try {
-            recommendTracksForPlaylist(selectedPlaylist!).then((tracks) => {
-                setRecommendedTracks(tracks);
-                setLoadingRecs(false);
-            });
-        } catch (error) {
-            setLoadingRecs(false);
-        }
+        recommendTracksForPlaylist(selectedPlaylist!).then((tracks) => {
+            setRecommendedTracks(tracks);
+        })
+        .catch((error) => {
+            alert("Error ehnacing current playlist.")
+        })
+        .finally(() => setLoadingRecs(false));
     }
 
     const handleAddTracks = () => {

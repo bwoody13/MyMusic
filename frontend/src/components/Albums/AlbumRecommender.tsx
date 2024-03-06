@@ -32,6 +32,11 @@ function AlbumRecommender(props: AlbumRecommenderProps) {
         if (baseAlbum) {
             recommendAlbum(baseAlbum, albums.map(album => album.id)).then(album => {
                 setRecommendedAlbum(album); 
+            })
+            .catch(err => {
+                alert(`Error recommending an album: ${err}.`)
+            })
+            .finally(() => {
                 setRecommending(false);
             });
         } else {
