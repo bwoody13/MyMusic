@@ -11,9 +11,11 @@ load_dotenv()  # Load environment variables from .env file
 
 APP_SECRET = os.getenv('APP_SECRET')
 
+domains = os.getenv('ALLOWED_DOMAINS').split(',')
+
 # Init app
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=os.getenv('ALLOWED_DOMAINS'))
+CORS(app, supports_credentials=True, origins=domains)
 app.secret_key = APP_SECRET
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
