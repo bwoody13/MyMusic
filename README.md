@@ -1,4 +1,4 @@
-# MySpotify
+# MyMusic (previously MySpotify)
 A full-stack Spotify application that adds additional functionality on top of that available through the Spotify app. Soon to be deployed...
 
 ## Design Outline

@@ -6,7 +6,7 @@ const TopNavBar = () => {
     return (
         <nav className="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
             <div className="container-fluid">
-                <a href="/dashboard" className="navbar-brand"><span className="my">My</span><span className="nav-title">Spotify</span></a>
+                <a href="/dashboard" className="navbar-brand"><span className="my">My</span><span className="nav-title">Music</span></a>
                 <div className='section-title'>
                     {pathname === '/' &&
                         <h1>Login</h1>

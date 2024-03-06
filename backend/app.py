@@ -1,5 +1,5 @@
 from datetime import datetime
-import logging
+# import logging
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -14,7 +14,6 @@ APP_SECRET = os.getenv('APP_SECRET')
 
 domains = os.getenv('ALLOWED_DOMAINS').split(',')
 print(domains)
-# domains = ['http://localhost:5173']
 # Init app
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=domains)
@@ -36,7 +35,7 @@ with app.app_context():
 # ROUTES
 @app.route("/")
 def index():
-    return "MySpotify backend API is running!"
+    return "MyBackend API is running!"
 
 
 @app.route("/user", methods=["POST"])
