@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -12,7 +13,8 @@ load_dotenv()  # Load environment variables from .env file
 APP_SECRET = os.getenv('APP_SECRET')
 
 domains = os.getenv('ALLOWED_DOMAINS').split(',')
-
+print(domains)
+# domains = ['http://localhost:5173']
 # Init app
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=domains)
@@ -22,7 +24,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 # app.config['SQLALCHEMY_ECHO'] = True
-
+# logging.getLogger('flask_cors').level = logging.DEBUG
 
 db.init_app(app)
 
