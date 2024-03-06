@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import User from '../Classes/User';
 import { retreiveAlbums, retreivePlaylists, syncAlbumsWithBackend, syncPlaylistsWithBackend } from '../utils/data_management';
 import { useAlbums } from '../contexts/AlbumContext';
@@ -16,6 +16,18 @@ const Sidebar: React.FC = () => {
     const { playlists, setPlaylists } = usePlaylists();
     let userLS = localStorage.getItem('user');
     const user: User | null = userLS ? JSON.parse(userLS) : null;
+    const navigate = useNavigate();
+
+    // Logout function using navigate
+    const logoutUser = () => {
+        try {
+            localStorage.removeItem('user');
+            navigate('/');
+        } catch (error) {
+            console.error("Error logging out:", error);
+            alert("Logout failed, please try again.");
+        }
+    }
 
     if (pathname === '/')
         return <div className="sidebar bg-dark">
@@ -71,13 +83,14 @@ const Sidebar: React.FC = () => {
     return (
         <div className="sidebar bg-dark">
             {/* Display user info if logged in */}
-            {user && (
+            {user && (<>
                 <div className="user-info">
                     <img src={user.images.length > 0 ? (user.images[0].url.length > 0 ? user.images[0].url : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y") : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y"} alt="User" className="user-profile-img" />
                     <br/>
                     <p className="user-name">{user.display_name}</p>
+                    <a onClick={logoutUser} className="logout-btn">Logout</a>
                 </div>
-            )}
+                </>)}
             {pathname === '/dashboard' && <>
                 <button className='p-2 mb-2' onClick={handleUpdateLibrary}>Update Library</button>
             </>}
@@ -103,7 +116,7 @@ const Sidebar: React.FC = () => {
             
 
             {/* Additional conditional content can be added similarly */}
-            <NavLink to="/" className={getActiveLinkClass}>Login to New User</NavLink>
+            
         </div>
     );
 };

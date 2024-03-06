@@ -151,6 +151,10 @@ button:focus-visible {
     font-size: 1.5rem;
 }
 
+.logout-btn {
+    cursor: pointer;
+}
+
 .login {
     padding-top: 50px;
     /* margin-left: -250px; */
