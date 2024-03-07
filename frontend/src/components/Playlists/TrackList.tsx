@@ -1,4 +1,5 @@
 import { TrackDisplay } from "../../Classes/Track";
+import TrackLink from "./TrackLink";
 
 type TrackListProps = {
     tracks: TrackDisplay[];
@@ -14,7 +15,7 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
                             <img src={track.albumImage} alt={track.name} className="track-img" />
                         </div>
                         <div className="col-sm-7">
-                            <strong className="name">{track.name}</strong>
+                            <strong className="name"><TrackLink track={track}/></strong>
                             <p><small className="owner"> by {track.artists}</small></p>
                         </div>
                     </div>
