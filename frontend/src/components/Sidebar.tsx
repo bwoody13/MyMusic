@@ -87,7 +87,7 @@ const Sidebar: React.FC = () => {
                 <div className="user-info">
                     <img src={user.images.length > 0 ? (user.images[0].url.length > 0 ? user.images[0].url : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y") : "https://dev.acquia.com/sites/default/files/styles/coh_small_square/public/images/2023-07/GenericUserAvatar.png.webp?itok=NpTeGe9Y"} alt="User" className="user-profile-img" />
                     <br/>
-                    <p className="user-name">{user.display_name}</p>
+                    <p className="user-name"><a href={`https://open.spotify.com/user/${user.id}`} target="_blank" rel="noopener noreferrer">{user.display_name}</a></p>
                     <a onClick={logoutUser} className="logout-btn">Logout</a>
                 </div>
                 </>)}
