@@ -25,7 +25,7 @@ function AlbumDashboard() {
             });
         };
         fetchData();
-    }, []);
+    }, [setAlbums, setLoading, retreiveAlbums]);
 
     return (
         <div className='album-dashboard'>
