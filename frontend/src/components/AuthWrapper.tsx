@@ -1,37 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { refreshAccessToken } from "../utils/auth";
+import { updateUser } from "../utils/backend_api_handler";
+import { plainToInstance } from "class-transformer";
+import User from "../Classes/User";
 
 const AuthWrapper: React.FC<{children: React.ReactNode}> = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [refreshing, setRefreshing] = useState(false);
     
     useEffect(() => {
       const userInfo = localStorage.getItem('user');
       const tokenTimestamp = localStorage.getItem('token_timestamp');
       const userIsAuthenticated = Boolean(userInfo);
-      
-       // Check if the token timestamp is more than 4 hours old
-       const logoutUserIfTokenExpired = () => {
-        if (tokenTimestamp) {
-          const timestampDate = new Date(tokenTimestamp);
-          const currentDate = new Date();
-          const hoursDifference = Math.abs(currentDate.getTime() - timestampDate.getTime()) / 36e5;
-          if (hoursDifference > 4) {
-            // Token is more than 4 hours old, log the user out
-            console.log("Token expired, logging out...");
-            localStorage.removeItem('user');
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
+
+      if (tokenTimestamp) {
+        const timestampDate = new Date(tokenTimestamp);
+        const currentDate = new Date();
+        const hoursDifference = Math.abs(currentDate.getTime() - timestampDate.getTime()) / 36e5;
+        if (hoursDifference > 1) {
+          // Token is more than 4 hours old, log the user out
+          if (!refreshing) {
+            setRefreshing(true);
             localStorage.removeItem('token_timestamp');
-            navigate('/');
-            return true;
+            console.log("Token expired, refreshing out...");
+            refreshAccessToken().then(() => updateUser(plainToInstance(User, userInfo)));
           }
         }
-        return false;
-      };
-
-      if (logoutUserIfTokenExpired()) {
-        return;
       }
 
       if (userIsAuthenticated && location.pathname === '/') {
@@ -44,7 +40,7 @@ const AuthWrapper: React.FC<{children: React.ReactNode}> = ({ children }) => {
         navigate('/');
         return;
       }
-    }, [navigate, location.pathname]);
+    }, [navigate, location.pathname, setRefreshing, refreshing, refreshAccessToken, updateUser]);
   
     return <>{children}</>;
   };
