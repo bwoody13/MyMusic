@@ -17,7 +17,7 @@ const ChildPlaylistChecklist: React.FC<ChildPlaylistChecklistProps> = ({ playlis
                     <input 
                         type="checkbox"
                         id={`checkbox-${playlist.id}`}
-                        checked={selectedPlaylists[playlist.id]}
+                        checked={selectedPlaylists[playlist.id] || false}
                         onChange={(e) => onSelectionChange(playlist.id, e.target.checked)}
                         className="form-check"
                     />

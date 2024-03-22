@@ -23,7 +23,7 @@ export async function retreiveAlbums() {
 export async function retreivePlaylists() {
     const user = await getUser();
     if (!user.playlist_sync_date || user.playlist_sync_date.getTime() + AUTO_SYNC_TIME < Date.now()) {
-        console.log("Playlists sync required");
+        console.log("Playlists sync required"); 
         await syncPlaylistsWithBackend();
     }
     return getPlaylistsDB();
