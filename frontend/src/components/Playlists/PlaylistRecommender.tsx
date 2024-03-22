@@ -66,7 +66,7 @@ function PlaylistRecommender({ }: PlaylistRecommenderProps) {
                     <CustomSelect options={playlistOptions} onSelectChange={updateBasePlaylist} />
                 </div>
                 <div>
-                {loadingRecs && <p>Loading recommendations...</p>}
+                {loadingRecs && <p>Loading recommendations... Large playlists will take longer.</p>}
                 {recommendations.length > 0 && recommendationBase && <>
                     <p>Recommended Tracks for <PlaylistLink playlist={recommendationBase}/>:</p>
                     <TrackList tracks={recommendations}/>

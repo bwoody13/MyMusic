@@ -30,7 +30,7 @@ function PlaylistDashboard() {
     return (
         <div className="playlist-dashboard">
             <div className="dashboard-content">
-                {isLoading ? <p>Updating Playlists...</p> : 
+                {isLoading ? <p>Updating Playlists... This may take a moment. The delay related to number of playlist that need to be updated from Spotify.</p> : 
                     <div>                        
                         <PlaylistEnhancer playlists={playlists.filter(playlist => playlist.owner_id === JSON.parse(localStorage.getItem('user')!).id)} />
                         <hr/>

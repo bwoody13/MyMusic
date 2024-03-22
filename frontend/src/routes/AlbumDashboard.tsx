@@ -29,7 +29,7 @@ function AlbumDashboard() {
 
     return (
         <div className='album-dashboard'>
-            {isLoading ? <p>Loading Albums From Spotify... This may take a moment.</p> :
+            {isLoading ? <p>Loading Albums From Spotify... This may take a moment. The delay related to number of albums that need to be updated from Spotify.</p> :
                 <div>
                     <AlbumCollage albums={albums} />
                     <div className='dashboard-content'>
