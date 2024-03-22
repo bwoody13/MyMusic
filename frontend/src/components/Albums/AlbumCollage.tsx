@@ -12,7 +12,7 @@ const AlbumCollage = (props: AlbumCollageProps) => {
     // Ensure albums is not empty and collage_albums length is less than desired
     let i = 0;
     if (albums.length > 0) {
-        while (collage_albums.length < 400 && i < 100) {
+        while (collage_albums.length < 300 && i < 100) {
             collage_albums = collage_albums.concat(albums);
             console.log(collage_albums.length, i);
             i++;
