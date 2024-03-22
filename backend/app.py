@@ -87,10 +87,12 @@ def update_albums():
         name = album.get("name")
         artistsData = album.get("artists")
         if not artistsData:
-            return jsonify({"error": "Artists data is required"}), 400
+            continue
+            # return jsonify({"error": "Artists data is required"}), 400
         artists = ", ".join([artist.get("name") for artist in artistsData])
         if not id or not name or not artists:
-            return jsonify({"error": "Invalid album data"}), 400
+            continue
+            # return jsonify({"error": "Invalid album data"}), 400
 
         album_ids.append(id)
 
