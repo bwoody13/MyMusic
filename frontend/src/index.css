@@ -130,6 +130,18 @@ button:focus-visible {
     color: #1DB954; /* Active link color */
 }
 
+.green-title {
+    color: #1DB954;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.general-info {
+    color: #fff;
+    font-size: 0.9rem;
+}
+
 .user-info {
     padding: 10px;
     color: #fff;

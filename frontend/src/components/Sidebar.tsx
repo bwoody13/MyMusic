@@ -31,7 +31,11 @@ const Sidebar: React.FC = () => {
 
     if (pathname === '/')
         return <div className="sidebar bg-dark">
-            <p className='user-name'>Log in to view sidebar content.</p>
+            <p className='green-title'>ALBUM DASHBOARD</p>
+            <p className='general-info'>The Album Dashboard provides users the ability to interact with the albums they have liked, including a personalized collage of all the users albums. Other features include an Album Randomizer and Recommender.</p>
+            <hr/>
+            <p className='green-title'>PLAYLIST DASHBOARD</p>
+            <p className='general-info'>The Playlist Dashboard allows users to interact with their playlists. There are recommendation based features as well as the main feature: Smart Playlists, which adds relationships between playlists, allowing parents to inherit tracks from child playlists.</p>
         </div>
 
     function handleAlbumUpdate() {
@@ -112,11 +116,6 @@ const Sidebar: React.FC = () => {
             </>)}
             <hr/>
             <NavLink to="/dashboard" className={getActiveLinkClass}>Dashboard</NavLink>
-            {/* Conditional Links based on current route */}
-            
-
-            {/* Additional conditional content can be added similarly */}
-            
         </div>
     );
 };
