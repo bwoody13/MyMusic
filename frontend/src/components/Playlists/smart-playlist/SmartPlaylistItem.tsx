@@ -56,6 +56,7 @@ const SmartPlaylistItem: React.FC<SmartPlaylistItemProps> = ({ smartPlaylist, se
                 <button onClick={onSync}>Sync Playlist</button>
                 <br/>
                 <input type='checkbox' checked={removeUnmatched} onChange={() => setRemoveUnmatched(!removeUnmatched)} /> Delete Extra Parent Tracks
+                <br/>
                 <button onClick={onDelete}>Remove Smart Playlist</button>
             </div>
         </div>
