@@ -170,6 +170,17 @@ button:focus-visible {
     }
 }
 
+.footer {
+    color: #fff;
+    position: absolute;
+    bottom: 60px;
+    left: 32px;
+    width: 100%;
+    /* Adjust height as needed */
+    height: 50px;
+    /* Additional styling for your footer */
+}
+
 .logout-btn {
     cursor: pointer;
 }

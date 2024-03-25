@@ -116,6 +116,11 @@ const Sidebar: React.FC = () => {
             </>)}
             <hr/>
             <NavLink to="/dashboard" className={getActiveLinkClass}>Dashboard</NavLink>
+            <div className="spacer"></div>
+            <div className="footer">
+                <span>Made by <a href='https://bwoody13.github.io/meet-brendan/' target="_blank" rel="noopener noreferrer">Brendan Woodward</a></span>
+                
+            </div>
         </div>
     );
 };
