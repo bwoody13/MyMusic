@@ -186,7 +186,7 @@ button:focus-visible {
 }
 
 .login {
-    padding-top: 50px;
+    /* padding-top: 0px; */
     /* margin-left: -250px; */
     text-align: center;
 }

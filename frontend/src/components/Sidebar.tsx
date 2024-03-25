@@ -36,6 +36,9 @@ const Sidebar: React.FC = () => {
             <hr/>
             <p className='green-title'>PLAYLIST DASHBOARD</p>
             <p className='general-info'>The Playlist Dashboard allows users to interact with their playlists. There are recommendation based features as well as the main feature: Smart Playlists, which adds relationships between playlists, allowing parents to inherit tracks from child playlists.</p>
+            <div className="footer">
+                <span>Made by <a href='https://bwoody13.github.io/meet-brendan/' target="_blank" rel="noopener noreferrer">Brendan Woodward</a></span>
+            </div>
         </div>
 
     function handleAlbumUpdate() {
@@ -116,7 +119,6 @@ const Sidebar: React.FC = () => {
             </>)}
             <hr/>
             <NavLink to="/dashboard" className={getActiveLinkClass}>Dashboard</NavLink>
-            <div className="spacer"></div>
             <div className="footer">
                 <span>Made by <a href='https://bwoody13.github.io/meet-brendan/' target="_blank" rel="noopener noreferrer">Brendan Woodward</a></span>
                 
