@@ -1,5 +1,5 @@
 # MyMusic (previously MySpotify)
-A full-stack Spotify application that adds additional functionality on top of that available through the Spotify app. Soon to be deployed...
+A full-stack Spotify application that adds additional functionality on top of that available through the Spotify app.
 
 ## Design Outline
 There is a front-end that uses React and ReactRouter to build and organize the page structure and site map. Communications to the Python back-end are made using Axios and received using Flask. The back-end utilizes SQLAlchemy and SQLite to manage a database for user information and listening information. 
